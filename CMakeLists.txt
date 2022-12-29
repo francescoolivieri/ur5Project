@@ -11,14 +11,15 @@ catkin_package()
 
 ## Build talker and listener
 include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
+#target_include_directories(main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+add_executable(main main.cpp)
+
+add_library(lib src/ur5_kinematics.cpp src/custom_joint_publisher.cpp)
+target_link_libraries(main lib ${catkin_LIBRARIES} ${EIGEN_LIBRARIES})
 
 
-add_library(ur5_kinematics ur5_kinematics.cpp)
-add_executable(custom_joint_publisher custom_joint_publisher.cpp)
-target_link_libraries(custom_joint_publisher ur5_kinematics ${catkin_LIBRARIES})
-#add_executable(custom_joint_publisher custom_joint_publisher.cpp)
-
-install(TARGETS custom_joint_publisher ur5_kinematics
+install(TARGETS main lib
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

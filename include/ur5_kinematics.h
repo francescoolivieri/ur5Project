@@ -26,15 +26,17 @@ MatrixXd ur5Jacobian(VectorXd th);
 MatrixXd InverseDiffKinematicsUr5(Vector3d ve, Vector3d omegae, RowVectorXd th, double tMin, double tMax, double DeltaT);
 
 //variables
+
+bool first = true;
+
 vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
 vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
-vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.};
+vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.}; // ?
+
 
 Matrix4d t_60 = Matrix4d::Identity();
 Matrix4d t0b = Matrix4d::Identity();
 Matrix4d te6 = Matrix4d::Identity();
-
-bool first = true;
 
 
 #endif

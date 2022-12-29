@@ -8,7 +8,6 @@
 #include <Eigen/Dense>
 #include <realtime_tools/realtime_publisher.h>
 
-
 typedef  Eigen::Matrix<double, 6, 1> JointStateVector;
 
 
