@@ -22,6 +22,9 @@ Matrix4d getT_i(int i, double th);
 Vector3d worldToRobot(Vector3d p);
 Vector3d robotToWorld(Vector3d p);
 
+MatrixXd ur5Jacobian(VectorXd th);
+MatrixXd InverseDiffKinematicsUr5(Vector3d ve, Vector3d omegae, RowVectorXd th, double tMin, double tMax, double DeltaT);
+
 //variables
 vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
 vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
