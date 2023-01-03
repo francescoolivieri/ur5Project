@@ -5,6 +5,8 @@
 #include <cmath>
 #include "ur5_kinematics.h"
 
+//using namespace Eigen;
+
 Vector3d worldToRobot(Vector3d p){
     Vector4d pe;
     pe << p(0), p(1), p(2), 1;
@@ -30,37 +32,49 @@ Vector3d robotToWorld(Vector3d p){
 }
 
 
-
-Vector3d DirectKinematicsUr5(VectorXd th){
+Matrix4d DirectKinematicsUr5(VectorXd th){
     int i=0;
 
     t_60 = Matrix4d::Identity();
 
+    /*
     t0b << 1, 0, 0, 0.499992,
         0, -1, 0, 0.349988,
         0, 0, -1, 1.749994,
+        0, 0, 0, 1;*/
+
+    t0b << 1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
         0, 0, 0, 1;
+    
 
     t_60 *= t0b; // base frame transf.
 
     for(i=0 ; i<6 ; i++){
         t_60 *= getT_i(i, th[i]);
     }
-    
-    return t_60.block<3,1>(0,3);
+
+    return t_60;
 }
 
 
-MatrixXd InverseKinematicsUr5(Vector3d pe){
+MatrixXd InverseKinematicsUr5(Vector3d pe, Matrix3d Re){
     
     // transf. of pe with respect of robot base frame
     Vector4d pe_t;  // temp of pe in 4d 
     pe_t << pe(0), pe(1), pe(2), 1;
 
 
-    t0b << 1, 0, 0, -0.499992,
+    /*
+    t0b << 1, 0, 0, 0.499992,
         0, -1, 0, 0.349988,
         0, 0, -1, 1.749994,
+        0, 0, 0, 1;*/
+
+    t0b << 1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
         0, 0, 0, 1;
 
 
@@ -70,6 +84,7 @@ MatrixXd InverseKinematicsUr5(Vector3d pe){
 
     t_60 = Matrix4d::Identity();
     t_60.block<3,1>(0,3) = pe; // sostituisco nuovo point in t_60
+    t_60.block<3,3>(0,0) = Re;
     
     
     // th1
@@ -202,11 +217,88 @@ Matrix4d getT_i(int i, double th){
     return t_i;
 }
 
-MatrixXd InverseDiffKinematicsUr5(Vector3d ve, Vector3d omegae, RowVectorXd th, double tMin, double tMax, double DeltaT){
+Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos){
+
+    Vector3d desiredPos;
+    desiredPos = (currentTime/totalDuration)*endPos + (1-(currentTime/totalDuration))*startPos;
+
+    return desiredPos;
+}
+
+Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient){
+
+    Vector3d desiredOrient;
+    desiredOrient = (currentTime/totalDuration)*endOrient+(1-(currentTime/totalDuration))*startOrient;
+
+    return desiredOrient;
+}
+
+VectorXd JointAngularVelocity(VectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot ){
+    
+    VectorXd dotQ;
+    MatrixXd Jac;
+    MatrixXd Ja;   
+    Matrix3d T;
+    MatrixXd Ta(6,6);
+    Matrix3d Kp;
+    Matrix3d Kphi;
+    VectorXd V(6);
+
+    Jac = ur5Jacobian(qk);
+    double psi = phie[0];
+    double theta = phie[1];
+    double phi = phie[2];
+
+    T << cos(theta)*cos(phi), -sin(phi), 0,
+         cos(theta)*sin(phi), cos(phi), 0,
+         -sin(theta), 0, 1;
+
+    Ta.block<3,3>(0,0) = MatrixXd::Identity(3,3);
+    Ta.block<3,3>(0,3) = MatrixXd::Zero(3,3);
+    Ta.block<3,3>(3,0) = MatrixXd::Zero(3,3);
+    Ta.block<3,3>(3,3) = T;
+
+    Ja = Ta.inverse()*Jac;
+
+//do kp and kphi have arbitrary values?
+    Kp = MatrixXd::Identity(3,3)*5; 
+    Kphi = MatrixXd::Identity(3,3)*0.1;
+
+    V.block<3,1>(0,0) = vd + Kp*(xd-xe);
+    V.block<3,1>(3,0) = phiddot + Kphi*(phid-phie);
+
+    dotQ = ( Ja+ MatrixXd::Identity(6,6)*(1e-06) )*V;
+    return dotQ;
+}
+
+
+//th is to substitute with startPos
+MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT){
     vector<double> t;
-    VectorXd dotqk(6);
+    VectorXd dotqk;
     RowVectorXd qk(6),qk1(6);
     MatrixXd q(1,6);
+
+    //Vector6d V;
+    Vector3d phie;
+    Vector3d xd;
+    Vector3d previousXd;
+    Vector3d phid;
+    Vector3d previousPhid;
+    Vector3d startOrientation;
+
+    double totalDuration = tMax - tMin;
+
+//roto-trasl matrix from end effector to base frame
+    Matrix4d t_f0;
+
+//parts of trasl and rotation of t_f0
+    Vector3d xe;
+    Matrix3d Re;
+
+// desired end-effector tangential and nagular velocities
+    Vector3d vd;
+    Vector3d phiddot;
 
     int i=0;
     while( (tMin+i*DeltaT)<=tMax ){
@@ -217,22 +309,45 @@ MatrixXd InverseDiffKinematicsUr5(Vector3d ve, Vector3d omegae, RowVectorXd th, 
     for(double i : t){
         cout << i << " ";
     }
+
     cout << endl;
 
     qk = th;  // .transpose()
     q.block<1,6>(0,0) = qk;
 
-    for(i=0; i<t.size() ; i++){
-        MatrixXd J = ur5Jacobian(qk.transpose());
-        VectorXd V(6);
+//calculatin initial position and orientation
+    t_f0 = DirectKinematicsUr5(qk);
+    xe = t_f0.block<3,1>(0,3);
+    Re = t_f0.block<3,3>(0,0);
+    startOrientation = Re.eulerAngles(0,1,2);
 
-        ve << -0.2*sin(t[i]), 0 ,0.2*cos(t[i]);
-        omegae << 0, 0, 0;
+    xd = TrajectoryPosition(0, totalDuration, xe, endPos);
+    previousXd = xd;
 
-        V.block<3,1>(0,0) = ve;  // calcolate al momento
-        V.block<3,1>(3,0) = omegae;
+    phid = TrajectoryOrientation(0, totalDuration, startOrientation, endOrientation);
+    previousPhid = phid;
 
-        dotqk = J.inverse() * V;
+
+
+    for(i=1; i<t.size() ; i++){
+        t_f0 = DirectKinematicsUr5(qk);
+        xe = t_f0.block<3,1>(0,3);
+        Re = t_f0.block<3,3>(0,0);
+        phie = Re.eulerAngles(0,1,2);
+
+        xd = TrajectoryPosition(t[i], totalDuration, th, endPos);
+        phid = TrajectoryOrientation(t[i], totalDuration, startOrientation, endOrientation);
+
+        vd = (xd-previousXd)/DeltaT;
+        phiddot = (phid-previousPhid)/DeltaT;
+
+        previousXd = xd;
+        previousPhid = phid;
+
+        //V.block<3,1>(0,0) = xe; 
+        //V.block<3,1>(3,0) = phie;
+        //dotqk = JointAngularVelocity(qk, xe, xd, vd, phie, phid, phiddot);
+        //dotqk = J.inverse() * V;
 
         qk1 = qk + dotqk.transpose()*DeltaT;
         q.conservativeResize(q.rows()+1, q.cols());
@@ -296,3 +411,18 @@ MatrixXd ur5Jacobian(VectorXd th){
     return J;
 }
 
+Matrix3d toRotationMatrix(Vector3d euler){
+
+    double psi = euler(0);    //yaw X
+    double theta = euler(1);  //pitch Y
+    double phi = euler(2);    //roll Z
+
+    Matrix3d R;
+
+    R << cos(phi)*cos(theta), cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi), cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi),
+         sin(phi)*cos(theta), sin(phi)*sin(theta)*sin(psi)+cos(phi)*cos(psi), sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi),
+         -sin(theta), cos(theta)*sin(psi), cos(theta)*cos(phi);
+
+    return R;
+
+}

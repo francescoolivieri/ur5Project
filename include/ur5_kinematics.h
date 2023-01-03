@@ -15,15 +15,21 @@ using namespace Eigen;
 
 
 //methods
-Vector3d DirectKinematicsUr5(VectorXd th);
-MatrixXd InverseKinematicsUr5(Vector3d pe);
+Matrix4d DirectKinematicsUr5(VectorXd th);
+MatrixXd InverseKinematicsUr5(Vector3d pe, Matrix3d Re);
 Matrix4d getT_i(int i, double th);
 
 Vector3d worldToRobot(Vector3d p);
 Vector3d robotToWorld(Vector3d p);
 
 MatrixXd ur5Jacobian(VectorXd th);
-MatrixXd InverseDiffKinematicsUr5(Vector3d ve, Vector3d omegae, RowVectorXd th, double tMin, double tMax, double DeltaT);
+Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos);
+Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient);
+
+VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot );
+
+MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT);
+Matrix3d toRotationMatrix(Vector3d euler); //euler angles in x, y, z
 
 //variables
 
