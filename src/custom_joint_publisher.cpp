@@ -30,6 +30,11 @@ void send_des_jstate(const JointStateVector & joint_pos)
   } */
 }
 
+JointStateVector receive_jstate(){
+
+  
+}
+
 
 void initFilter(const JointStateVector & joint_pos)
 {

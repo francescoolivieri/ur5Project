@@ -225,6 +225,18 @@ Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d s
     return desiredPos;
 }
 
+Vector3d TrajectoryPositionSinusoidal(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos){
+
+    Vector3d desiredPos;
+
+    //desiredPos = (currentTime/totalDuration)*endPos + (1-(currentTime/totalDuration))*startPos;
+
+    double sinArgument = (currentTime/totalDuration)*M_PI - M_PI/2;
+    desiredPos = ((sin(sinArgument)+1)/2)*(endPos-startPos) + startPos;
+
+    return desiredPos;
+}
+
 Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient){
 
     Vector3d desiredOrient;
@@ -280,7 +292,7 @@ VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d
 
 //do kp and kphi have arbitrary values?
     Kp = MatrixXd::Identity(3,3)*5; 
-    Kphi = MatrixXd::Identity(3,3)*5;
+    Kphi = MatrixXd::Identity(3,3)*0.1; 
 
    
 
@@ -347,8 +359,12 @@ MatrixXd InverseDiffKinematicsUr5(RowVectorXd th,Vector3d startPos, Vector3d end
     //startOrientation = Re.eulerAngles(0,1,2);
 
 
-    xd = TrajectoryPosition(0, totalDuration, startPos, endPos);
-    previousXd = TrajectoryPosition(0-DeltaT, totalDuration, startPos, endPos);
+    //xd = TrajectoryPosition(0, totalDuration, startPos, endPos);
+    //previousXd = TrajectoryPosition(0-DeltaT, totalDuration, startPos, endPos);
+
+    /*----sinusoidal profile trajectory -----*/
+    xd = TrajectoryPositionSinusoidal(0, totalDuration, startPos, endPos);
+    previousXd = TrajectoryPositionSinusoidal(0-DeltaT, totalDuration, startPos, endPos);
 
     phid = TrajectoryOrientation(0, totalDuration, startOrientation, endOrientation);
     previousPhid = TrajectoryOrientation(0-DeltaT, totalDuration, startOrientation, endOrientation);
@@ -367,17 +383,18 @@ MatrixXd InverseDiffKinematicsUr5(RowVectorXd th,Vector3d startPos, Vector3d end
         //if(i==3) cout << Re << endl;
 
         
-        xd = TrajectoryPosition(t[i], totalDuration, startPos, endPos);
+        //xd = TrajectoryPosition(t[i], totalDuration, startPos, endPos);
+        xd = TrajectoryPositionSinusoidal(t[i], totalDuration, startPos, endPos);
         phid = TrajectoryOrientation(t[i], totalDuration, startOrientation, endOrientation);
 
-        previousXd = TrajectoryPosition(t[i-1], totalDuration, startPos, endPos);
+        previousXd = TrajectoryPositionSinusoidal(t[i-1], totalDuration, startPos, endPos);
         previousPhid = TrajectoryOrientation(t[i-1], totalDuration, startOrientation, endOrientation);
 
         vd = (xd-previousXd)/DeltaT;
         phiddot = (phid-previousPhid)/DeltaT;
 
         //cout << "desired point" << phid << endl;
-        cout << "effective point " << phie << endl;
+        //cout << "effective point " << phie << endl;
         //cout << phie << endl;
         //cout << endl;
         //cout <<endl;

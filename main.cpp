@@ -62,21 +62,18 @@ int main(int argc, char **argv)
     //MatrixXd support = DirectKinematicsUr5(thi);
     //Vector3d startPos = support.block<3,1>(0,3);
     //Vector3d startPos = {0.3, 0.3, 0.1};
-    Vector3d startPos = { 0.4, 0.4, 0.5};
+    Vector3d startPos = { 0.151850 , 0.190809, 0.5};
     Vector3d startOrient = { 0 , 0, 0};
 
 
     //cout << startPos << endl;
 
-    
-    Vector3d sum = {0.05, 0.05, 0.05};
-
     //endPos << startPos(0)+0.05, startPos(1)+0.05, startPos(2)+0.05;
     //Vector3d endPos2 =  worldToRobot(endPos);
-    Vector3d endPos = { 0.4, 0.4, 0.5};
-    Vector3d endOrient = { 0 , M_PI, M_PI};
+    Vector3d endPos = { 0.3, 0.3, 0.5};
+    Vector3d endOrient = { 0 , 0, 0};
 
-    double samples = 100;
+    double samples = 500;
     double delta = 1/samples;
     
     //cout << toRotationMatrix(startOrient) << endl;
@@ -86,7 +83,7 @@ int main(int argc, char **argv)
     th = thi.block<1,6>(0,0);
     
 
-    MatrixXd result = InverseDiffKinematicsUr5(th, startPos, endPos, startOrient, endOrient, 0, 1, delta);
+    //MatrixXd result = InverseDiffKinematicsUr5(th, startPos, endPos, startOrient, endOrient, 0, 1, delta);
 
     
 
@@ -113,18 +110,21 @@ int main(int argc, char **argv)
   //cout << pe_2-pe << endl;
 
   
+  /*
     int i=0;
     while (ros::ok())
     {
 
         //1- step reference
-        if (loop_time < 10.)
+        if (loop_time < 100.)
         {
             cout<< "inir" << endl;
             q_des = q_des0;
             cout << q_des << endl;
             
             cout << endl;
+            if(loop_time < 2)
+                send_des_jstate(q_des);
 
         } else {
 
@@ -143,6 +143,7 @@ int main(int argc, char **argv)
                 break;
             }
             //q_des = secondOrderFilter(q_des0 + delta_q, loop_frequency, 5.);
+            send_des_jstate(q_des);
         }
         
 
@@ -151,7 +152,7 @@ int main(int argc, char **argv)
 
         
 
-        send_des_jstate(q_des);
+        
 
         ros::spinOnce();
         loop_time++;
@@ -159,7 +160,7 @@ int main(int argc, char **argv)
 
     }
 
-    cout << "HELo" << endl;
+    cout << "HELo" << endl;*/
 
   return 0;
 }

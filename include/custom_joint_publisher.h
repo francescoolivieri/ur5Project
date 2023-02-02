@@ -13,6 +13,7 @@ typedef  Eigen::Matrix<double, 6, 1> JointStateVector;
 
 // Methods
 void send_des_jstate(const JointStateVector & joint_pos);
+JointStateVector receive_jstate();
 JointStateVector secondOrderFilter(const JointStateVector & input, const double rate, const double settling_time);
 
 // Variables
@@ -29,6 +30,8 @@ double  loop_frequency = 60.;
 // Publishers
 //std::shared_ptr<realtime_tools::RealtimePublisher<sensor_msgs::JointState> > pub_des_jstate_sim_rt;
 ros::Publisher pub_des_jstate;
+ros::Subscriber sub_jstate;
+
 sensor_msgs::JointState jointState_msg_sim;
 std_msgs::Float64MultiArray jointState_msg_robot;
 

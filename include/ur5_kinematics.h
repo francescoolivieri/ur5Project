@@ -24,6 +24,7 @@ Vector3d robotToWorld(Vector3d p);
 
 MatrixXd ur5Jacobian(VectorXd th);
 Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos);
+Vector3d TrajectoryPositionSinusoidal(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos);
 Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient);
 
 VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot );
