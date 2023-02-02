@@ -47,7 +47,6 @@ int main(int argc, char **argv)
 
     RowVectorXd th(6);
     //VectorXd thi(6);
-
     
 
     //scale facto == 1 quindi abbastanza inutile
@@ -82,10 +81,7 @@ int main(int argc, char **argv)
     
     th = thi.block<1,6>(0,0);
     
-
     //MatrixXd result = InverseDiffKinematicsUr5(th, startPos, endPos, startOrient, endOrient, 0, 1, delta);
-
-    
 
     /*
     for(int j=0; j<samples; j++){
@@ -102,8 +98,6 @@ int main(int argc, char **argv)
       dist[i] *= SCALE_FACTOR;
       a[i] *= SCALE_FACTOR;
   }*/
-  
-  
 
   //Vector3d pe_2 = DirectKinematicsUr5(th); // test inverse kin
 
@@ -149,10 +143,6 @@ int main(int argc, char **argv)
 
         //2- sine reference
         // q_des = q_des0.array() + amp.array()*(2*M_PI*freq*loop_time).array().sin();
-
-        
-
-        
 
         ros::spinOnce();
         loop_time++;

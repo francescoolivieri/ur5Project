@@ -571,3 +571,120 @@ Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d){
     return error;
 
 }
+
+// standard inv. diff. kin. using quaternion 
+VectorXd InverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des){
+    int iter_max = 1000;
+   
+    VectorXd q_des(6);
+
+    // set q as current set of joint
+    VectorXd q = q_k;
+
+    // coeff. matrix building
+    MatrixXd K = MatrixXd::Identity(6,6);
+    Matrix3d K_p = Matrix3d::Identity()*5;
+    Matrix3d K_o = Matrix3d::Identity()*5;
+    K.block<3,3>(0,0) = K_p;
+    K.block<3,3>(3,3) = K_o; 
+
+    // speed matrix building
+    VectorXd speed_control(6);
+    speed_control << v_des, w_des;
+    
+    for(int i=0 ; i<iter_max ; i++){
+        // Jacobian calc.
+        MatrixXd J = ur5Jacobian(q);
+
+        VectorXd err_vect = ComputeErrorQuaternion(q, pos_des, orient_des);
+
+        // calc. next set of joint base on error
+        q = q + 0.05 * (J + MatrixXd::Identity(6,6) * 0.001 ).inverse() * ( speed_control + (K * err_vect) );
+
+        for (int j = 0; j < q.size(); j++) {
+            q(j) = atan2(imag(exp(1i * q(j))), real(exp(1i * q(j))));
+        }
+
+        if(vectMagnitude(err_vect.block<3,1>(0,0))<1e-4 && vectMagnitude(err_vect.block<3,1>(3,0))<1e-4){
+            
+            cout << "Finded in " << i << " iterations" << endl;
+
+            q_des = q;
+            return q_des;
+        }
+    }    
+
+    return q;
+}
+
+// position and orientation error using quaternion
+VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des){
+    // express orientation in quaternion
+    Quaterniond quat_orient_des = EulerToQuaternion(orient_des);
+
+    // calc. forward kin to get position and orientation
+    Matrix4d curr_fwk = DirectKinematicsUr5(q);
+
+    Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
+
+    Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
+    Quaterniond quat_orient_curr(curr_rot);   // calc. quaternion
+
+    // errors calculation
+    Vector3d err_pos = pos_des - curr_pos;
+    Vector3d err_orient = quat_orient_curr.w() * quat_orient_des.vec() - quat_orient_des.w() * quat_orient_des.vec() - quat_orient_des.vec().cross(quat_orient_curr.vec()) ;
+
+    // build 6x1 vector
+    VectorXd err_vect(6);
+    err_vect << err_pos, err_orient;
+
+    cout << err_pos << endl << err_orient << endl;
+
+    return err_vect;
+}
+
+// returns the J*(...)
+VectorXd JointAngularVelocityQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des){
+    
+    // Jacobian calc.
+    MatrixXd J = ur5Jacobian(q);
+
+    // express orientation in quaternion
+    Quaterniond quat_orient_des = EulerToQuaternion(orient_des);
+
+    // coeff. matrix building
+    MatrixXd K = MatrixXd::Identity(6,6);
+
+    Matrix3d K_p = Matrix3d::Identity()*5;
+    Matrix3d K_o = Matrix3d::Identity()*5;
+    K.block<3,3>(0,0) = K_p;
+    K.block<3,3>(3,3) = K_o; 
+
+    // speed vector building
+    VectorXd speed_control(6);
+    speed_control << v_des, w_des;
+
+    VectorXd err_vect = ComputeErrorQuaternion(q, pos_des, orient_des);
+        
+    // calc. next set of joint base on error
+    return J.inverse() * ( speed_control + (K * err_vect) );
+}
+
+Quaterniond EulerToQuaternion(Vector3d euler){
+    Matrix3d R = Matrix3d::Identity();
+
+    R = toRotationMatrix({0,0,euler(2)}) * toRotationMatrix({0,euler(1),0}) * toRotationMatrix({euler(0),0,0});
+
+    Quaterniond q(R);
+
+    return q;
+
+}
+
+double quatMagnitude(const Quaterniond &q) {
+    return sqrt(q.w() * q.w() + q.x() * q.x() + q.y() * q.y() + q.z() * q.z());
+}
+
+double vectMagnitude(const Vector3d &v) {
+    return sqrt(v(0) * v(0) + v(1) * v(1) + v(2) * v(2));
+}
