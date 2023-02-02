@@ -8,7 +8,7 @@
 #include <cmath>
 
 #define SCALE_FACTOR 1
-#define GRIPPER_LENGTH 0.12
+#define GRIPPER_LENGTH 0 // needs to be replaced with 0.12 later (0 is just for testing)
 
 using namespace std;
 using namespace Eigen;
@@ -26,10 +26,13 @@ MatrixXd ur5Jacobian(VectorXd th);
 Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos);
 Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient);
 
-VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot );
+VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot );
 
-MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT);
+MatrixXd InverseDiffKinematicsUr5(RowVectorXd th,Vector3d startPos, Vector3d endPos, Vector3d startOrientation, Vector3d endOrientation,  double tMin, double tMax, double DeltaT);
 Matrix3d toRotationMatrix(Vector3d euler); //euler angles in x, y, z
+VectorXd q_dott0(VectorXd qk);
+VectorXd JointAngularVelocityRedundancy(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot );
+Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d);
 
 //variables
 

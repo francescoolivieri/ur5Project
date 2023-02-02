@@ -24,7 +24,7 @@ JointStateVector filter_1 = JointStateVector::Zero();
 JointStateVector filter_2 = JointStateVector::Zero();
 
 double  loop_time = 0.;
-double  loop_frequency = 1000.;
+double  loop_frequency = 60.;
 
 // Publishers
 //std::shared_ptr<realtime_tools::RealtimePublisher<sensor_msgs::JointState> > pub_des_jstate_sim_rt;

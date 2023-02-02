@@ -11,9 +11,9 @@ Vector3d worldToRobot(Vector3d p){
     Vector4d pe;
     pe << p(0), p(1), p(2), 1;
 
-    t0b << 1, 0, 0, -0.499992,
-        0, -1, 0, 0.349988,
-        0, 0, -1, 1.749994,
+    t0b << 1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
         0, 0, 0, 1;
 
     return (t0b*pe).block<3,1>(0,0);
@@ -23,9 +23,9 @@ Vector3d robotToWorld(Vector3d p){
     Vector4d pe;
     pe << p(0), p(1), p(2), 1;
 
-    t0b << 1, 0, 0, 0.499992,
-        0, -1, 0, 0.349988,
-        0, 0, -1, 1.749994,
+    t0b << 1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
         0, 0, 0, 1;
 
     return (t0b*pe).block<3,1>(0,0);
@@ -230,10 +230,13 @@ Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3
     Vector3d desiredOrient;
     desiredOrient = (currentTime/totalDuration)*endOrient+(1-(currentTime/totalDuration))*startOrient;
 
+    //cout << desiredOrient << endl;
+    //cout << endl;
+
     return desiredOrient;
 }
 
-VectorXd JointAngularVelocity(VectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot ){
+VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot ){
     
     VectorXd dotQ;
     MatrixXd Jac;
@@ -243,37 +246,57 @@ VectorXd JointAngularVelocity(VectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd
     Matrix3d Kp;
     Matrix3d Kphi;
     VectorXd V(6);
+    Matrix3d w_R_d;
+    Vector3d errorOrientation;
+    Vector3d omegaDot;
 
-    Jac = ur5Jacobian(qk);
-    double psi = phie[0];
-    double theta = phie[1];
-    double phi = phie[2];
+    w_R_d = toRotationMatrix(phid);
+    errorOrientation = computeOrientationError(Re, w_R_d);
+    
+
+    Jac = ur5Jacobian(qk.transpose());
+    double psi = phid[0];
+    double theta = phid[1];
+    double phi = phid[2];
 
     T << cos(theta)*cos(phi), -sin(phi), 0,
          cos(theta)*sin(phi), cos(phi), 0,
          -sin(theta), 0, 1;
 
-    Ta.block<3,3>(0,0) = MatrixXd::Identity(3,3);
+    omegaDot = T*phiddot;
+
+    cout << errorOrientation << endl;
+    cout << endl;
+
+
+    /*Ta.block<3,3>(0,0) = MatrixXd::Identity(3,3);
     Ta.block<3,3>(0,3) = MatrixXd::Zero(3,3);
     Ta.block<3,3>(3,0) = MatrixXd::Zero(3,3);
-    Ta.block<3,3>(3,3) = T;
+    Ta.block<3,3>(3,3) = T;*/
 
-    Ja = Ta.inverse()*Jac;
+
+
+    
 
 //do kp and kphi have arbitrary values?
     Kp = MatrixXd::Identity(3,3)*5; 
-    Kphi = MatrixXd::Identity(3,3)*0.1;
+    Kphi = MatrixXd::Identity(3,3)*5;
+
+   
 
     V.block<3,1>(0,0) = vd + Kp*(xd-xe);
-    V.block<3,1>(3,0) = phiddot + Kphi*(phid-phie);
+    V.block<3,1>(3,0) = omegaDot + Kphi*(errorOrientation);
 
-    dotQ = ( Ja+ MatrixXd::Identity(6,6)*(1e-06) )*V;
+    dotQ = (Jac+ MatrixXd::Identity(6,6)*(1e-06)).inverse()*V;
+
+    //cout << dotQ << endl;
+
     return dotQ;
 }
 
 
 //th is to substitute with startPos
-MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT){
+MatrixXd InverseDiffKinematicsUr5(RowVectorXd th,Vector3d startPos, Vector3d endPos, Vector3d startOrientation, Vector3d endOrientation,  double tMin, double tMax, double DeltaT){
     vector<double> t;
     VectorXd dotqk;
     RowVectorXd qk(6),qk1(6);
@@ -285,7 +308,9 @@ MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endO
     Vector3d previousXd;
     Vector3d phid;
     Vector3d previousPhid;
-    Vector3d startOrientation;
+
+    //Vector3d startOrientation;
+    //Vector3d startPos;
 
     double totalDuration = tMax - tMin;
 
@@ -296,7 +321,7 @@ MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endO
     Vector3d xe;
     Matrix3d Re;
 
-// desired end-effector tangential and nagular velocities
+// desired end-effector tangential and angular velocities
     Vector3d vd;
     Vector3d phiddot;
 
@@ -307,46 +332,59 @@ MatrixXd InverseDiffKinematicsUr5(RowVectorXd th, Vector3d endPos, Vector3d endO
     }
     
     for(double i : t){
-        cout << i << " ";
+        //cout << i << " ";
     }
+    //cout << endl;
 
-    cout << endl;
 
     qk = th;  // .transpose()
     q.block<1,6>(0,0) = qk;
 
-//calculatin initial position and orientation
-    t_f0 = DirectKinematicsUr5(qk);
-    xe = t_f0.block<3,1>(0,3);
+//calculating initial position and orientation
+    t_f0 = DirectKinematicsUr5(qk.transpose());
+    //startPos = t_f0.block<3,1>(0,3);
     Re = t_f0.block<3,3>(0,0);
-    startOrientation = Re.eulerAngles(0,1,2);
+    //startOrientation = Re.eulerAngles(0,1,2);
 
-    xd = TrajectoryPosition(0, totalDuration, xe, endPos);
-    previousXd = xd;
+
+    xd = TrajectoryPosition(0, totalDuration, startPos, endPos);
+    previousXd = TrajectoryPosition(0-DeltaT, totalDuration, startPos, endPos);
 
     phid = TrajectoryOrientation(0, totalDuration, startOrientation, endOrientation);
-    previousPhid = phid;
+    previousPhid = TrajectoryOrientation(0-DeltaT, totalDuration, startOrientation, endOrientation);
 
+    //cout << startOrientation << endl;
+    //cout << endOrientation<< endl;
 
-
-    for(i=1; i<t.size() ; i++){
+    for(i=0; i<t.size() ; i++){
+        
         t_f0 = DirectKinematicsUr5(qk);
         xe = t_f0.block<3,1>(0,3);
         Re = t_f0.block<3,3>(0,0);
-        phie = Re.eulerAngles(0,1,2);
+        //phie = Re.eulerAngles(0,1,2);//initially 0,1,2
 
-        xd = TrajectoryPosition(t[i], totalDuration, th, endPos);
+        //if(i==2) cout << Re << endl;
+        //if(i==3) cout << Re << endl;
+
+        
+        xd = TrajectoryPosition(t[i], totalDuration, startPos, endPos);
         phid = TrajectoryOrientation(t[i], totalDuration, startOrientation, endOrientation);
+
+        previousXd = TrajectoryPosition(t[i-1], totalDuration, startPos, endPos);
+        previousPhid = TrajectoryOrientation(t[i-1], totalDuration, startOrientation, endOrientation);
 
         vd = (xd-previousXd)/DeltaT;
         phiddot = (phid-previousPhid)/DeltaT;
 
-        previousXd = xd;
-        previousPhid = phid;
+        //cout << "desired point" << phid << endl;
+        cout << "effective point " << phie << endl;
+        //cout << phie << endl;
+        //cout << endl;
+        //cout <<endl;
 
         //V.block<3,1>(0,0) = xe; 
         //V.block<3,1>(3,0) = phie;
-        //dotqk = JointAngularVelocity(qk, xe, xd, vd, phie, phid, phiddot);
+        dotqk = JointAngularVelocity(qk, xe, xd, vd, Re, phie, phid, phiddot);
         //dotqk = J.inverse() * V;
 
         qk1 = qk + dotqk.transpose()*DeltaT;
@@ -424,5 +462,95 @@ Matrix3d toRotationMatrix(Vector3d euler){
          -sin(theta), cos(theta)*sin(psi), cos(theta)*cos(phi);
 
     return R;
+
+}
+
+VectorXd q_dott0(VectorXd qk){
+    VectorXd q_dott0(6);
+    int k0 = 20;
+
+    q_dott0 = -k0/6*(qk/(2*M_PI));
+
+    return q_dott0;
+}
+
+VectorXd JointAngularVelocityRedundancy(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot ){
+    
+    VectorXd dotQ;
+    MatrixXd Jac;
+    MatrixXd Ja;   
+    Matrix3d T;
+    MatrixXd Ta(6,6);
+    Matrix3d Kp;
+    Matrix3d Kphi;
+    VectorXd V(6);
+
+    Jac = ur5Jacobian(qk.transpose());
+    double psi = phie[0];
+    double theta = phie[1];
+    double phi = phie[2];
+
+    T << cos(theta)*cos(phi), -sin(phi), 0,
+         cos(theta)*sin(phi), cos(phi), 0,
+         -sin(theta), 0, 1;
+
+    Ta.block<3,3>(0,0) = MatrixXd::Identity(3,3);
+    Ta.block<3,3>(0,3) = MatrixXd::Zero(3,3);
+    Ta.block<3,3>(3,0) = MatrixXd::Zero(3,3);
+    Ta.block<3,3>(3,3) = T;
+
+    Ja = Ta.inverse()*Jac;
+
+    
+
+//do kp and kphi have arbitrary values?
+    Kp = MatrixXd::Identity(3,3)*5; 
+    Kphi = MatrixXd::Identity(3,3)*0.1;
+
+   
+
+    V.block<3,1>(0,0) = vd + Kp*(xd-xe);
+    V.block<3,1>(3,0) = phiddot + Kphi*(phid-phie);
+
+    
+    
+
+    dotQ = (Ja+ MatrixXd::Identity(6,6)*(1e-06)).completeOrthogonalDecomposition().pseudoInverse()*V + (MatrixXd::Identity(6,6)-Ja.completeOrthogonalDecomposition().pseudoInverse()*Ja)*q_dott0(qk.transpose());
+
+    return dotQ;
+}
+
+Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d){
+
+    Vector3d error;
+    Matrix3d e_R_d = w_R_e.transpose()*w_R_d;
+
+    
+    double cos_dtheta = (e_R_d(0,0) + e_R_d(1,1) + e_R_d(2,2) - 1)/2;
+
+    Vector3d toNormalize; 
+
+    toNormalize << e_R_d(2,1) - e_R_d(1,2), e_R_d(0,2) - e_R_d(2,0), e_R_d(1,0) - e_R_d(0,1); 
+
+    
+    double sin_dtheta = toNormalize.norm()*0.5;
+
+    double dtheta = atan2(sin_dtheta, cos_dtheta);
+
+    
+    if(dtheta == 0){
+
+        error = {0, 0, 0};
+
+    }else{
+
+
+        Vector3d axis = 1/(2*sin_dtheta)*toNormalize;
+        error = w_R_e * axis * dtheta;
+    }
+
+    
+
+    return error;
 
 }
