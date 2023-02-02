@@ -35,6 +35,15 @@ VectorXd q_dott0(VectorXd qk);
 VectorXd JointAngularVelocityRedundancy(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Vector3d phie, Vector3d phid, Vector3d phiddot );
 Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d);
 
+// Quaternions
+VectorXd InverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des);
+VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des);
+VectorXd JointAngularVelocityQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des);
+
+Quaterniond EulerToQuaternion(Vector3d euler);
+double quatMagnitude(const Quaterniond &q);
+double vectMagnitude(const Vector3d &v);
+
 //variables
 
 bool first = true;
