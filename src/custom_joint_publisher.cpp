@@ -4,7 +4,7 @@
 void send_des_jstate(const JointStateVector & joint_pos)
 {
     std::cout << "q_des " << joint_pos.transpose() << std::endl;
-   if (real_robot)
+   if (true)
    {
         for (int i = 0; i < joint_pos.size(); i++)
         {
@@ -16,9 +16,13 @@ void send_des_jstate(const JointStateVector & joint_pos)
    }else {
         for (int i = 0; i < joint_pos.size(); i++)  
         {
+          //std::cout << "pos size" <<std::endl;
+          //std::cout << joint_pos.size() << std::endl;
+          //std::cout << std::endl;
+
           jointState_msg_sim.position[i] = joint_pos[i];
-          jointState_msg_sim.velocity[i] = 0.0;
-          jointState_msg_sim.effort[i] = 0.0;
+          jointState_msg_sim.velocity[i] = 5;
+          jointState_msg_sim.effort[i] = 0;
         }
 
         pub_des_jstate.publish(jointState_msg_sim);
@@ -50,6 +54,7 @@ JointStateVector secondOrderFilter(const JointStateVector & input, const double 
         filter_1 = (1 - gain) * filter_1 + gain * input;
         filter_2 = (1 - gain) * filter_2 + gain *filter_1;
         return filter_2;
+        
 }
 
 
