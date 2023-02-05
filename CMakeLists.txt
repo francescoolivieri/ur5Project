@@ -11,7 +11,6 @@ catkin_package()
 
 ## Build talker and listener
 include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
-#target_include_directories(main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(main main.cpp)
 
