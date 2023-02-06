@@ -72,6 +72,8 @@ int main(int argc, char **argv)
 
         //to user max= X=-0.4
     /*------------------*/
+
+    cout << touchCenterCircle({0.2, 0, 0}, {0.4, 0, 0}) << endl;
     
 
     //MatrixXd support = DirectKinematicsUr5(thi);
