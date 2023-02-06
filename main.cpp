@@ -100,7 +100,7 @@ int main(int argc, char **argv)
     //Vector3d endOrient = { 0 , 0, 0};
 
     double samples = 50;
-    double delta = 1/samples;
+    //double delta = 1/samples;
     
     //cout << toRotationMatrix(startOrient) << endl;
 
@@ -115,21 +115,7 @@ int main(int argc, char **argv)
     //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
     //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
 
-    MatrixXd mat = DirectKinematicsUr5(q_des0);
-
-    Vector3d inPos = mat.block<3,1>(0,3);
-
-    cout << "in pos reference" << endl;
-    value = sqrt(inPos(0)*inPos(0) + inPos(1)*inPos(1));
-    cout << value << endl;
-
-    Vector3d newPos;
-
-    newPos(1) = value*sin(-0.5);
-    newPos(0) = value*cos(-0.5); 
-    newPos(2) = inPos(2); 
-
-    MatrixXd tot_trajectory = InverseDiffKinematicsUr5(q_des0, newPos, endOrient , 0, 1, delta, CIRC);
+    cout << TrajectoryPosition(samples, {0, 0, 0}, endPos, CIRC);
 
     /*
     MatrixXd tot_trajectory =  InverseDiffKinematicsUr5(q_des0, newPos, endOrient, 0, 1, delta, CIRC);
@@ -170,7 +156,7 @@ int main(int argc, char **argv)
 
   //cout << pe_2-pe << endl;
 
-    
+    /*
     int i=0;
     while (ros::ok())
     {
@@ -218,7 +204,7 @@ int main(int argc, char **argv)
         loop_time++;
         loop_rate.sleep();
 
-    }
+    }*/
     cout << "HELo" << endl;
 
   return 0;

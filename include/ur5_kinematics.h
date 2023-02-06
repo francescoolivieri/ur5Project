@@ -30,7 +30,8 @@ Vector3d worldToRobot(Vector3d p);
 Vector3d robotToWorld(Vector3d p);
 
 MatrixXd ur5Jacobian(VectorXd th);
-Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos, mode traj_type);
+MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d endPos, mode traj_type);
+
 Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient);
 VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot );
 
@@ -50,7 +51,8 @@ double quatMagnitude(const Quaterniond &q);
 double vectMagnitude(const Vector3d &v);
 
 
-MatrixXd completeTrajectory(VectorXd q_current, Vector3d end_pos, Vector3d end_orient, double delta);
+MatrixXd pathGeneration(VectorXd q_current, Vector3d end_pos, Vector3d end_orient);
+
 Vector3d tangentialPoint(Vector3d start_pos);
 int touchCenterCircle(Vector3d start_pos, Vector3d end_pos);
 int nearestViaPoint(Vector3d end_pos, Vector3d pos1, Vector3d pos2);

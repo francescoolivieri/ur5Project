@@ -218,55 +218,62 @@ Matrix4d getT_i(int i, double th){
     return t_i;
 }
 
-Vector3d TrajectoryPosition(double currentTime, double totalDuration, Vector3d startPos, Vector3d endPos, mode traj_type){
+MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d endPos, mode traj_type){
 
+
+    MatrixXd path(1,3);
     Vector3d desiredPos;
 
-    switch (traj_type){
 
-        case LIN:
-            {
-                desiredPos = (currentTime/totalDuration)*endPos + (1-(currentTime/totalDuration))*startPos;
-                break;
-            }
+    double number_steps1 = 60; // to be put out of formula
+    double step_length = 1/number_steps;
 
-            
+    
 
-        case CIRC:
-            {   
+    for(int i=0; i< number_steps; i++){
 
-                double a1;
-                double a2;
-                a1 = atan2(startPos(1), startPos(0));
-                a2 = atan2(endPos(1), endPos(0));
-                if(startPos(0)<0){
-                   a1 = a1;
+    
+        switch (traj_type){
+
+            case LIN:
+                {
+                    desiredPos = (i*step_length)*endPos + (1-(i*step_length))*startPos;
+
+                    
+                    break;
+                } 
+
+            case CIRC:
+                {   
+
+                    double a1;
+                    double a2;
+                    a1 = atan2(startPos(1), startPos(0));
+                    a2 = atan2(endPos(1), endPos(0));
+                    if(startPos(0)<0){
+                    a1 = a1;
+                    }
+
+                    if(endPos(0)<0){
+                        a2 = a2 ;
+                    }
+
+                    double a21 = a2-a1;
+                    step_length = a21/number_steps;
+
+                    desiredPos(0) = RADIUS*cos(a21*(i*step_length)+a1);
+                    desiredPos(1) = RADIUS*sin(a21*(i*step_length)+a1);
+                    desiredPos(2) = startPos(2);
+
+                    break;
                 }
+        }
 
-                if(endPos(0)<0){
-                    a2 = a2 ;
-                }
-                double a21 = a2-a1;
-
-                desiredPos(0) = value*cos(a21*(currentTime)+a1);
-                desiredPos(1) = value*sin(a21*(currentTime)+a1);
-                desiredPos(2) = startPos(2);
-
-                
-
-                break;
-            }
-
-        case SIN:
-            {
-                double sinArgument = (currentTime/totalDuration)*M_PI - M_PI/2;
-                desiredPos = ((sin(sinArgument)+1)/2)*(endPos-startPos) + startPos;
-
-                break;
-            }
+        path.conservativeResize(path.rows()+1, path.cols());
+        path.block<1,3>(path.rows()-1, 0) = desiredPos;
     }
 
-    return desiredPos;
+    return path;
 }
 
 Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient){
@@ -338,10 +345,26 @@ VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d
 
 //th is to substitute with startPos
 MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type){
+    
+    MatrixXd curr_fwk = DirectKinematicsUr5(th);
+    Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
+    Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
+
+    MatrixXd path_points = pathGeneration(th, endPos, endOrientation);
+
+    MatrixXd q(1,6);
+    
+    /*
+    for(int j=0; j<path_points.rows(); j++ ){
+
+    }*/
+    
+
+
     vector<double> t;
     VectorXd dotqk;
-    RowVectorXd qk(6)
-    MatrixXd q(1,6);
+    RowVectorXd qk(6);
+    
     MatrixXd qk1(1,6);
 
     
@@ -357,7 +380,7 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
 
     //Vector3d startOrientation;
     //Vector3d startPos;
-
+    /*
     double totalDuration = tMax - tMin;
 
 //roto-trasl matrix from end effector to base frame
@@ -435,7 +458,8 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         q.conservativeResize(q.rows()+qk1.rows(), q.cols());
         q << q, qk1;
     }
-    return q;
+    */
+    return qk;
 }
 
 MatrixXd ur5Jacobian(VectorXd th){
@@ -726,7 +750,48 @@ Vector3d tangentialPoint(Vector3d start_pos){
     return tan_pos;
 }
 
-MatrixXd pathGeneration();
+MatrixXd pathGeneration(VectorXd q_current, Vector3d end_pos, Vector3d end_orient){
+    MatrixXd curr_fwk = DirectKinematicsUr5(q_current);
+    Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
+    Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
+
+    MatrixXd result(1,3);
+
+    if(false){
+
+        MatrixXd result = TrajectoryPosition(60, curr_pos, end_pos, LIN);
+
+        return result;
+
+    }else{
+
+        MatrixXd path1;
+        MatrixXd path2;
+        MatrixXd path3;
+
+        Vector3d first_pos;
+        Vector3d second_pos;
+
+        first_pos = tangentialPoint(curr_pos);
+        second_pos = tangentialPoint(end_pos);
+
+        cout << "seond pos" << endl;
+        cout << first_pos << endl;
+
+        
+        path1 = TrajectoryPosition(60, curr_pos, end_pos, LIN);
+
+        path2 = TrajectoryPosition(60, curr_pos, end_pos, CIRC);
+
+        path3 = TrajectoryPosition(60, curr_pos, end_pos,  LIN);
+
+        MatrixXd result(path1.rows()*3, path1.cols());
+        result << path1, path2, path3;
+
+        return result;
+    }
+
+}
 
 MatrixXd completeTrajectory(VectorXd q_current, Vector3d end_pos, Vector3d end_orient, double delta){
 
