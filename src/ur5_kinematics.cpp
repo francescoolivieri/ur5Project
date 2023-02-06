@@ -633,8 +633,18 @@ int touchCenterCircle(Vector3d start_pos, Vector3d end_pos){
 
     delta = 4*((diff(0)*start_pos(0)+diff(1)*start_pos(1))*(diff(0)*start_pos(0)+diff(1)*start_pos(1)))-4*(diff(0)*diff(0)+diff(1)*diff(1))*(start_pos(0)*start_pos(0)+start_pos(1)*start_pos(1)-radius*radius);
 
-    // (start_pos(1)*end_pos(1))<0
-    if(delta > 0 ) return true;
+    // if the line connecting start-end goes into the circle
+    if(delta > 0 ){
+
+        for(double t=0; t<=1 ; t=t+0.001){
+            Vector3d p = start_pos + (end_pos - start_pos) * t;
+
+            // check if p is inside the circle
+            if( pow(p(0), 2) + pow(p(1), 2) - pow(radius, 2) < 0 ){
+                return true;
+            }
+        }
+    }
 
     return false;
 
