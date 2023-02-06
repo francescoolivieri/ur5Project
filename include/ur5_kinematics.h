@@ -56,7 +56,7 @@ int touchCenterCircle(Vector3d start_pos, Vector3d end_pos);
 int nearestViaPoint(Vector3d end_pos, Vector3d pos1, Vector3d pos2);
 
 //variables
-
+double value;
 bool first = true;
 
 vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};

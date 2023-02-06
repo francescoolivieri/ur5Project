@@ -17,9 +17,9 @@ int main(int argc, char **argv)
   JointStateVector q_current;
 
   //q_des0 << -0.3223527113543909, -0.7805794638446351, -2.5675506591796875, -1.6347843609251917, -1.5715253988849085, -1.0017417112933558;
-  q_des0 << -2.72186 , -1.1391 , -2.44604  , -1.12765 , -1.57099 ,  1.15094;
+    //q_des0 << -2.72186 , -1.1391 , -2.44604  , -1.12765 , -1.57099 ,  1.15094;
 
-  //q_des0 << -2.72186 , -M_PI  , -2.44604  , -1.12765 , -1.57099 ,  1.15094;
+  q_des0 << -2.29748, -1.07838, -2.47464, -1.15936,  -1.5708, 0.726684;
   //q_des0 <<  -2.21729 ,-1.18481, -2.09685, -1.43074,  -1.5708, 0.646493;
   //pub_des_jstate_sim_rt.reset(new realtime_tools::RealtimePublisher<sensor_msgs::JointState>(node, "/command", 1));
 
@@ -95,13 +95,11 @@ int main(int argc, char **argv)
 
     Vector3d posArc = {0.182291, -0.201256, 0.566109};
 
-    Vector3d newPos;
-
     //Vector3d endPos1 = { -0.2, -0.3, 0.6};
     //Vector3d endPos1 = { -0.3, -0.4, 0.6};
     //Vector3d endOrient = { 0 , 0, 0};
 
-    double samples = 500;
+    double samples = 50;
     double delta = 1/samples;
     
     //cout << toRotationMatrix(startOrient) << endl;
@@ -117,12 +115,33 @@ int main(int argc, char **argv)
     //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
     //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
 
-    
-    newPos(1) = RADIUS*sin(M_PI+M_PI/4);
-    newPos(0) = RADIUS*cos(M_PI+M_PI/4); 
-    newPos(2) = posArc(2); 
+    MatrixXd mat = DirectKinematicsUr5(q_des0);
 
-    MatrixXd tot_trajectory =  completeTrajectory(q_des0, endPos, endOrient, delta);
+    Vector3d inPos = mat.block<3,1>(0,3);
+
+    cout << "in pos reference" << endl;
+    value = sqrt(inPos(0)*inPos(0) + inPos(1)*inPos(1));
+    cout << value << endl;
+
+    Vector3d newPos;
+
+    newPos(1) = value*sin(-0.5);
+    newPos(0) = value*cos(-0.5); 
+    newPos(2) = inPos(2); 
+
+    MatrixXd tot_trajectory = InverseDiffKinematicsUr5(q_des0, newPos, endOrient , 0, 1, delta, CIRC);
+
+    /*
+    MatrixXd tot_trajectory =  InverseDiffKinematicsUr5(q_des0, newPos, endOrient, 0, 1, delta, CIRC);
+
+    for(int k = 0; k < tot_trajectory.rows()-1; k++){
+
+        MatrixXd mat = DirectKinematicsUr5(tot_trajectory.block<1,6>(k,0));
+        inPos = mat.block<3,1>(0,3);
+        cout << sqrt(inPos(0)*inPos(0) + inPos(1)*inPos(1))<< endl;
+
+    }*/
+
 
 
     //MatrixXd tot_trajectory(trajectory1.rows()+trajectory2.rows(), trajectory1.cols());
@@ -150,7 +169,6 @@ int main(int argc, char **argv)
   //Vector3d pe_2 = DirectKinematicsUr5(th); // test inverse kin
 
   //cout << pe_2-pe << endl;
-
 
     
     int i=0;
@@ -189,7 +207,6 @@ int main(int argc, char **argv)
                 q_des0 = q_des;
                 break;
             }
-            //q_des = secondOrderFilter(q_des0 + delta_q, loop_frequency, 5.);
             send_des_jstate(q_des);
         }
         

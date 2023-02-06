@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,liblib.so -o devel/lib/liblib.so CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o 
