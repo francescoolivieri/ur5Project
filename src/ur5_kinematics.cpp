@@ -349,117 +349,40 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     MatrixXd curr_fwk = DirectKinematicsUr5(th);
     Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
     Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
+    Vector3d curr_rot_euler = curr_rot.eulerAngles(0,1,2);
 
     MatrixXd path_points = pathGeneration(th, endPos, endOrientation);
 
     MatrixXd q(1,6);
-    
-    /*
-    for(int j=0; j<path_points.rows(); j++ ){
-
-    }*/
-    
-
-
-    vector<double> t;
-    VectorXd dotqk;
-    RowVectorXd qk(6);
-    
-    MatrixXd qk1(1,6);
-
-    
-    Vector3d startPos;
-    Vector3d startOrientation;
-    
-    //Vector6d V;
-    Vector3d phie;
     Vector3d xd;
-    Vector3d previousXd;
     Vector3d phid;
+    Vector3d previousXd;
     Vector3d previousPhid;
-
-    //Vector3d startOrientation;
-    //Vector3d startPos;
-    /*
-    double totalDuration = tMax - tMin;
-
-//roto-trasl matrix from end effector to base frame
-    Matrix4d t_f0;
-
-//parts of trasl and rotation of t_f0
-    Vector3d xe;
-    Matrix3d Re;
-
-// desired end-effector tangential and angular velocities
     Vector3d vd;
     Vector3d phiddot;
-
+    VectorXd qk = th;
     
-    int i=0;
-    while( (tMin+i*DeltaT)<=tMax ){
-        
-        t.push_back(tMin+i*DeltaT);
-        i++;
-    }
-
-    qk = th.transpose();  // .transpose()
-    q.block<1,6>(0,0) = qk;
-    //calculating initial position and orientation
-    t_f0 = DirectKinematicsUr5(th);
-    startPos = t_f0.block<3,1>(0,3);
-    Re = t_f0.block<3,3>(0,0);
-    startOrientation = Re.eulerAngles(0,1,2);
-
-
-    //xd = TrajectoryPosition(0, totalDuration, startPos, endPos);
-    //previousXd = TrajectoryPosition(0-DeltaT, totalDuration, startPos, endPos);
-    xd = TrajectoryPosition(0, totalDuration, startPos, endPos, traj_type);
-    previousXd = TrajectoryPosition(0-DeltaT, totalDuration, startPos, endPos, traj_type);
-
-    phid = TrajectoryOrientation(0, totalDuration, startOrientation, endOrientation);
-    previousPhid = TrajectoryOrientation(0-DeltaT, totalDuration, startOrientation, endOrientation);
-
     
-    for(i=0; i<t.size(); i++){
-        
-        t_f0 = DirectKinematicsUr5(qk.transpose());
-        xe = t_f0.block<3,1>(0,3);
-        Re = t_f0.block<3,3>(0,0);
-        //phie = Re.eulerAngles(0,1,2);//initially 0,1,2
+    for(int j=1; j<path_points.rows(); j++ ){
 
-        //if(i==2) cout << Re << endl;
-        //if(i==3) cout << Re << endl;
+        xd = path_points.block<1,3>(j,0);
+        previousXd = path_points.block<1,3>(j-1,0);
 
-        
-        //xd = TrajectoryPosition(t[i], totalDuration, startPos, endPos);
-
-        
-        xd = TrajectoryPosition(t[i], totalDuration, startPos, endPos, traj_type);
-        phid = TrajectoryOrientation(t[i], totalDuration, startOrientation, endOrientation);
-
-        previousXd = TrajectoryPosition(t[i-1], totalDuration, startPos, endPos, traj_type);
-        previousPhid = TrajectoryOrientation(t[i-1], totalDuration, startOrientation, endOrientation);
-
-        
-
-        double check = sqrt(xe(0)*xe(0) + xe(1)*xe(1));
-
-        cout << "valore raggio" << endl;
-        cout << check << endl;
-        //cout << sqrt(xd(0)*xd(0)+ xd(1)*xd(1)) << endl;
-        //cout << endl;
-
+        //valori fissi in futuro da creare traj orientamento end effector
+        phid = endOrientation;
+        previousPhid = curr_rot_euler; 
 
         vd = (xd-previousXd)/DeltaT;
         phiddot = (phid-previousPhid)/DeltaT;
 
-        qk1 = InverseDiffKinematicsUr5Quaternions(xd, phid, qk, vd, phiddot);
+        MatrixXd partial_trajectory = InverseDiffKinematicsUr5Quaternions(xd, endOrientation, qk, vd, phiddot);
 
-        q.conservativeResize(q.rows()+qk1.rows(), q.cols());
-        q << q, qk1;
+        qk = partial_trajectory.block<1,6>(partial_trajectory.rows()-1, partial_trajectory.cols());
+        q.conservativeResize(q.rows()+partial_trajectory.rows(), q.cols());
+        q << q, partial_trajectory;
     }
-    */
-    return qk;
+
+    return q;
 }
 
 MatrixXd ur5Jacobian(VectorXd th){
@@ -751,6 +674,8 @@ Vector3d tangentialPoint(Vector3d start_pos){
 }
 
 MatrixXd pathGeneration(VectorXd q_current, Vector3d end_pos, Vector3d end_orient){
+
+    //endOirent da togliere non viene usata
     MatrixXd curr_fwk = DirectKinematicsUr5(q_current);
     Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
     Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
