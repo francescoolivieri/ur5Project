@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(lab_palopoli)
 
 ## Find catkin and any catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs sensor_msgs ros_impedance_controller)
 find_package(Eigen3 3.3 REQUIRED)
 
 
