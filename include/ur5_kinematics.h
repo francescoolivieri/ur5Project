@@ -9,7 +9,10 @@
 
 #define SCALE_FACTOR 1
 #define GRIPPER_LENGTH 0.12 // needs to be replaced with 0.12 later (0 is just for testing)
-#define RADIUS 0.29
+#define RADIUS 0.20
+
+double steps = 400;
+
 
 typedef enum {
     SIN,
@@ -32,7 +35,7 @@ Vector3d robotToWorld(Vector3d p);
 MatrixXd ur5Jacobian(VectorXd th);
 MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d endPos, mode traj_type);
 
-Vector3d TrajectoryOrientation(double currentTime, double totalDuration, Vector3d startOrient, Vector3d endOrient);
+Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3d endOrient);
 VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot );
 
 MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type);
