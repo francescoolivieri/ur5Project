@@ -14,6 +14,12 @@ Vector3d worldToRobot(Vector3d p){
         0, 0, 1, 0,
         0, 0, 0, 1;
 
+    /*
+    t0b << 1, 0, 0, 0.499992,
+        0, -1, 0, 0.349988,
+        0, 0, -1, 1.749994,
+        0, 0, 0, 1;*/
+
     return (t0b*pe).block<3,1>(0,0);
 }
 
@@ -26,28 +32,30 @@ Vector3d robotToWorld(Vector3d p){
         0, 0, 1, 0,
         0, 0, 0, 1;
 
-    return (t0b*pe).block<3,1>(0,0);
-}
-
-
-Matrix4d DirectKinematicsUr5(VectorXd th){
-    int i=0;
-
-    t_60 = Matrix4d::Identity();
-
     /*
     t0b << 1, 0, 0, 0.499992,
         0, -1, 0, 0.349988,
         0, 0, -1, 1.749994,
         0, 0, 0, 1;*/
 
+    return (t0b*pe).block<3,1>(0,0);
+}
+
+
+Matrix4d directKinematicsUr5(VectorXd th){
+    int i=0;
+
+    t_60 = Matrix4d::Identity();
+
+    
+    /*
     t0b << 1, 0, 0, 0,
         0, 1, 0, 0,
-        0, 0, 1, 0,
+        0, 0, 1, 0, //parte da eliminare
         0, 0, 0, 1;
     
 
-    t_60 *= t0b; // base frame transf.
+    t_60 *= t0b; // base frame transf.*/
 
     for(i=0 ; i<6 ; i++){
         t_60 *= getT_i(i, th[i]);
@@ -57,7 +65,7 @@ Matrix4d DirectKinematicsUr5(VectorXd th){
 }
 
 
-MatrixXd InverseKinematicsUr5(Vector3d pe, Matrix3d Re){
+MatrixXd inverseKinematicsUr5(Vector3d pe, Matrix3d Re){
     
     // transf. of pe with respect of robot base frame
     Vector4d pe_t;  // temp of pe in 4d 
@@ -68,7 +76,7 @@ MatrixXd InverseKinematicsUr5(Vector3d pe, Matrix3d Re){
     t0b << 1, 0, 0, 0.499992,
         0, -1, 0, 0.349988,
         0, 0, -1, 1.749994,
-        0, 0, 0, 1;*/
+        0, 0, 0, 1;
 
     t0b << 1, 0, 0, 0,
         0, 1, 0, 0,
@@ -76,7 +84,7 @@ MatrixXd InverseKinematicsUr5(Vector3d pe, Matrix3d Re){
         0, 0, 0, 1;
 
 
-    pe_t = t0b * pe_t;  
+    pe_t = t0b * pe_t;  */
 
     pe = pe_t.block<3,1>(0,0);
 
@@ -225,9 +233,6 @@ MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d end
 
    // double number_steps1 = 60; // to be put out of formula
     double step_length = 1/number_steps;
-
-    
-
     for(int i=1; i<= number_steps; i++){
 
     
@@ -282,11 +287,10 @@ Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3
     return desiredOrient;
 }
 
-VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot ){
+VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot ){
     
     VectorXd dotQ;
     MatrixXd Jac;
-    MatrixXd Ja;   
     Matrix3d T;
     MatrixXd Ta(6,6);
     Matrix3d Kp;
@@ -297,39 +301,24 @@ VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d
     Vector3d errorPosition;
     Vector3d omegaDot;
 
-    w_R_d = toRotationMatrix(phid);
-    errorOrientation = computeOrientationError(Re, w_R_d);
-    errorPosition = xd - xe;
+    w_R_d = eulerToRotationMatrix(phid);
+    errorOrientation = orientationError(Re, w_R_d);
+    errorPosition = positionError(xe, xd);
     
-
     Jac = ur5Jacobian(qk.transpose());
     double psi = phid[0];
     double theta = phid[1];
     double phi = phid[2];
 
-    T << cos(theta)*cos(phi), -sin(phi), 0,
-         cos(theta)*sin(phi), cos(phi), 0,
-         -sin(theta), 0, 1;
-
-    omegaDot = T*phiddot;
-
-    Kp = MatrixXd::Identity(3,3)*5; 
+    Kp = MatrixXd::Identity(3,3)*10; 
     Kphi = MatrixXd::Identity(3,3)*5; //oppure 7 come peso utile, o 3
 
-    
-    if(errorPosition.norm()>0.1){
-        errorPosition = 0.1*errorPosition.normalized();
-    }
-
-   
     V.block<3,1>(0,0) = vd + Kp*(errorPosition);
     V.block<3,1>(3,0) = Kphi*(errorOrientation);
 
     cout << "ERRORI------" << endl;
-    cout << errorOrientation << endl << endl;
-    cout << errorPosition << endl << endl;
-
-    
+    cout << errorOrientation.norm() << endl << endl;
+    cout << errorPosition.norm() << endl << endl;
 
     dotQ = (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
@@ -338,9 +327,9 @@ VectorXd JointAngularVelocity(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d
 
 
 //th is to substitute with startPos
-MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type){
+MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type){
     
-    MatrixXd curr_fwk = DirectKinematicsUr5(th);
+    MatrixXd curr_fwk = directKinematicsUr5(th);
     Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
     Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
     Vector3d curr_rot_euler = curr_rot.eulerAngles(0,1,2);
@@ -356,14 +345,14 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     Vector3d phiddot;
     VectorXd qk = th;
     VectorXd q = th;
-    VectorXd dotQ;
+    VectorXd dotq;
 
     MatrixXd tmp;
 
     
-    for(int j=0; j<steps; j++ ){
+    for(int j=1; j<steps; j++ ){
 
-        curr_fwk = DirectKinematicsUr5(qk);
+        curr_fwk = directKinematicsUr5(qk);
         curr_rot = curr_fwk.block<3,3>(0,0);
         curr_pos = curr_fwk.block<3,1>(0,3);
         curr_rot_euler = curr_rot.eulerAngles(0,1,2);
@@ -379,7 +368,7 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         vd = (xd-previousXd)/DeltaT;
         phiddot = (phid-previousPhid)/DeltaT;
         
-        dotQ = JointAngularVelocity(qk, curr_pos, xd, vd, curr_rot, curr_rot_euler, phid, phiddot);
+        dotq = dotQ(qk, curr_pos, xd, vd, curr_rot, curr_rot_euler, phid, phiddot);
         
         /*
         cout << "--------------------" << endl;
@@ -390,7 +379,7 @@ MatrixXd InverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         cout << "--------------------" << endl;*/
         
         
-        qk = q + dotQ * DeltaT;
+        qk = q + dotq * DeltaT;
         q = qk;
         
         //cout << joints_config.rows() << endl;
@@ -455,7 +444,7 @@ MatrixXd ur5Jacobian(VectorXd th){
     return J;
 }
 
-Matrix3d toRotationMatrix(Vector3d euler){
+Matrix3d eulerToRotationMatrix(Vector3d euler){
 
     double psi = euler(0);    //yaw X
     double theta = euler(1);  //pitch Y
@@ -480,31 +469,23 @@ VectorXd q_dott0(VectorXd qk){
     return q_dott0;
 }
 
-Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d){
+Vector3d orientationError(Matrix3d w_R_e, Matrix3d w_R_d){
 
     Vector3d error;
+    Vector3d toNormalize; 
     Matrix3d e_R_d = w_R_e.transpose()*w_R_d;
 
-    
     double cos_dtheta = (e_R_d(0,0) + e_R_d(1,1) + e_R_d(2,2) - 1)/2;
-
-    Vector3d toNormalize; 
-
     toNormalize << e_R_d(2,1) - e_R_d(1,2), e_R_d(0,2) - e_R_d(2,0), e_R_d(1,0) - e_R_d(0,1); 
 
-    
     double sin_dtheta = toNormalize.norm()*0.5;
-
     double dtheta = atan2(sin_dtheta, cos_dtheta);
 
-    
     if(dtheta == 0){
 
         error = {0, 0, 0};
 
     }else{
-
-
         Vector3d axis = 1/(2*sin_dtheta)*toNormalize;
         error = w_R_e * axis * dtheta;
     }
@@ -515,8 +496,20 @@ Vector3d computeOrientationError(Matrix3d w_R_e, Matrix3d w_R_d){
 
 }
 
+Vector3d positionError(Vector3d xe, Vector3d xd){
+
+    Vector3d error;
+
+    error = xd - xe;
+    if(error.norm()>0.1){
+        error = 0.1*error.normalized();
+    }
+
+    return error;
+}
+
 // standard inv. diff. kin. using quaternion 
-MatrixXd InverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des){
+MatrixXd inverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des){
     int iter_max = 30;
    
     MatrixXd joints_config(1,6);
@@ -573,7 +566,7 @@ VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_de
     Quaterniond quat_orient_des = EulerToQuaternion(orient_des);
 
     // calc. forward kin to get position and orientation
-    Matrix4d curr_fwk = DirectKinematicsUr5(q);
+    Matrix4d curr_fwk = directKinematicsUr5(q);
 
     Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
 
@@ -598,7 +591,7 @@ VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_de
 }
 
 // returns the J*(...)
-VectorXd JointAngularVelocityQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des){
+VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des){
     
     // Jacobian calc.
     MatrixXd J = ur5Jacobian(q);
@@ -628,7 +621,7 @@ VectorXd JointAngularVelocityQuaternion(VectorXd q, Vector3d pos_des, Vector3d o
 Quaterniond EulerToQuaternion(Vector3d euler){
     Matrix3d R = Matrix3d::Identity();
 
-    R = toRotationMatrix({0,0,euler(2)}) * toRotationMatrix({0,euler(1),0}) * toRotationMatrix({euler(0),0,0});
+    R = eulerToRotationMatrix({0,0,euler(2)}) * eulerToRotationMatrix({0,euler(1),0}) * eulerToRotationMatrix({euler(0),0,0});
 
     Quaterniond q(R);
 
@@ -670,16 +663,6 @@ int touchCenterCircle(Vector3d start_pos, Vector3d end_pos){
 
     return false;
 
-}
-
-
-
-int nearestViaPoint(Vector3d end_pos, Vector3d pos1, Vector3d pos2){
-    double dist1 = (end_pos - pos1).norm();
-    double dist2 = (end_pos - pos2).norm();
-
-    if(dist1 < dist2) return 0;
-    else return 1;
 }
 
 Vector3d tangentialPoint(Vector3d start_pos){
@@ -726,7 +709,7 @@ Vector3d tangentialPoint(Vector3d start_pos){
 MatrixXd pathGeneration(VectorXd q_current, Vector3d end_pos, Vector3d end_orient){
 
     //endOirent da togliere non viene usata
-    MatrixXd curr_fwk = DirectKinematicsUr5(q_current);
+    MatrixXd curr_fwk = directKinematicsUr5(q_current);
     Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
     Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
 
@@ -771,59 +754,4 @@ MatrixXd pathGeneration(VectorXd q_current, Vector3d end_pos, Vector3d end_orien
         return result;
     }
 
-}
-
-MatrixXd completeTrajectory(VectorXd q_current, Vector3d end_pos, Vector3d end_orient, double delta){
-
-    MatrixXd curr_fwk = DirectKinematicsUr5(q_current);
-    Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
-    Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
-
-    //cout << "curr pos" << endl;
-    //cout << curr_pos << endl;
-
-    //const Vector3d via_point1 = {0.2, -0.3, 0.6};
-    //const Vector3d via_point2 = {-0.2, -0.3, 0.6};
-
-    Vector3d first_pos;
-    Vector3d second_pos;
-
-    if(true){
-
-        MatrixXd result;
-        result = InverseDiffKinematicsUr5(q_current, end_pos, end_orient, 0, 1, delta, LIN);
-
-        return result;
-
-    }else{
-
-        MatrixXd trajectory1;
-        MatrixXd trajectory2;
-        MatrixXd trajectory3;
-
-        first_pos = tangentialPoint(curr_pos);
-        //second_pos = tangentialPoint(end_pos);
-
-        cout << "seond pos" << endl;
-        cout << first_pos << endl;
-
-        //cout << sqrt(first_pos(0)*first_pos(0) + first_pos(1)*first_pos(1));
-
-        
-        trajectory1 = InverseDiffKinematicsUr5(q_current, first_pos, end_orient, 0, 1, delta, LIN);
-        RowVectorXd q_des1 = trajectory1.block<1,6>(trajectory1.rows()-1, 0);
-
-        trajectory2 = InverseDiffKinematicsUr5(q_des1.transpose(), second_pos , end_orient, 0, 1, delta, CIRC);
-        RowVectorXd q_des2 = trajectory2.block<1,6>(trajectory2.rows()-1, 0);
-
-        trajectory3 = InverseDiffKinematicsUr5(q_des2.transpose(), end_pos , end_orient, 0, 1, delta, LIN);
-
-        MatrixXd result(trajectory1.rows()*2, trajectory1.cols());
-        result << trajectory1, trajectory2;
-
-        return result;
-
-        //return MatrixXd::Identity(3,3);
-
-    }
 }

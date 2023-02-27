@@ -118,11 +118,11 @@ int main(int argc, char **argv)
 
 
     
-    //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
-    //MatrixXd result = InverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
+    //MatrixXd result = inverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
+    //MatrixXd result = inverseDiffKinematicsUr5(th,  endPos, endOrient, 0, 1, delta);
 
     
-    MatrixXd tot_trajectory =  InverseDiffKinematicsUr5(q_des0, endPos, endOrient, 0, 1, delta, LIN);
+    MatrixXd tot_trajectory =  inverseDiffKinematicsUr5(q_des0, endPos, endOrient, 0, 1, delta, LIN);
 
     MatrixXd points(1,3);
     points << 0,0,0;
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 
     
     for(int i=0; i< tot_trajectory.rows(); i++){
-        MatrixXd mat = DirectKinematicsUr5(tot_trajectory.block<1,6>(i,0));
+        MatrixXd mat = directKinematicsUr5(tot_trajectory.block<1,6>(i,0));
         Vector3d point = mat.block<3,1>(0,3);
         send_des_jstate(tot_trajectory.block<1,6>(i,0));
         ros::spinOnce();
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     //tot_trajectory << trajectory1, trajectory2;
 
 
-    //MatrixXd  trajectory2 = InverseDiffKinematicsUr5(q_des0, endPos, endOrient, 0, 1, delta);
+    //MatrixXd  trajectory2 = inverseDiffKinematicsUr5(q_des0, endPos, endOrient, 0, 1, delta);
 
     /*
     for(int j=0; j<samples; j++){
