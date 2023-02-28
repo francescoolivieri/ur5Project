@@ -1,5 +1,4 @@
 #include "robot.hpp"
-#include "custom_joint_pub.hpp"
 
 Joints::Joints(){
     this->set_joints_from_robot();
@@ -21,8 +20,8 @@ void Joints::set_new(Vector6d q_arm, Eigen::Vector3d q_gripper){
     this->wrist_2 = q_arm(4);
     this->wrist_3 = q_arm(5);
     this->gripper_1 = q_gripper(0);
-    this->gripper_1 = q_gripper(1);
-    this->gripper_1 = q_gripper(2);
+    this->gripper_2 = q_gripper(1);
+    this->gripper_3 = q_gripper(2);
 }
 
 void Joints::set_new(Vector6d q_arm){
@@ -36,8 +35,8 @@ void Joints::set_new(Vector6d q_arm){
 
 void Joints::set_new(Eigen::Vector3d q_gripper){
     this->gripper_1 = q_gripper(0);
-    this->gripper_1 = q_gripper(1);
-    this->gripper_1 = q_gripper(2);
+    this->gripper_2 = q_gripper(1);
+    this->gripper_3 = q_gripper(2);
 }
 
 Vector6d Joints::get_arm(){
@@ -57,7 +56,7 @@ void Joints::set_joints_from_robot(){
 
     Vector6d v_arm = v.block<6,1>(0,0); 
     Vector3d v_gripper = v.block<3,1>(6,0);
-
+    
     this->set_new(v_arm);
     this->set_new(v_gripper);
 }
