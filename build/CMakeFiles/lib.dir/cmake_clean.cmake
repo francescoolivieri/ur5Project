@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o"
+  "CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o"
   "CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o"
   "devel/lib/liblib.pdb"
   "devel/lib/liblib.so"

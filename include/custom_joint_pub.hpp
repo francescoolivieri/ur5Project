@@ -17,12 +17,14 @@ typedef Matrix<double, 9, 1> Vector9d;
 static double loop_time = 0.;
 static double loop_frequency = 60.;
 
+extern bool real_robot;
+extern bool soft_gripper;
+extern bool gripper_sim;
+
 // Publishers
 //std::shared_ptr<realtime_tools::RealtimePublisher<sensor_msgs::JointState> > pub_des_jstate_sim_rt;
 static ros::Publisher pub_des_jstate;
 static ros::Subscriber sub_jstate;
-
-static ros::NodeHandle node;
 
 static sensor_msgs::JointState jointState_msg_sim;
 static std_msgs::Float64MultiArray jointState_msg_robot;
@@ -35,9 +37,5 @@ void robot_send_des_jstate(const Vector6d & joint_pos, const double diameter, co
 void robot_move_gripper(const double diameter);
 
 Vector9d receive_jstate();
-
-extern bool real_robot;
-extern bool soft_gripper;
-extern bool gripper_sim;
 
 #endif

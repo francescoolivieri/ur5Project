@@ -155,7 +155,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lab_palopoli/main")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lab_palopoli/main"
-         OLD_RPATH "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/devel/lib:/opt/ros/noetic/lib:"
+         OLD_RPATH "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/devel/lib:/opt/ros/noetic/lib:/home/fed/ros_ws/install/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/lab_palopoli/main")

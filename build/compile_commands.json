@@ -1,17 +1,17 @@
 [
 {
   "directory": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -Dlib_EXPORTS -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/ur5_kinematics.cpp",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -Dlib_EXPORTS -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/home/fed/ros_ws/install/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/ur5_kinematics.cpp",
   "file": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/ur5_kinematics.cpp"
 },
 {
   "directory": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -Dlib_EXPORTS -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_publisher.cpp",
-  "file": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_publisher.cpp"
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -Dlib_EXPORTS -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/home/fed/ros_ws/install/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g -fPIC   -o CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_pub.cpp",
+  "file": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_pub.cpp"
 },
 {
   "directory": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build",
-  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/main.cpp",
+  "command": "/usr/bin/c++  -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\\\"lab_palopoli\\\" -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/home/fed/ros_ws/install/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3  -g   -o CMakeFiles/main.dir/main.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/main.cpp",
   "file": "/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/main.cpp"
 },
 {

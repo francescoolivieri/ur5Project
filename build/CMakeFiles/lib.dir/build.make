@@ -70,29 +70,29 @@ CMakeFiles/lib.dir/src/ur5_kinematics.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lib.dir/src/ur5_kinematics.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/ur5_kinematics.cpp -o CMakeFiles/lib.dir/src/ur5_kinematics.cpp.s
 
-CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o: CMakeFiles/lib.dir/flags.make
-CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o: ../src/custom_joint_publisher.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_publisher.cpp
+CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o: CMakeFiles/lib.dir/flags.make
+CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o: ../src/custom_joint_pub.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o -c /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_pub.cpp
 
-CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_publisher.cpp > CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.i
+CMakeFiles/lib.dir/src/custom_joint_pub.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lib.dir/src/custom_joint_pub.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_pub.cpp > CMakeFiles/lib.dir/src/custom_joint_pub.cpp.i
 
-CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_publisher.cpp -o CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.s
+CMakeFiles/lib.dir/src/custom_joint_pub.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lib.dir/src/custom_joint_pub.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/src/custom_joint_pub.cpp -o CMakeFiles/lib.dir/src/custom_joint_pub.cpp.s
 
 # Object files for target lib
 lib_OBJECTS = \
 "CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o" \
-"CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o"
+"CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o"
 
 # External object files for target lib
 lib_EXTERNAL_OBJECTS =
 
 devel/lib/liblib.so: CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o
-devel/lib/liblib.so: CMakeFiles/lib.dir/src/custom_joint_publisher.cpp.o
+devel/lib/liblib.so: CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o
 devel/lib/liblib.so: CMakeFiles/lib.dir/build.make
 devel/lib/liblib.so: CMakeFiles/lib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library devel/lib/liblib.so"

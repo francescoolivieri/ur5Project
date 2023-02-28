@@ -446,10 +446,13 @@ lab_palopoli_BINARY_DIR:STATIC=/home/fed/ros_ws/src/locosim/robot_control/lab_ex
 lab_palopoli_SOURCE_DIR:STATIC=/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/noetic/lib/libxmlrpcpp.so
+lib:FILEPATH=/home/fed/ros_ws/install/lib/libros_impedance_controller.so
 
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/noetic/share/message_runtime/cmake
+
+//The directory containing a CMake configuration file for ros_impedance_controller.
+ros_impedance_controller_DIR:PATH=/home/fed/ros_ws/install/share/ros_impedance_controller/cmake
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/noetic/share/rosconsole/cmake

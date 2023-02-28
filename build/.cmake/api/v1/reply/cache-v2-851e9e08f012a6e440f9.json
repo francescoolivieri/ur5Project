@@ -2447,7 +2447,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/opt/ros/noetic/lib/libxmlrpcpp.so"
+			"value" : "/home/fed/ros_ws/install/lib/libros_impedance_controller.so"
 		},
 		{
 			"name" : "message_runtime_DIR",
@@ -2460,6 +2460,18 @@
 			],
 			"type" : "PATH",
 			"value" : "/opt/ros/noetic/share/message_runtime/cmake"
+		},
+		{
+			"name" : "ros_impedance_controller_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for ros_impedance_controller."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/home/fed/ros_ws/install/share/ros_impedance_controller/cmake"
 		},
 		{
 			"name" : "rosconsole_DIR",

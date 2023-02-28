@@ -14,7 +14,7 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR})
 
 add_executable(main main.cpp)
 
-add_library(lib src/ur5_kinematics.cpp src/robot.cpp src/custom_joint_pub.cpp)
+add_library(lib src/ur5_kinematics.cpp src/custom_joint_pub.cpp)
 target_link_libraries(main lib ${catkin_LIBRARIES} ${EIGEN_LIBRARIES})
 
 

@@ -6,5 +6,5 @@ CXX_FLAGS = -g
 
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"lab_palopoli\"
 
-CXX_INCLUDES = -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3 
+CXX_INCLUDES = -I/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/include -I/home/fed/ros_ws/install/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3 
 

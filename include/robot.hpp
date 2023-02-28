@@ -16,6 +16,10 @@ using namespace Eigen;
 typedef Matrix<double, 6, 1> Vector6d;
 typedef Matrix<double, 9, 1> Vector9d;
 
+bool real_robot;
+bool soft_gripper;
+bool gripper_sim;
+
 class Joints{
     public:
         double shoulder_pan;

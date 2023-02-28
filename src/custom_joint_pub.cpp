@@ -1,6 +1,8 @@
 #include "custom_joint_pub.hpp"
 
+
 void init(){
+
     int argc = 1;
     char* argv[] = {(char *)"custom_joint_pub", NULL};
 

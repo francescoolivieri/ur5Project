@@ -90,6 +90,7 @@ devel/lib/lab_palopoli/main: /opt/ros/noetic/lib/librosconsole_backend_interface
 devel/lib/lab_palopoli/main: /usr/lib/aarch64-linux-gnu/liblog4cxx.so
 devel/lib/lab_palopoli/main: /usr/lib/aarch64-linux-gnu/libboost_regex.so.1.71.0
 devel/lib/lab_palopoli/main: /opt/ros/noetic/lib/libxmlrpcpp.so
+devel/lib/lab_palopoli/main: /home/fed/ros_ws/install/lib/libros_impedance_controller.so
 devel/lib/lab_palopoli/main: /opt/ros/noetic/lib/libroscpp_serialization.so
 devel/lib/lab_palopoli/main: /opt/ros/noetic/lib/librostime.so
 devel/lib/lab_palopoli/main: /usr/lib/aarch64-linux-gnu/libboost_date_time.so.1.71.0

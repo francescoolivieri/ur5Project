@@ -174,6 +174,10 @@
 				},
 				{
 					"backtrace" : 19,
+					"path" : "/home/fed/ros_ws/install/include"
+				},
+				{
+					"backtrace" : 19,
 					"path" : "/opt/ros/noetic/include"
 				},
 				{
@@ -227,7 +231,7 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/devel/lib:/opt/ros/noetic/lib:",
+				"fragment" : "-Wl,-rpath,/home/fed/ros_ws/src/locosim/robot_control/lab_exercises/lab_palopoli/cpp/build/devel/lib:/opt/ros/noetic/lib:/home/fed/ros_ws/install/lib:",
 				"role" : "libraries"
 			},
 			{
@@ -273,6 +277,10 @@
 			},
 			{
 				"fragment" : "/opt/ros/noetic/lib/libxmlrpcpp.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/home/fed/ros_ws/install/lib/libros_impedance_controller.so",
 				"role" : "libraries"
 			},
 			{
