@@ -7,7 +7,9 @@
         "/home/fed/ros_ws/src/locosim/robot_control"
     ],
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
