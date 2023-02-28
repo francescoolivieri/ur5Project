@@ -7,12 +7,16 @@ void init(){
     char* argv[] = {(char *)"custom_joint_pub", NULL};
 
     ros::init(argc, argv, "custom_joint_pub");
+
+    ros::NodeHandle node;
     
     node.getParam("/real_robot", real_robot);
     node.getParam("/soft_gripper", soft_gripper);
     node.getParam("/gripper_sim", gripper_sim);
 
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);
+
+    client_gripper = node.serviceClient<ros_impedance_controller::generic_float>("move_gripper");
 
     ros::Rate loop_rate(loop_frequency);
 
@@ -49,15 +53,13 @@ void robot_send_des_jstate(const Vector6d & joint_pos, const double diameter, co
 void robot_move_gripper(const double diameter){
 
   if(real_robot && gripper_sim){
-    ros::ServiceClient client = node.serviceClient<ros_impedance_controller::generic_float>("move_gripper");
-
     ros_impedance_controller::generic_float::Request req;
     ros_impedance_controller::generic_float::Response res;
 
     req.data = diameter;
 
     /* !!! HAVE TO BE CALLED ONLY ONCE !!! */
-    client.call(req, res); 
+    client_gripper.call(req, res); 
 
     if(!res.ack) ROS_ERROR("GRIPPER FAIL");
   }
@@ -65,6 +67,7 @@ void robot_move_gripper(const double diameter){
 }
 
 void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
+  
     for (int i = 0; i < joint_pos.size(); i++)
     {
       jointState_msg_robot.data[i] = joint_pos[i];

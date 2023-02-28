@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <eigen3/Eigen/Dense>
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
+#include "custom_joint_pub.hpp"
 
 using namespace std;
 using namespace Eigen;
