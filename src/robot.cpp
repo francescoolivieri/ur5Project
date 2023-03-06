@@ -110,6 +110,4 @@ void Robot::move_gripper(double diameter){
 
         send_des_jstate(this->joints.get_arm(), this->joints.get_gripper());
     }
-
-
 }

@@ -291,43 +291,59 @@ VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re
     
     VectorXd dotQ;
     MatrixXd Jac;
-    Matrix3d T;
-    MatrixXd Ta(6,6);
     Matrix3d Kp;
     Matrix3d Kphi;
     VectorXd V(6);
     Matrix3d w_R_d;
     Vector3d errorOrientation;
     Vector3d errorPosition;
-    Vector3d omegaDot;
 
     w_R_d = eulerToRotationMatrix(phid);
     errorOrientation = orientationError(Re, w_R_d);
     errorPosition = positionError(xe, xd);
     
     Jac = ur5Jacobian(qk.transpose());
-    double psi = phid[0];
-    double theta = phid[1];
-    double phi = phid[2];
 
     Kp = MatrixXd::Identity(3,3)*10; 
-    Kphi = MatrixXd::Identity(3,3)*5; //oppure 7 come peso utile, o 3
-
+    Kphi = MatrixXd::Identity(3,3)*5; 
     V.block<3,1>(0,0) = vd + Kp*(errorPosition);
     V.block<3,1>(3,0) = Kphi*(errorOrientation);
 
+
     cout << "ERRORI------" << endl;
-    cout << errorOrientation.norm() << endl << endl;
     cout << errorPosition.norm() << endl << endl;
+    cout << errorOrientation.norm() << endl << endl;
 
     dotQ = (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
     return dotQ;
 }
 
+double centerDist(Vector3d p){
+    return sqrt(p(0)*p(0)+p(1)+p(1));
+}
+
+Vector3d potentialVelocity(Vector3d xd){
+    Vector3d result;
+
+    result = xd/centerDist(xd);
+
+    result(2) = xd(2);
+    return result;
+}
+
+Vector3d velocity(Vector3d xe, Vector3d xd, double delta){
+    Vector3d vd =  (xd - xe)/delta;
+    if(centerDist(xe) < RADIUS){
+
+        cout << "USATA VELOCITA STRANA" << endl;
+        vd = vd + potentialVelocity(xd);
+    }
+    return vd;
+}
 
 //th is to substitute with startPos
-MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type){
+MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation){
     
     MatrixXd curr_fwk = directKinematicsUr5(th);
     Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
@@ -346,8 +362,7 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     VectorXd qk = th;
     VectorXd q = th;
     VectorXd dotq;
-
-    MatrixXd tmp;
+    double deltaT = 0.001;
 
     
     for(int j=1; j<steps; j++ ){
@@ -358,17 +373,15 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         curr_rot_euler = curr_rot.eulerAngles(0,1,2);
 
         xd = TrajectoryOrientation(j, curr_pos, endPos );
-        
-        previousXd = TrajectoryOrientation(j-1, curr_pos, endPos );
-
-        //valori fissi in futuro da creare traj orientamento end effector
         phid = TrajectoryOrientation(j, curr_rot_euler, endOrientation );
-        previousPhid = TrajectoryOrientation(j, curr_rot_euler, endOrientation ); 
-
-        vd = (xd-previousXd)/DeltaT;
-        phiddot = (phid-previousPhid)/DeltaT;
+        
+        //previousXd = TrajectoryOrientation(j-1, curr_pos, endPos );
+        //previousPhid = TrajectoryOrientation(j, curr_rot_euler, endOrientation ); 
+        vd = velocity(curr_pos, xd, deltaT);
+        phiddot = (phid-curr_rot_euler)/deltaT;
         
         dotq = dotQ(qk, curr_pos, xd, vd, curr_rot, curr_rot_euler, phid, phiddot);
+        //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         /*
         cout << "--------------------" << endl;
@@ -379,7 +392,7 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         cout << "--------------------" << endl;*/
         
         
-        qk = q + dotq * DeltaT;
+        qk = q + dotq * deltaT;
         q = qk;
         
         //cout << joints_config.rows() << endl;
@@ -602,8 +615,8 @@ VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vecto
     // coeff. matrix building
     MatrixXd K = MatrixXd::Identity(6,6);
 
-    Matrix3d K_p = Matrix3d::Identity()*2;
-    Matrix3d K_o = Matrix3d::Identity()*16;
+    Matrix3d K_p = Matrix3d::Identity()*10;
+    Matrix3d K_o = Matrix3d::Identity()*5;
     K.block<3,3>(0,0) = K_p;
     K.block<3,3>(3,3) = K_o; 
 

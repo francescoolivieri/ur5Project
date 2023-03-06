@@ -10,15 +10,19 @@ void init(){
 
     ros::NodeHandle node;
     
+    
     node.getParam("/real_robot", real_robot);
     node.getParam("/soft_gripper", soft_gripper);
     node.getParam("/gripper_sim", gripper_sim);
+    
+    cout << "--GRIPPER CHECK---" << endl;
+    cout << gripper_sim << endl << endl;
+    cout << soft_gripper << endl;
+    cout << "------------------" << endl;
 
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);
 
     client_gripper = node.serviceClient<ros_impedance_controller::generic_float>("move_gripper");
-
-    ros::Rate loop_rate(loop_frequency);
 
     if(gripper_sim && !real_robot){
         if(soft_gripper){
@@ -67,7 +71,8 @@ void robot_move_gripper(const double diameter){
 }
 
 void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
-  
+
+    
     for (int i = 0; i < joint_pos.size(); i++)
     {
       jointState_msg_robot.data[i] = joint_pos[i];
@@ -75,6 +80,8 @@ void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
 
     /* GRIPPER MANAGEMENT */
 
+
+    
     if(gripper_sim){
       int j=0;
       if(soft_gripper){
@@ -91,6 +98,8 @@ void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
     }
 
     /* SEND MESSAGE */
+
+    cout << joint_pos.transpose() << endl;
 
     pub_des_jstate.publish(jointState_msg_robot);
 }

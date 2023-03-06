@@ -38,11 +38,15 @@ MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d end
 Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3d endOrient);
 VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot );
 
-MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation,  double tMin, double tMax, double DeltaT, mode traj_type);
+MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation);
 Matrix3d eulerToRotationMatrix(Vector3d euler); //euler angles in x, y, z
 VectorXd q_dott0(VectorXd qk);
 Vector3d orientationError(Matrix3d w_R_e, Matrix3d w_R_d);
 Vector3d positionError(Vector3d xe, Vector3d xd);
+
+Vector3d velocity(Vector3d xe, Vector3d xd, double delta);
+double centerDist(Vector3d p);
+Vector3d potentialVelocity(Vector3d xd);
 
 // Quaternions
 MatrixXd inverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des);
