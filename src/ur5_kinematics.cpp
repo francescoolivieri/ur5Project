@@ -9,16 +9,10 @@ Vector3d worldToRobot(Vector3d p){
     Vector4d pe;
     pe << p(0), p(1), p(2), 1;
 
-    t0b << 1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
+    t0b << 1, 0, 0, -0.5,
+        0, -1, 0, 0.35,
+        0, 0, -1, 1.75,
         0, 0, 0, 1;
-
-    /*
-    t0b << 1, 0, 0, 0.499992,
-        0, -1, 0, 0.349988,
-        0, 0, -1, 1.749994,
-        0, 0, 0, 1;*/
 
     return (t0b*pe).block<3,1>(0,0);
 }
@@ -27,16 +21,10 @@ Vector3d robotToWorld(Vector3d p){
     Vector4d pe;
     pe << p(0), p(1), p(2), 1;
 
-    t0b << 1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1;
-
-    /*
     t0b << 1, 0, 0, 0.499992,
         0, -1, 0, 0.349988,
         0, 0, -1, 1.749994,
-        0, 0, 0, 1;*/
+        0, 0, 0, 1;
 
     return (t0b*pe).block<3,1>(0,0);
 }
@@ -354,6 +342,9 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
 
     MatrixXd joints_config = th.transpose();
     Vector3d xd;
+    Vector3d xe;
+    Matrix3d Re;
+    Vector3d eule;
     Vector3d phid;
     Vector3d previousXd;
     Vector3d previousPhid;
@@ -362,25 +353,26 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     VectorXd qk = th;
     VectorXd q = th;
     VectorXd dotq;
-    double deltaT = 0.001;
+    double deltaT = 1/steps;
 
     
     for(int j=1; j<steps; j++ ){
 
         curr_fwk = directKinematicsUr5(qk);
-        curr_rot = curr_fwk.block<3,3>(0,0);
-        curr_pos = curr_fwk.block<3,1>(0,3);
-        curr_rot_euler = curr_rot.eulerAngles(0,1,2);
+        Re = curr_fwk.block<3,3>(0,0);
+        xe = curr_fwk.block<3,1>(0,3);
+        eule = Re.eulerAngles(0,1,2);
 
         xd = TrajectoryOrientation(j, curr_pos, endPos );
         phid = TrajectoryOrientation(j, curr_rot_euler, endOrientation );
         
         //previousXd = TrajectoryOrientation(j-1, curr_pos, endPos );
         //previousPhid = TrajectoryOrientation(j, curr_rot_euler, endOrientation ); 
-        vd = velocity(curr_pos, xd, deltaT);
-        phiddot = (phid-curr_rot_euler)/deltaT;
+        //vd = velocity(curr_pos, xd, deltaT);
+        vd = (xd-xe)/deltaT;
+        phiddot = (phid-eule)/deltaT;
         
-        dotq = dotQ(qk, curr_pos, xd, vd, curr_rot, curr_rot_euler, phid, phiddot);
+        dotq = dotQ(qk, xe, xd, vd, Re, eule, phid, phiddot);
         //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         /*

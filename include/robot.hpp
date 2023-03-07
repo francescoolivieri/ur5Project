@@ -7,6 +7,7 @@
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
 #include "custom_joint_pub.hpp"
+#include "ur5_kinematics.h"
 
 using namespace std;
 using namespace Eigen;
@@ -50,9 +51,9 @@ class Joints{
 
 class Robot{
     private:
-        vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
-        vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
-        vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.};
+       // vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
+       // vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
+       // vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.};
 
         Joints joints;
         double gripper_diameter;  // can be useful to se the actual state of the gripper
@@ -65,7 +66,7 @@ class Robot{
         Robot(Vector6d q_arm, Vector3d q_gripper);
         Robot(Vector6d q_arm);
 
-        void move();
+        void move(Vector3d finalPos, Vector3d finalOrient);
         void move_gripper(double diameter);
 
         void set_new_gripper_position(double diameter);
