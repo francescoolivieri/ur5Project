@@ -111,3 +111,25 @@ void Robot::move_gripper(double diameter){
         send_des_jstate(this->joints.get_arm(), this->joints.get_gripper());
     }
 }
+
+void Robot::move(Vector3d finalPos, Vector3d finalOrient){
+    ros::Rate loop_rate(loop_frequency);
+
+     double samples = 50;
+
+     double delta = 1/steps;
+    
+    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(this->joints.get_arm(), finalPos, finalOrient);
+    
+     for(int i=0; i< tot_trajectory.rows(); i++){
+         //MatrixXd mat = directKinematicsUr5(tot_trajectory.block<1,6>(i,0));
+         send_des_jstate(tot_trajectory.block<1,6>(i,0), this->joints.get_gripper());
+         ros::spinOnce();
+         //loop_time++;
+         loop_rate.sleep();
+         //points.conservativeResize(points.rows()+1, points.cols());
+         //points.block<1,3>(points.rows()-1, 0) = point;
+     }
+
+    this->joints.set_joints_from_robot();
+}

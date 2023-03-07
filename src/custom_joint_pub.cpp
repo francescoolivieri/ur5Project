@@ -79,8 +79,6 @@ void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
     }
 
     /* GRIPPER MANAGEMENT */
-
-
     
     if(gripper_sim){
       int j=0;
@@ -102,6 +100,7 @@ void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
     cout << joint_pos.transpose() << endl;
 
     pub_des_jstate.publish(jointState_msg_robot);
+
 }
 
 Vector9d receive_jstate(){

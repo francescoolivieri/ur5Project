@@ -8,10 +8,10 @@
 #include <cmath>
 
 #define SCALE_FACTOR 1
-#define GRIPPER_LENGTH 0.12 // needs to be replaced with 0.12 later (0 is just for testing)
+#define GRIPPER_LENGTH 0.15 // needs to be replaced with 0.12 later (0 is just for testing)
 #define RADIUS 0.20
 
-double steps = 400;
+static double steps = 400;
 
 
 typedef enum {
@@ -64,17 +64,17 @@ Vector3d tangentialPoint(Vector3d start_pos);
 int touchCenterCircle(Vector3d start_pos, Vector3d end_pos);
 
 //variables
-double value;
-bool first = true;
+static double value;
+static bool first = true;
 
-vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
-vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
-vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.}; // ?
+static vector<double> alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};
+static vector<double> dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};
+static vector<double> a = {0., 0., -0.425, -0.3922, 0., 0.}; // ?
 
 
-Matrix4d t_60 = Matrix4d::Identity();
-Matrix4d t0b = Matrix4d::Identity();
-Matrix4d te6 = Matrix4d::Identity();
+static Matrix4d t_60 = Matrix4d::Identity();
+static Matrix4d t0b = Matrix4d::Identity();
+static Matrix4d te6 = Matrix4d::Identity();
 
 
 #endif
