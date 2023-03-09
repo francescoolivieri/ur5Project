@@ -33,6 +33,14 @@ Vector3d worldToRobot(Vector3d p);
 Vector3d robotToWorld(Vector3d p);
 
 MatrixXd ur5Jacobian(VectorXd th);
+
+Vector3d attrForce(Vector3d error);
+Vector3d repulForce(Vector3d xe);
+Vector3d desPos(Vector3d xe, Vector3d xf);
+Vector3d desOrient(Vector3d phie, Vector3d phif);
+
+
+
 MatrixXd TrajectoryPosition(double number_steps, Vector3d startPos, Vector3d endPos, mode traj_type);
 
 Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3d endOrient);

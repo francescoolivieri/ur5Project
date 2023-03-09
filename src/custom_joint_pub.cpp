@@ -20,9 +20,13 @@ void init(){
     cout << soft_gripper << endl;
     cout << "------------------" << endl;
 
+    
+
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);
 
     client_gripper = node.serviceClient<ros_impedance_controller::generic_float>("move_gripper");
+
+    
 
     if(gripper_sim && !real_robot){
         if(soft_gripper){
@@ -33,6 +37,8 @@ void init(){
     }else{
         jointState_msg_robot.data.resize(6);
     }
+
+    
 }
 
 void robot_send_des_jstate(const Vector6d & joint_pos, const double diameter, const bool move_gripper){

@@ -12,7 +12,7 @@
 using namespace std;
 using namespace Eigen;
 
-#define GRIPPER_LENGTH 0.12
+//#define GRIPPER_LENGTH 0.12
 
 typedef Matrix<double, 6, 1> Vector6d;
 typedef Matrix<double, 9, 1> Vector9d;

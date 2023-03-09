@@ -15,7 +15,7 @@ typedef Matrix<double, 6, 1> Vector6d;
 typedef Matrix<double, 9, 1> Vector9d;
 
 static double loop_time = 0.;
-static double loop_frequency = 60.;
+static double loop_frequency = 200.;
 
 extern bool real_robot;
 extern bool soft_gripper;
