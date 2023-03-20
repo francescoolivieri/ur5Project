@@ -1,5 +1,6 @@
 #include <math.h>
 #include "robot.hpp"
+//#include "ur5_kinematics.h"
 #include <iostream>
 using namespace std;
 
@@ -11,18 +12,21 @@ int main(int argc, char **argv){
     Vector3d zero;
     zero << 0, 0, 0;
     Vector6d q_des0;
+    Vector3d phie = {0,0,0};
 
-
+    
     Robot robot;
     //robot.move_gripper(70);
     
-    Vector3d endOrient = { 0, 0, 0};
+    Vector3d endOrient = {0, 0, 0};
     //Vector3d endPos = worldToRobot({ 0.9, 0.6, 0.87+0.2});
-    Vector3d endPos = { -0.4, 0, 0.7};
-
-    
+    Vector3d endPos = { -0.4, -0.3, 0.6};
 
     robot.move(endPos, endOrient);
+
+    endOrient = {0, 0, M_PI/2};
+    endPos = {-0.4, -0.3, 0.8};
+    robot.rotate(endPos, endOrient);
 
     
     /*

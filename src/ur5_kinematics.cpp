@@ -221,8 +221,12 @@ Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3
 }
 
 /*da aggiungere a .h*/
-Vector3d attrForce(Vector3d error){
-    return -0.001*(error)/error.norm();
+Vector3d attrForce_pos(Vector3d error){
+    return -0.002*(error)/error.norm();
+}
+
+Vector3d attrForce_orient(Vector3d error){
+    return -(error)/error.norm();
 }
 
 Vector3d repulForce(Vector3d xe){
@@ -243,13 +247,16 @@ Vector3d desPos(Vector3d xe, Vector3d xf){
     Vector3d errPos = xe - xf;
     Vector3d xd;
     
-    if(errPos.norm() > 0.001){
-        
-        xd = xe + (attrForce(errPos) + repulForce(xe));
-
+    
+    if(errPos.norm() > 0.0001){
+        if(errPos.norm() > 0.1){
+            xd = xe + (attrForce_pos(errPos) + repulForce(xe));
+        }else{
+            xd = xe -0.05*errPos;
+        }
     }else{
         xd = xe;
-    }
+   }
 
     return xd;
 }
@@ -259,17 +266,80 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
     Vector3d phid;
     
     if(errOrient.norm() > 0.0001){
-        
-        phid = phie + 0.5*attrForce(errOrient);
-
+        if(errOrient.norm() > 0.1){
+            phid = phie + 0.06*attrForce_orient(errOrient);
+        }else{
+            phid = phie - 0.1*errOrient;
+        }
     }else{
+        
         phid = phie;
+
     }
 
     return phid;
 }
 
 /*-----fine funct da aggiungere------*/
+
+VectorXd nearest_config(VectorXd qk, MatrixXd val){
+    VectorXd min_config = val.block<1,6>(0,0);
+    VectorXd d_min = qk - min_config;
+    VectorXd d;
+    VectorXd candidate;
+    for(int i=1; i < val.rows(); i++){
+        candidate = val.block<1,6>(i,0);
+        d = qk -candidate;
+        if(d.norm() < d_min.norm()){
+            min_config = candidate;
+            d_min = d;
+        }
+    }
+    return min_config;
+}
+
+MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient ){
+
+    MatrixXd val = inverseKinematicsUr5(endPos, eulerToRotationMatrix(endOrient));
+    VectorXd endConfig = nearest_config(qk, val);
+    /*to be added to gripper getter*/
+    for (int j = 0; j < qk.size(); j++) {
+            qk(j) = atan2(imag(exp(1i * qk(j))), real(exp(1i * qk(j))));
+    }
+    VectorXd qNext = qk;
+    VectorXd error = endConfig - qNext;
+    MatrixXd joints_config = qk.transpose();
+
+    // check if orientations are correct
+    Matrix3d rot;
+    Vector3d pos;
+    MatrixXd tmp = directKinematicsUr5(endConfig);
+    rot = tmp.block<3,3>(0,0);
+    pos = tmp.block<3,1>(0,3);
+
+    /*final euler orientation and position*/
+    cout << "final euler orientation and position" << endl;
+    cout << endOrient << endl;
+    cout << eulerToRotationMatrix(endOrient).eulerAngles(0,1,2) << endl << endl;
+    cout << rot.eulerAngles(0,1,2) << endl << endl;
+    cout << pos << endl;
+
+    int iter = 0;
+    while (error.norm() > 0.005)
+    {
+        qNext = qNext + 0.005 * error/error.norm();
+        joints_config.conservativeResize(joints_config.rows() + 1, joints_config.cols());
+        joints_config.block<1,6>(joints_config.rows()-1, 0) = qNext.transpose();
+        error = endConfig - qNext;
+        cout << error.norm() << endl;
+        iter++;
+    }
+    cout << "numero di iterazioni: " << endl;
+    cout << iter << endl;
+    return joints_config;
+}
+
+
 
 VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re, Vector3d phie, Vector3d phid, Vector3d phiddot ){
     
@@ -284,19 +354,27 @@ VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re
 
     w_R_d = eulerToRotationMatrix(phid);
     errorOrientation = orientationError(Re, w_R_d);
+    //errorOrientation = ComputeErrorQuaternion(qk, xd, phid);
     errorPosition = positionError(xe, xd);
     
     Jac = ur5Jacobian(qk.transpose());
 
-    Kp = MatrixXd::Identity(3,3)*0; 
-    Kphi = MatrixXd::Identity(3,3)*5; 
-    V.block<3,1>(0,0) = vd + Kp*(errorPosition);
-    V.block<3,1>(3,0) = phiddot; //Kphi*errorOrientation;
+    Kp = MatrixXd::Identity(3,3)*10; 
+    Kphi = MatrixXd::Identity(3,3)*20; 
 
+    /*
+    cout << "errore Orienta" << endl;
+    cout << errorOrientation << endl << endl;*/
+    V.block<3,1>(0,0) = vd;// + Kp*(errorPosition);
+    //V.block<3,1>(3,0) = 0.003*errorOrientation/0.001;
+    V.block<3,1>(3,0) = 0.1*phiddot;
 
+    //V.block<6,1>(0,0) = ComputeErrorQuaternion(qk, xd, phid)/0.001;
+
+    /*
     cout << "ERRORI------" << endl;
     cout << errorPosition.norm() << endl << endl;
-    cout << errorOrientation.norm() << endl << endl;
+    cout << errorOrientation.norm() << endl << endl;*/
 
     dotQ = (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
@@ -333,7 +411,7 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     Vector3d distancePos = endPos - curr_pos;
     Vector3d distanceOrient = endOrientation - curr_rot_euler;
     
-    while( (distancePos.norm() > 0.001  || distanceOrient.norm() > 0.001 )&& iter < 1000 ){
+    while( (distancePos.norm() > 0.001  || distanceOrient.norm() > 0.01 ) && iter < 1500){
 
         curr_fwk = directKinematicsUr5(qk);
         Re = curr_fwk.block<3,3>(0,0);
@@ -347,18 +425,23 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         phiddot = (phid-eule)/0.001;
         
         dotq = dotQ(qk, xe, xd, vd, Re, eule, phid, phiddot);
+        //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         
+        /*
         cout << "--------------------" << endl;
         cout << xe << endl << endl;
         cout << xd << endl << endl;
         cout << eule << endl << endl;
         cout << endOrientation << endl << endl;
-        //cout << vd << endl << endl;
-        cout << "--------------------" << endl;
-        
+        cout << "--------------------" << endl;*/
         
         qk = q + dotq * 0.001;
+
+        /*
+        for (int j = 0; j < qk.size(); j++) {
+            qk(j) = atan2(imag(exp(1i * qk(j))), real(exp(1i * qk(j))));
+        }*/
         q = qk;
         
         //cout << joints_config.rows() << endl;
@@ -367,6 +450,15 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
 
         distancePos = endPos - xe;
         distanceOrient = endOrientation - eule;
+
+        cout << "-------errors-------" << endl;
+        //cout << distancePos.norm() << endl << endl;
+        //cout << err_orient << endl << endl;
+        cout << distanceOrient.norm() << endl << endl;
+        cout << eule << endl << endl;
+        cout << phid << endl << endl;
+        cout << "--------------------" << endl;
+
         iter++;
     }
     cout << "numero iterazioni: " << iter << endl;
@@ -428,15 +520,15 @@ MatrixXd ur5Jacobian(VectorXd th){
 
 Matrix3d eulerToRotationMatrix(Vector3d euler){
 
-    double psi = euler(0);    //yaw X
-    double theta = euler(1);  //pitch Y
-    double phi = euler(2);    //roll Z
+    double psi = euler(0);    //yaw X psi
+    double theta = euler(1);  //pitch Y theta
+    double phi = euler(2);    //roll Z phi 
 
     Matrix3d R;
 
     R << cos(phi)*cos(theta), cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi), cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi),
          sin(phi)*cos(theta), sin(phi)*sin(theta)*sin(psi)+cos(phi)*cos(psi), sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi),
-         -sin(theta), cos(theta)*sin(psi), cos(theta)*cos(phi);
+         -sin(theta), cos(theta)*sin(psi), cos(theta)*cos(psi);
 
     return R;
 
@@ -472,8 +564,6 @@ Vector3d orientationError(Matrix3d w_R_e, Matrix3d w_R_d){
         error = w_R_e * axis * dtheta;
     }
 
-    
-
     return error;
 
 }
@@ -492,35 +582,69 @@ Vector3d positionError(Vector3d xe, Vector3d xd){
 }
 
 // standard inv. diff. kin. using quaternion 
-MatrixXd inverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des){
-    int iter_max = 30;
+MatrixXd inverseDiffKinematicsUr5Quaternions(VectorXd q_k, Vector3d endPos, Vector3d endOrient){
+    int iter_max = 1000;
    
     MatrixXd joints_config(1,6);
     joints_config = q_k.transpose();
+
+    VectorXd q = q_k;
+
+    
+    MatrixXd curr_fwk = directKinematicsUr5(q);
+    Matrix3d curr_rot = curr_fwk.block<3,3>(0,0);
+    Vector3d curr_pos = curr_fwk.block<3,1>(0,3);
+    Vector3d curr_rot_euler = curr_rot.eulerAngles(0,1,2);
     //VectorXd q_des(6);
 
+    Vector3d xe;
+    Matrix3d Re;
+    Vector3d eule;
+
+    Vector3d xd;
+    Vector3d phid;
+    Vector3d vd;
+    Vector3d phiddot;
+
     // set q as current set of joint
-    VectorXd q = q_k;
+    
 
     // coeff. matrix building
     MatrixXd K = MatrixXd::Identity(6,6);
-    Matrix3d K_p = Matrix3d::Identity()*5;
-    Matrix3d K_o = Matrix3d::Identity()*5;
+    Matrix3d K_p = Matrix3d::Identity()*0;
+    Matrix3d K_o = Matrix3d::Identity()*7;
     K.block<3,3>(0,0) = K_p;
     K.block<3,3>(3,3) = K_o; 
 
     // speed matrix building
     VectorXd speed_control(6);
-    speed_control << v_des, w_des;
     
-    for(int i=0 ; i<iter_max ; i++){
+
+    Vector3d distancePos = endPos - curr_pos;
+    Vector3d distanceOrient = endOrient - curr_rot_euler;
+    int i;
+    for(i=0 ; i<iter_max ; i++){
+
+        
+        curr_fwk = directKinematicsUr5(q);
+        Re = curr_fwk.block<3,3>(0,0);
+        xe = curr_fwk.block<3,1>(0,3);
+        eule = Re.eulerAngles(0,1,2);
+
+        xd = desPos(xe, endPos);
+        phid = desOrient(eule, endOrient);
+        
+        vd = (xd-xe)/0.001;
+        phiddot = (phid-eule)/0.001;
+        speed_control << vd, phiddot;
+
         // Jacobian calc.
         MatrixXd J = ur5Jacobian(q);
-
-        VectorXd err_vect = ComputeErrorQuaternion(q, pos_des, orient_des);
+        
+        VectorXd err_vect = ComputeErrorQuaternion(q, endPos, endOrient);
 
         // calc. next set of joint base on error
-        q = q + 0.05 * (J + MatrixXd::Identity(6,6) * 0.001 ).inverse() * ( speed_control + (K * err_vect) );
+        q = q + 0.001 * (J + MatrixXd::Identity(6,6) * 0.001 ).inverse() * ( speed_control + (K * err_vect) );
 
         
         for (int j = 0; j < q.size(); j++) {
@@ -533,14 +657,26 @@ MatrixXd inverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_d
         if(vectMagnitude(err_vect.block<3,1>(0,0))<1e-4 && vectMagnitude(err_vect.block<3,1>(3,0))<1e-4){
             
             cout << "Finded in " << i << " iterations" << endl;
-            return q;
+            return joints_config;
             break;
 
         }
-    }    
+
+        distancePos = endPos - xe;
+        distanceOrient = endOrient - eule;
+        cout << "-------errors-------" << endl;
+        cout << distancePos.norm() << endl << endl;
+        //cout << err_orient << endl << endl;
+        cout << distanceOrient.norm() << endl << endl;
+        cout << xe << endl << endl;
+        cout << eule << endl << endl;
+        cout << "--------------------" << endl;
+    } 
+    
+          
 
     //return joints_config;
-    return q;
+    return joints_config;
 }
 
 // position and orientation error using quaternion
@@ -561,13 +697,14 @@ VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_de
     Vector3d err_orient = quat_orient_curr.w() * quat_orient_des.vec() - quat_orient_des.w() * quat_orient_des.vec() - quat_orient_des.vec().cross(quat_orient_curr.vec()) ;
 
     // build 6x1 vector
-    VectorXd err_vect(6);
-    err_vect << err_pos, err_orient;
+    Vector3d err_vect;
+    err_vect << err_orient;
 
-    /*
+    /*s
     cout << "-------errors-------" << endl;
-    cout << err_pos << endl << endl;
-    cout << err_pos << endl << endl;
+    cout << err_pos.norm() << endl << endl;
+    //cout << err_orient << endl << endl;
+    cout << err_orient.norm() << endl << endl;
     cout << "--------------------" << endl;*/
 
     return err_vect;
@@ -585,15 +722,16 @@ VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vecto
     // coeff. matrix building
     MatrixXd K = MatrixXd::Identity(6,6);
 
-    Matrix3d K_p = Matrix3d::Identity()*10;
-    Matrix3d K_o = Matrix3d::Identity()*5;
+    Matrix3d K_p = Matrix3d::Identity()*0;
+    Matrix3d K_o = Matrix3d::Identity()*0;
     K.block<3,3>(0,0) = K_p;
     K.block<3,3>(3,3) = K_o; 
 
-
+    //w_des = {0, 0 , 0};
     // speed vector building
     VectorXd speed_control(6);
-    speed_control << v_des, w_des;
+    speed_control << 7*v_des,17*w_des;
+    //speed_control << w_des, w_des;
 
     VectorXd err_vect = ComputeErrorQuaternion(q, pos_des, orient_des);
         

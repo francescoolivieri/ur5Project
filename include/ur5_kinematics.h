@@ -34,7 +34,8 @@ Vector3d robotToWorld(Vector3d p);
 
 MatrixXd ur5Jacobian(VectorXd th);
 
-Vector3d attrForce(Vector3d error);
+Vector3d attrForce_pos(Vector3d error);
+Vector3d attrForce_orient(Vector3d error);
 Vector3d repulForce(Vector3d xe);
 Vector3d desPos(Vector3d xe, Vector3d xf);
 Vector3d desOrient(Vector3d phie, Vector3d phif);
@@ -55,9 +56,10 @@ Vector3d positionError(Vector3d xe, Vector3d xd);
 Vector3d velocity(Vector3d xe, Vector3d xd, double delta);
 double centerDist(Vector3d p);
 Vector3d potentialVelocity(Vector3d xd);
+MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient );
 
 // Quaternions
-MatrixXd inverseDiffKinematicsUr5Quaternions(Vector3d pos_des, Vector3d orient_des, VectorXd q_k, Vector3d v_des, Vector3d w_des);
+MatrixXd inverseDiffKinematicsUr5Quaternions(VectorXd q_k, Vector3d endPos, Vector3d endOrient);
 VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des);
 VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des);
 

@@ -6,8 +6,10 @@ void init(){
     int argc = 1;
     char* argv[] = {(char *)"custom_joint_pub", NULL};
 
+    
     ros::init(argc, argv, "custom_joint_pub");
 
+    
     ros::NodeHandle node;
     
     
@@ -19,8 +21,6 @@ void init(){
     cout << gripper_sim << endl << endl;
     cout << soft_gripper << endl;
     cout << "------------------" << endl;
-
-    
 
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);
 
@@ -37,8 +37,6 @@ void init(){
     }else{
         jointState_msg_robot.data.resize(6);
     }
-
-    
 }
 
 void robot_send_des_jstate(const Vector6d & joint_pos, const double diameter, const bool move_gripper){

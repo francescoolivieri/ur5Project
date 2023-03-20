@@ -67,6 +67,7 @@ class Robot{
         Robot(Vector6d q_arm);
 
         void move(Vector3d finalPos, Vector3d finalOrient);
+        void rotate(Vector3d finalPos, Vector3d finalOrient);
         void move_gripper(double diameter);
 
         void set_new_gripper_position(double diameter);
