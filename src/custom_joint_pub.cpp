@@ -25,7 +25,6 @@ void init(){
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);
 
     client_gripper = node.serviceClient<ros_impedance_controller::generic_float>("move_gripper");
-
     
 
     if(gripper_sim && !real_robot){

@@ -24,7 +24,6 @@ extern bool gripper_sim;
 // Publishers
 //std::shared_ptr<realtime_tools::RealtimePublisher<sensor_msgs::JointState> > pub_des_jstate_sim_rt;
 static ros::Publisher pub_des_jstate;
-static ros::Subscriber sub_jstate;
 static ros::ServiceClient client_gripper;
 
 static sensor_msgs::JointState jointState_msg_sim;
