@@ -86,5 +86,7 @@ static Matrix4d t_60 = Matrix4d::Identity();
 static Matrix4d t0b = Matrix4d::Identity();
 static Matrix4d te6 = Matrix4d::Identity();
 
+typedef Matrix<double, 6, 1> Vector6d;
+
 
 #endif

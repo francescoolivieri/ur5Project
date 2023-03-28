@@ -284,17 +284,19 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
 
 VectorXd nearest_config(VectorXd qk, MatrixXd val){
     VectorXd min_config = val.block<1,6>(0,0);
-    VectorXd d_min = qk - min_config;
-    VectorXd d;
+    VectorXd diff_min = qk - min_config;
+    VectorXd diff;
     VectorXd candidate;
+
     for(int i=1; i < val.rows(); i++){
         candidate = val.block<1,6>(i,0);
-        d = qk -candidate;
-        if(d.norm() < d_min.norm()){
+        diff = qk -candidate;
+        if(diff.norm() < diff_min.norm()){    // looking for the nearest configuration
             min_config = candidate;
-            d_min = d;
+            diff_min = diff;
         }
     }
+
     return min_config;
 }
 
@@ -324,6 +326,7 @@ MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient 
     cout << rot.eulerAngles(0,1,2) << endl << endl;
     cout << pos << endl;
 
+    /* fill the matrix with the middle configurations */
     int iter = 0;
     while (error.norm() > 0.005)
     {
@@ -411,12 +414,15 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
     Vector3d distancePos = endPos - curr_pos;
     Vector3d distanceOrient = endOrientation - curr_rot_euler;
     
-    while( (distancePos.norm() > 0.001  || distanceOrient.norm() > 0.01 ) && iter < 1500){
+    /* Check on error from actual pos. to desired pos. and number of iterations */
+    while( (distancePos.norm() > 0.001  || distanceOrient.norm() > 0.01 ) && iter < 1500){ 
 
+        /* Calc. direct kin. to know my actual position and orientation in space */
         curr_fwk = directKinematicsUr5(qk);
         Re = curr_fwk.block<3,3>(0,0);
         xe = curr_fwk.block<3,1>(0,3);
         eule = Re.eulerAngles(0,1,2);
+
 
         xd = desPos(xe, endPos);
         phid = desOrient(eule, endOrientation);

@@ -115,53 +115,38 @@ void Robot::move_gripper(double diameter){
 void Robot::move(Vector3d finalPos, Vector3d finalOrient){
     ros::Rate loop_rate(loop_frequency);
 
-    double samples = 50;
+    /* Calc. configurations to arrive at the final pos. & orient. */
+    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(this->joints.get_arm(), finalPos, finalOrient);
 
-    double delta = 1/steps;
-
-    //cout << this->joints.get_arm() << endl;
-    VectorXd startConf(6);
-    startConf << -0.3223527113543909, -0.7805794638446351, -2.5675506591796875, -1.6347843609251917, -1.5715253988849085, -1.0017417112933558;
     
-    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(startConf, finalPos, finalOrient);
-
-    //cout << this->joints.get_arm() << endl;
-    
-    
+    /* Send config. to the robot */
      for(int i=0; i< tot_trajectory.rows(); i++){
-         //MatrixXd mat = directKinematicsUr5(tot_trajectory.block<1,6>(i,0));
          send_des_jstate(tot_trajectory.block<1,6>(i,0), this->joints.get_gripper());
          ros::spinOnce();
          loop_time++;
          loop_rate.sleep();
-         //points.conservativeResize(points.rows()+1, points.cols());
-         //points.block<1,3>(points.rows()-1, 0) = point;
      }
 
+    /* Update actual joint state */
     this->joints.set_joints_from_robot();
-    //cout << this->joints.get_arm() << endl;
 }
 
 void Robot::rotate(Vector3d finalPos, Vector3d finalOrient){
     ros::Rate loop_rate(loop_frequency);
-    //cout << this->joints.get_arm() << endl;
     VectorXd startConf(6);
-    //startConf << -0.3223527113543909, -0.7805794638446351, -2.5675506591796875, -1.6347843609251917, -1.5715253988849085, -1.0017417112933558;
     
+    /* Calc. configurations to arrive at the final orientation */
     MatrixXd tot_trajectory = jointSpace_kinematics(this->joints.get_arm(), finalPos, finalOrient);
 
-    //cout << this->joints.get_arm() << endl;
     
+    /* Send config. to the robot */
     for(int i=0; i< tot_trajectory.rows(); i++){
-         //MatrixXd mat = directKinematicsUr5(tot_trajectory.block<1,6>(i,0));
          send_des_jstate(tot_trajectory.block<1,6>(i,0), this->joints.get_gripper());
          ros::spinOnce();
          loop_time++;
          loop_rate.sleep();
-         //points.conservativeResize(points.rows()+1, points.cols());
-         //points.block<1,3>(points.rows()-1, 0) = point;
      }
 
+    /* Update actual joint state */
     this->joints.set_joints_from_robot();
-    //cout << this->joints.get_arm() << endl;
 }
