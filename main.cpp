@@ -1,12 +1,13 @@
 #include <math.h>
 #include "robot.hpp"
-//#include "ur5_kinematics.h"
+#include "blocks.hpp"
 #include <iostream>
 using namespace std;
 
 int main(int argc, char **argv){
     
     init();
+    /*
     //cout << "here" << endl;
     ros::Rate loop_rate(loop_frequency);
     Vector3d zero;
@@ -27,16 +28,17 @@ int main(int argc, char **argv){
     endOrient = {0, 0, M_PI/2};
     endPos = {-0.4, -0.3, 0.8};
     robot.rotate(endPos, endOrient);
-
-    
-    /*
-    endPos << worldToRobot({0.9, 0.6, 0.87});
+*/
+    Robot robot;
+    Vector3d endPos = { -0.4, -0.3, 0.6};
+    Vector3d endOrient = {0, 0, 0};
+    //endPos << worldToRobot({0.9, 0.6, 0.87});
     robot.move(endPos, endOrient);
 
-    robot.move_gripper(10);
+    //robot.move_gripper(10);
 
-    endPos << worldToRobot({0.9, 0.6, 1.0});
-    robot.move(endPos, endOrient);*/
+    //endPos << worldToRobot({0.9, 0.6, 1.0});
+    //robot.move(endPos, endOrient);
 
     cout << "HELo" << endl;
     return 0;

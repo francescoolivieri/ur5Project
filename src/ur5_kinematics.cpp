@@ -12,7 +12,7 @@ Vector3d worldToRobot(Vector3d p){
     t0b << 1, 0, 0, -0.5,
         0, -1, 0, 0.35,
         0, 0, -1, 1.75,
-        0, 0, 0, 1;
+        0, 0,  0,  1;
 
     return (t0b*pe).block<3,1>(0,0);
 }

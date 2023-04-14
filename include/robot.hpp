@@ -9,6 +9,10 @@
 #include "custom_joint_pub.hpp"
 #include "ur5_kinematics.h"
 
+/* SET THIS CONSTANT TO TRUE IF YOU WANT TO UPDATE JOINTS FROM
+    THE REAL ROBOT */
+#define UPDATE_FROM_ROBOT 0
+
 using namespace std;
 using namespace Eigen;
 

@@ -120,7 +120,8 @@ void Robot::move(Vector3d finalPos, Vector3d finalOrient){
 
     
     /* Send config. to the robot */
-     for(int i=0; i< tot_trajectory.rows(); i++){
+    int i;
+     for(i=0; i< tot_trajectory.rows(); i++){
          send_des_jstate(tot_trajectory.block<1,6>(i,0), this->joints.get_gripper());
          ros::spinOnce();
          loop_time++;
@@ -128,7 +129,12 @@ void Robot::move(Vector3d finalPos, Vector3d finalOrient){
      }
 
     /* Update actual joint state */
-    this->joints.set_joints_from_robot();
+    #if UPDATE_FROM_ROBOT
+        this->joints.set_joints_from_robot();
+    #else
+        Vector6d v = tot_trajectory.block<1,6>(i-1,0).transpose();
+        this->joints.set_new( v );
+    #endif
 }
 
 void Robot::rotate(Vector3d finalPos, Vector3d finalOrient){
@@ -140,13 +146,19 @@ void Robot::rotate(Vector3d finalPos, Vector3d finalOrient){
 
     
     /* Send config. to the robot */
-    for(int i=0; i< tot_trajectory.rows(); i++){
+    int i;
+    for(i=0; i< tot_trajectory.rows(); i++){
          send_des_jstate(tot_trajectory.block<1,6>(i,0), this->joints.get_gripper());
          ros::spinOnce();
          loop_time++;
          loop_rate.sleep();
-     }
+    }
 
     /* Update actual joint state */
-    this->joints.set_joints_from_robot();
+    #if UPDATE_FROM_ROBOT
+        this->joints.set_joints_from_robot();
+    #else
+        Vector6d v = tot_trajectory.block<1,6>(i-1,0).transpose();
+        this->joints.set_new( v );
+    #endif
 }
