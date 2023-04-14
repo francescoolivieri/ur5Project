@@ -115,8 +115,10 @@ void Robot::move_gripper(double diameter){
 void Robot::move(Vector3d finalPos, Vector3d finalOrient){
     ros::Rate loop_rate(loop_frequency);
 
+    Vector6d startConf;
     /* Calc. configurations to arrive at the final pos. & orient. */
-    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(this->joints.get_arm(), finalPos, finalOrient);
+    startConf << -0.3223527113543909, -0.7805794638446351, -2.5675506591796875, -1.6347843609251917, -1.5715253988849085, -1.0017417112933558;
+    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(startConf, finalPos, finalOrient);
 
     
     /* Send config. to the robot */

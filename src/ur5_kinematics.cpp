@@ -222,7 +222,7 @@ Vector3d TrajectoryOrientation(double currentIter, Vector3d startOrient, Vector3
 
 /*da aggiungere a .h*/
 Vector3d attrForce_pos(Vector3d error){
-    return -0.002*(error)/error.norm();
+    return -0.001*(error)/error.norm();
 }
 
 Vector3d attrForce_orient(Vector3d error){
