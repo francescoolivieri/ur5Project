@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/lib.dir/src/blocks.cpp.o"
   "CMakeFiles/lib.dir/src/custom_joint_pub.cpp.o"
   "CMakeFiles/lib.dir/src/robot.cpp.o"
   "CMakeFiles/lib.dir/src/ur5_kinematics.cpp.o"

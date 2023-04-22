@@ -32,6 +32,8 @@ int main(int argc, char **argv){
     Robot robot;
     Vector3d endPos = { -0.4, -0.3, 0.6};
     Vector3d endOrient = {0, 0, 0};
+    
+    
     endPos << worldToRobot({0.9, 0.6, 0.87});
     robot.move(endPos, endOrient);
 
@@ -39,6 +41,13 @@ int main(int argc, char **argv){
 
     endPos << worldToRobot({0.9, 0.6, 1.0});
     robot.move(endPos, endOrient);
+
+    endPos << worldToRobot({0.9, 0.3, 1.0});
+    robot.move(endPos, endOrient);
+
+    endPos << worldToRobot({0.3, 0.6, 1.0});
+    robot.move(endPos, endOrient);
+
 
     cout << "HELo" << endl;
     return 0;

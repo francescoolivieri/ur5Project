@@ -727,6 +727,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/blocks.o: src/blocks.cpp.o
+
+.PHONY : src/blocks.o
+
+# target to build an object file
+src/blocks.cpp.o:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/blocks.cpp.o
+.PHONY : src/blocks.cpp.o
+
+src/blocks.i: src/blocks.cpp.i
+
+.PHONY : src/blocks.i
+
+# target to preprocess a source file
+src/blocks.cpp.i:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/blocks.cpp.i
+.PHONY : src/blocks.cpp.i
+
+src/blocks.s: src/blocks.cpp.s
+
+.PHONY : src/blocks.s
+
+# target to generate assembly for a file
+src/blocks.cpp.s:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/blocks.cpp.s
+.PHONY : src/blocks.cpp.s
+
 src/custom_joint_pub.o: src/custom_joint_pub.cpp.o
 
 .PHONY : src/custom_joint_pub.o
@@ -865,6 +892,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/blocks.o"
+	@echo "... src/blocks.i"
+	@echo "... src/blocks.s"
 	@echo "... src/custom_joint_pub.o"
 	@echo "... src/custom_joint_pub.i"
 	@echo "... src/custom_joint_pub.s"

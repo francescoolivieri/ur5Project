@@ -252,7 +252,7 @@ Vector3d desPos(Vector3d xe, Vector3d xf){
         if(errPos.norm() > 0.1){
             xd = xe + (attrForce_pos(errPos) + repulForce(xe));
         }else{
-            xd = xe -0.05*errPos;
+            xd = xe -0.02*errPos;
         }
     }else{
         xd = xe;
@@ -267,9 +267,9 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
     
     if(errOrient.norm() > 0.0001){
         if(errOrient.norm() > 0.1){
-            phid = phie + 0.06*attrForce_orient(errOrient);
+            phid = phie + 0.2*attrForce_orient(errOrient);
         }else{
-            phid = phie - 0.1*errOrient;
+            phid = phie - 0.3*errOrient;
         }
     }else{
         
@@ -369,10 +369,10 @@ VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re
     cout << "errore Orienta" << endl;
     cout << errorOrientation << endl << endl;*/
     V.block<3,1>(0,0) = vd;// + Kp*(errorPosition);
-    //V.block<3,1>(3,0) = 0.003*errorOrientation/0.001;
-    V.block<3,1>(3,0) = 0.1*phiddot;
+    V.block<3,1>(3,0) = 3*errorOrientation;
+    //V.block<3,1>(3,0) = 0.1*phiddot;
 
-    //V.block<6,1>(0,0) = ComputeErrorQuaternion(qk, xd, phid)/0.001;
+    //V.block<3,1>(3,0) = 50*ComputeErrorQuaternion(qk, xd, phid);
 
     /*
     cout << "ERRORI------" << endl;
@@ -421,7 +421,7 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         curr_fwk = directKinematicsUr5(qk);
         Re = curr_fwk.block<3,3>(0,0);
         xe = curr_fwk.block<3,1>(0,3);
-        eule = Re.eulerAngles(0,1,2);
+        eule = Re.eulerAngles(0,1,2); 
 
 
         xd = desPos(xe, endPos);
@@ -455,14 +455,14 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         joints_config.block<1,6>(joints_config.rows()-1, 0) = qk.transpose();
 
         distancePos = endPos - xe;
-        distanceOrient = endOrientation - eule;
+        distanceOrient = orientationError(Re, eulerToRotationMatrix(phid));
 
         cout << "-------errors-------" << endl;
         //cout << distancePos.norm() << endl << endl;
         //cout << err_orient << endl << endl;
         cout << distanceOrient.norm() << endl << endl;
         cout << eule << endl << endl;
-        cout << phid << endl << endl;
+        cout << distancePos.norm() << endl << endl;
         cout << "--------------------" << endl;
 
         iter++;
