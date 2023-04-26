@@ -266,10 +266,11 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
     Vector3d phid;
     
     if(errOrient.norm() > 0.0001){
-        if(errOrient.norm() > 0.1){
+        if(errOrient.norm() > 0.01){
+
             phid = phie + 0.2*attrForce_orient(errOrient);
         }else{
-            phid = phie - 0.3*errOrient;
+            phid = phie - 0.15*errOrient;
         }
     }else{
         
@@ -279,6 +280,16 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
 
     return phid;
 }
+
+/*
+Vector3d euler_riconstruct(Vector3d euler){
+    doule sum;
+    Vector3d abs_euler;
+
+    abs_euler = euler().abs();
+
+    cout << abs_euler << endl;
+}*/
 
 /*-----fine funct da aggiungere------*/
 
@@ -362,14 +373,11 @@ VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Vector3d vd, Matrix3d Re
     
     Jac = ur5Jacobian(qk.transpose());
 
-    Kp = MatrixXd::Identity(3,3)*10; 
-    Kphi = MatrixXd::Identity(3,3)*20; 
-
     /*
     cout << "errore Orienta" << endl;
     cout << errorOrientation << endl << endl;*/
     V.block<3,1>(0,0) = vd;// + Kp*(errorPosition);
-    V.block<3,1>(3,0) = 3*errorOrientation;
+    V.block<3,1>(3,0) = 6*errorOrientation;
     //V.block<3,1>(3,0) = 0.1*phiddot;
 
     //V.block<3,1>(3,0) = 50*ComputeErrorQuaternion(qk, xd, phid);
@@ -428,9 +436,9 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         phid = desOrient(eule, endOrientation);
         
         vd = (xd-xe)/0.001;
-        phiddot = (phid-eule)/0.001;
+        //phiddot = (phid-eule)/0.001;
         
-        dotq = dotQ(qk, xe, xd, vd, Re, eule, phid, phiddot);
+        dotq = dotQ(qk, xe, xd, vd, Re, eule, endOrientation, phiddot);
         //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         
@@ -455,7 +463,7 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         joints_config.block<1,6>(joints_config.rows()-1, 0) = qk.transpose();
 
         distancePos = endPos - xe;
-        distanceOrient = orientationError(Re, eulerToRotationMatrix(phid));
+        distanceOrient = orientationError(Re, eulerToRotationMatrix(endOrientation));
 
         cout << "-------errors-------" << endl;
         //cout << distancePos.norm() << endl << endl;
