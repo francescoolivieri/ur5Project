@@ -1951,7 +1951,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "GTest_DIR-NOTFOUND"
+			"value" : "/usr/local/lib/cmake/GTest"
 		},
 		{
 			"name" : "INSTALL_GTEST",

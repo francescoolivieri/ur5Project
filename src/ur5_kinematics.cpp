@@ -1,5 +1,3 @@
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Geometry>
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -465,13 +463,14 @@ MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrie
         distancePos = endPos - xe;
         distanceOrient = orientationError(Re, eulerToRotationMatrix(endOrientation));
 
+        /*
         cout << "-------errors-------" << endl;
         //cout << distancePos.norm() << endl << endl;
         //cout << err_orient << endl << endl;
         cout << distanceOrient.norm() << endl << endl;
         cout << eule << endl << endl;
         cout << distancePos.norm() << endl << endl;
-        cout << "--------------------" << endl;
+        cout << "--------------------" << endl;*/
 
         iter++;
     }
@@ -678,13 +677,14 @@ MatrixXd inverseDiffKinematicsUr5Quaternions(VectorXd q_k, Vector3d endPos, Vect
 
         distancePos = endPos - xe;
         distanceOrient = endOrient - eule;
+        /*
         cout << "-------errors-------" << endl;
         cout << distancePos.norm() << endl << endl;
         //cout << err_orient << endl << endl;
         cout << distanceOrient.norm() << endl << endl;
         cout << xe << endl << endl;
         cout << eule << endl << endl;
-        cout << "--------------------" << endl;
+        cout << "--------------------" << endl;*/
     } 
     
           

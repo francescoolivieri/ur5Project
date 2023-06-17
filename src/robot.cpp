@@ -176,3 +176,30 @@ void Robot::rotate(Vector3d finalPos, Vector3d finalOrient){
         this->joints.set_new( v );
     #endif
 }
+
+string Robot::get_string_nearest_model(vector<string> models_list){
+    if(models_list.size() == 0){
+        ROS_ERROR("list of models is empty");
+        return "err";
+    }
+
+    Vector3d ef_pos = robotToWorld(directKinematicsUr5(this->joints.get_arm()).block<3,1>(0,3));
+
+    string nearest_model = models_list[0];
+    double nearest_distance = (ef_pos - get_pose(nearest_model)).norm();
+
+    double current_distance;
+    string current_model;
+    for(int i=1; i<models_list.size(); i++){
+        current_model = models_list[i];
+        current_distance = (ef_pos - get_pose(current_model)).norm();
+
+        cout << current_distance << endl;
+
+        if(current_distance < nearest_distance){
+            nearest_distance = current_distance;
+            nearest_model = current_model;
+        }
+    }
+    return nearest_model;
+}

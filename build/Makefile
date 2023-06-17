@@ -781,6 +781,33 @@ src/custom_joint_pub.cpp.s:
 	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/custom_joint_pub.cpp.s
 .PHONY : src/custom_joint_pub.cpp.s
 
+src/link_attacher.o: src/link_attacher.cpp.o
+
+.PHONY : src/link_attacher.o
+
+# target to build an object file
+src/link_attacher.cpp.o:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/link_attacher.cpp.o
+.PHONY : src/link_attacher.cpp.o
+
+src/link_attacher.i: src/link_attacher.cpp.i
+
+.PHONY : src/link_attacher.i
+
+# target to preprocess a source file
+src/link_attacher.cpp.i:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/link_attacher.cpp.i
+.PHONY : src/link_attacher.cpp.i
+
+src/link_attacher.s: src/link_attacher.cpp.s
+
+.PHONY : src/link_attacher.s
+
+# target to generate assembly for a file
+src/link_attacher.cpp.s:
+	$(MAKE) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/src/link_attacher.cpp.s
+.PHONY : src/link_attacher.cpp.s
+
 src/robot.o: src/robot.cpp.o
 
 .PHONY : src/robot.o
@@ -898,6 +925,9 @@ help:
 	@echo "... src/custom_joint_pub.o"
 	@echo "... src/custom_joint_pub.i"
 	@echo "... src/custom_joint_pub.s"
+	@echo "... src/link_attacher.o"
+	@echo "... src/link_attacher.i"
+	@echo "... src/link_attacher.s"
 	@echo "... src/robot.o"
 	@echo "... src/robot.i"
 	@echo "... src/robot.s"

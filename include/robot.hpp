@@ -73,6 +73,7 @@ class Robot{
         void move(Vector3d finalPos, Vector3d finalOrient);
         void rotate(Vector3d finalPos, Vector3d finalOrient);
         void move_gripper(double diameter);
+        string get_string_nearest_model(vector<string> models_list);
 
         void set_new_gripper_position(double diameter);
     

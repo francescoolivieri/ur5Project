@@ -7,6 +7,7 @@
 #include <std_msgs/Float64MultiArray.h>
 #include <Eigen/Dense>
 #include <realtime_tools/realtime_publisher.h>
+#include "link_attacher.hpp"
 
 using namespace std;
 using namespace Eigen;

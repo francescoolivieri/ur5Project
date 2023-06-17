@@ -11,7 +11,15 @@ void init(){
 
     
     ros::NodeHandle node;
-    
+
+    attach_client = node.serviceClient<gazebo_ros_link_attacher::Attach>("link_attacher_node/attach");
+    attach_client.waitForExistence();
+    detach_client = node.serviceClient<gazebo_ros_link_attacher::Attach>("link_attacher_node/detach");
+    detach_client.waitForExistence();
+    get_model_client = node.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
+    get_model_client.waitForExistence();
+    get_model_client = node.serviceClient<gazebo_msgs::GetWorldProperties>("/gazebo/get_world_properties");
+    get_model_client.waitForExistence();
     
     node.getParam("/real_robot", real_robot);
     node.getParam("/soft_gripper", soft_gripper);
@@ -99,8 +107,7 @@ void send_des_jstate(const Vector6d & joint_pos, const Vector3d & gripper_pos){
     }
 
     /* SEND MESSAGE */
-
-    cout << joint_pos.transpose() << endl;
+    //cout << joint_pos.transpose() << endl;
 
     pub_des_jstate.publish(jointState_msg_robot);
 
