@@ -28,9 +28,9 @@ void detach(const char* model1, const char* link1, const char* model2, const cha
 
 Vector3d get_pose(string model_name){
     gazebo_msgs::GetModelState gms;
-    gms.request.model_name=model_name;
+    gms.request.model_name=model_name.c_str();
     if (!get_model_client.call(gms))
-        ROS_INFO_STREAM("Get model pose failed");
+        ROS_ERROR("Get model pose failed");
 
     Vector3d pose;
     pose << gms.response.pose.position.x , gms.response.pose.position.y, gms.response.pose.position.z;
@@ -39,7 +39,7 @@ Vector3d get_pose(string model_name){
 
 void get_list_models(vector<string> &list_models){
     gazebo_msgs::GetWorldProperties gwp;
-    if (!get_model_client.call(gwp))
+    if (!get_list_models_client.call(gwp))
         ROS_INFO_STREAM("Get list models failed");
 
     for(int i=0; i<gwp.response.model_names.size(); i++){

@@ -250,7 +250,7 @@ Vector3d desPos(Vector3d xe, Vector3d xf){
         if(errPos.norm() > 0.1){
             xd = xe + (attrForce_pos(errPos) + repulForce(xe));
         }else{
-            xd = xe -0.02*errPos;
+            xd = xe -0.03*errPos;
         }
     }else{
         xd = xe;
@@ -266,9 +266,9 @@ Vector3d desOrient(Vector3d phie, Vector3d phif){
     if(errOrient.norm() > 0.0001){
         if(errOrient.norm() > 0.01){
 
-            phid = phie + 0.2*attrForce_orient(errOrient);
+            phid = phie + 0.3*attrForce_orient(errOrient);
         }else{
-            phid = phie - 0.15*errOrient;
+            phid = phie - 0.2*errOrient;
         }
     }else{
         
