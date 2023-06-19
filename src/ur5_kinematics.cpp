@@ -300,6 +300,7 @@ VectorXd nearest_config(VectorXd qk, MatrixXd val){
     for(int i=1; i < val.rows(); i++){
         candidate = val.block<1,6>(i,0);
         diff = qk -candidate;
+        diff << diff(0)*2, diff(1)*2, diff(2)*2, diff(3), diff(4), diff(5);
         if(diff.norm() < diff_min.norm()){    // looking for the nearest configuration
             min_config = candidate;
             diff_min = diff;
@@ -320,6 +321,7 @@ MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient 
     VectorXd qNext = qk;
     VectorXd error = endConfig - qNext;
     MatrixXd joints_config = qk.transpose();
+
 
     // check if orientations are correct
     Matrix3d rot;

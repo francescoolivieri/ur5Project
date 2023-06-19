@@ -1,5 +1,7 @@
 #include "robot.hpp"
 
+vector<string> models_list;
+
 Joints::Joints(){
     #if UPDATE_FROM_ROBOT
         this->set_joints_from_robot();
@@ -202,4 +204,34 @@ string Robot::get_string_nearest_model(vector<string> models_list){
         }
     }
     return nearest_model;
+}
+
+void Robot::set_block_up_right(Vector3d model_pose){
+
+    vector<string> models_list;
+    get_list_models(models_list);
+    move(worldToRobot({model_pose(0), model_pose(1)-0.02, working_height}), {0, 0, M_PI_2});
+    move_gripper(70);
+
+    move(worldToRobot({model_pose(0), model_pose(1)-0.02, grasping_height}), {0, 0, M_PI_2});
+    string handled_model = get_string_nearest_model(models_list);
+    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0, 0, M_PI_2});
+    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
+    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {-M_PI_2, 0, M_PI_2});
+
+    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
+    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+    rotate(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, working_height}), {M_PI_2,M_PI,0});
+    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, releasing_height}), {M_PI_2,M_PI,0});
+    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.01, releasing_height}), {M_PI_2,M_PI,0});
+
+    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
+    
+    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+
 }

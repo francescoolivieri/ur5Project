@@ -27,6 +27,8 @@ extern ros::ServiceClient detach_client;
 extern ros::ServiceClient get_model_client;
 extern ros::ServiceClient get_list_models_client;
 
+extern vector<string> models_list;
+
 void attach(const char* model1, const char* link1, const char* model2, const char* link2);
 void detach(const char* model1, const char* link1, const char* model2, const char* link2);
 Vector3d get_pose(string model_name);

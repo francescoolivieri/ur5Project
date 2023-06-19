@@ -7,6 +7,7 @@
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Geometry>
 #include "custom_joint_pub.hpp"
+#include "link_attacher.hpp"
 #include "ur5_kinematics.h"
 
 /* SET THIS CONSTANT TO TRUE IF YOU WANT TO UPDATE JOINTS FROM
@@ -24,6 +25,12 @@ typedef Matrix<double, 9, 1> Vector9d;
 bool real_robot;
 bool soft_gripper;
 bool gripper_sim;
+
+static double working_height = 1.1;
+static double grasping_height = 0.90;
+static double releasing_height = 0.92;
+static double height_offset = 0.22;
+
 
 class Joints{
     public:
@@ -47,6 +54,7 @@ class Joints{
         void set_new(Vector3d q_gripper);
 
         void set_joints_from_robot();
+        
 
         Vector6d get_arm();
         Vector3d get_gripper();
@@ -76,6 +84,7 @@ class Robot{
         string get_string_nearest_model(vector<string> models_list);
 
         void set_new_gripper_position(double diameter);
+        void set_block_up_right(Vector3d model_pose);
     
 };
 
