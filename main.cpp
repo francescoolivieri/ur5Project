@@ -15,7 +15,9 @@
 #include "link_attacher.hpp"
 #include <iostream>
 #include <string>
+
 using namespace std;
+using namespace Mathutils;
 
 vector<string> models_list;
 
