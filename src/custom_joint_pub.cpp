@@ -26,8 +26,8 @@ void init(){
     node.getParam("/gripper_sim", gripper_sim);
     
     cout << "--GRIPPER CHECK---" << endl;
-    cout << gripper_sim << endl << endl;
-    cout << soft_gripper << endl;
+    cout << "GRIPPER SIM: " << gripper_sim << endl << endl;
+    cout << "SOFT GRIPPER: " << soft_gripper << endl;
     cout << "------------------" << endl;
 
     pub_des_jstate = node.advertise<std_msgs::Float64MultiArray>("/ur5/joint_group_pos_controller/command", 1);

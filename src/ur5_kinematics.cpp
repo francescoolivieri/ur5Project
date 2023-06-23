@@ -331,11 +331,13 @@ MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient 
     pos = tmp.block<3,1>(0,3);
 
     /*final euler orientation and position*/
+    /*
     cout << "final euler orientation and position" << endl;
     cout << endOrient << endl;
     cout << eulerToRotationMatrix(endOrient).eulerAngles(0,1,2) << endl << endl;
     cout << rot.eulerAngles(0,1,2) << endl << endl;
     cout << pos << endl;
+    */
 
     /* fill the matrix with the middle configurations */
     int iter = 0;
@@ -345,7 +347,7 @@ MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient 
         joints_config.conservativeResize(joints_config.rows() + 1, joints_config.cols());
         joints_config.block<1,6>(joints_config.rows()-1, 0) = qNext.transpose();
         error = endConfig - qNext;
-        cout << error.norm() << endl;
+        // cout << error.norm() << endl;
         iter++;
     }
     cout << "numero di iterazioni: " << endl;

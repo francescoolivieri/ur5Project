@@ -1,0 +1,193 @@
+\hypertarget{classJoints}{}\doxysection{Joints Class Reference}
+\label{classJoints}\index{Joints@{Joints}}
+
+
+Class representing the robot\textquotesingle{}s joints, used to both store and update.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classJoints_ae40766f698d114f9276e6e76672636c2}\label{classJoints_ae40766f698d114f9276e6e76672636c2}} 
+\mbox{\hyperlink{classJoints_ae40766f698d114f9276e6e76672636c2}{Joints}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classJoints}{Joints}} object. It sets all the joints to their actual values. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}{Joints}} (Vector6d q\+\_\+arm)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classJoints}{Joints}} object-\/ It sets all the joints of ur5-\/arm to the specified passed by argument. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classJoints_a8c8a5c92483d2fd1fa04951d347f81f2}{Joints}} (Vector6d q\+\_\+arm, Vector3d q\+\_\+gripper)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classJoints}{Joints}} object. It sets all the joint of ur5-\/arm and ur5-\/gripper to the specified passed by argument. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classJoints_aaee5a443b535c183fa2b2b849f71877b}{set\+\_\+new}} (Vector6d q\+\_\+arm, Vector3d q\+\_\+gripper)
+\begin{DoxyCompactList}\small\item\em Set new arm and gripper set of joints. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classJoints_a23b3806b014345902d1f0ae620d03587}{set\+\_\+new}} (Vector6d q\+\_\+arm)
+\begin{DoxyCompactList}\small\item\em Set new arm joints. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}{set\+\_\+new}} (Vector3d q\+\_\+gripper)
+\begin{DoxyCompactList}\small\item\em Set new gripper joints. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classJoints_a0c04b955dbffff11b03db5167d1c70a3}{set\+\_\+joints\+\_\+from\+\_\+robot}} ()
+\begin{DoxyCompactList}\small\item\em Update the joints taking the values from the simulation. \end{DoxyCompactList}\item 
+Vector6d \mbox{\hyperlink{classJoints_a5d1149262bcd8d66ac2db249aa2079c4}{get\+\_\+arm}} ()
+\begin{DoxyCompactList}\small\item\em Get the ur5-\/arm joints. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{classJoints_a467608e6cb7dd4dd9bea9ee953c8aa3a}{get\+\_\+gripper}} ()
+\begin{DoxyCompactList}\small\item\em Get the ur5-\/gripper joints. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classJoints_a6d7402869f2d7895908bbdd596b9ec93}\label{classJoints_a6d7402869f2d7895908bbdd596b9ec93}} 
+double {\bfseries shoulder\+\_\+pan}
+\item 
+\mbox{\Hypertarget{classJoints_a14378b37ec53d6009538b11eba575b00}\label{classJoints_a14378b37ec53d6009538b11eba575b00}} 
+double {\bfseries shoulder\+\_\+lift}
+\item 
+\mbox{\Hypertarget{classJoints_af194e33bd3d998511b535d6157b062c7}\label{classJoints_af194e33bd3d998511b535d6157b062c7}} 
+double {\bfseries elbow}
+\item 
+\mbox{\Hypertarget{classJoints_aab13ee21bea373c322bdb559b1929b98}\label{classJoints_aab13ee21bea373c322bdb559b1929b98}} 
+double {\bfseries wrist\+\_\+1}
+\item 
+\mbox{\Hypertarget{classJoints_a9c3c41a2cafc443b0458692af08ed3ac}\label{classJoints_a9c3c41a2cafc443b0458692af08ed3ac}} 
+double {\bfseries wrist\+\_\+2}
+\item 
+\mbox{\Hypertarget{classJoints_aed1cbf0f6b599b574dc2dc9998c05a11}\label{classJoints_aed1cbf0f6b599b574dc2dc9998c05a11}} 
+double {\bfseries wrist\+\_\+3}
+\item 
+\mbox{\Hypertarget{classJoints_ac6b9cc9ed3c7a9977841ffa8bfaaa91c}\label{classJoints_ac6b9cc9ed3c7a9977841ffa8bfaaa91c}} 
+double {\bfseries gripper\+\_\+1}
+\item 
+\mbox{\Hypertarget{classJoints_a663e076d1f3bbbabf1dfbd73bf679934}\label{classJoints_a663e076d1f3bbbabf1dfbd73bf679934}} 
+double {\bfseries gripper\+\_\+2}
+\item 
+\mbox{\Hypertarget{classJoints_a322a0bb0cdf85e5ce7b6064da886bd83}\label{classJoints_a322a0bb0cdf85e5ce7b6064da886bd83}} 
+double {\bfseries gripper\+\_\+3}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class representing the robot\textquotesingle{}s joints, used to both store and update. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}\label{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}} 
+\index{Joints@{Joints}!Joints@{Joints}}
+\index{Joints@{Joints}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Joints\+::\+Joints (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classJoints}{Joints}} object-\/ It sets all the joints of ur5-\/arm to the specified passed by argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classJoints_a8c8a5c92483d2fd1fa04951d347f81f2}\label{classJoints_a8c8a5c92483d2fd1fa04951d347f81f2}} 
+\index{Joints@{Joints}!Joints@{Joints}}
+\index{Joints@{Joints}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Joints\+::\+Joints (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm,  }\item[{Vector3d}]{q\+\_\+gripper }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classJoints}{Joints}} object. It sets all the joint of ur5-\/arm and ur5-\/gripper to the specified passed by argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+{\em q\+\_\+gripper} & Vector (3 elements) of gripper joints \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classJoints_a5d1149262bcd8d66ac2db249aa2079c4}\label{classJoints_a5d1149262bcd8d66ac2db249aa2079c4}} 
+\index{Joints@{Joints}!get\_arm@{get\_arm}}
+\index{get\_arm@{get\_arm}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{get\_arm()}{get\_arm()}}
+{\footnotesize\ttfamily Vector6d Joints\+::get\+\_\+arm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the ur5-\/arm joints. 
+
+\begin{DoxyReturn}{Returns}
+Vector6d Vector of 6 elements representing the joints of the ur5-\/arm in the following order\+: shoulder\+\_\+pan, shoulder\+\_\+lift, elbow, wrist\+\_\+1, wrist\+\_\+2, wrist\+\_\+3 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classJoints_a467608e6cb7dd4dd9bea9ee953c8aa3a}\label{classJoints_a467608e6cb7dd4dd9bea9ee953c8aa3a}} 
+\index{Joints@{Joints}!get\_gripper@{get\_gripper}}
+\index{get\_gripper@{get\_gripper}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{get\_gripper()}{get\_gripper()}}
+{\footnotesize\ttfamily Vector3d Joints\+::get\+\_\+gripper (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the ur5-\/gripper joints. 
+
+\begin{DoxyReturn}{Returns}
+Vector3d Vector of 3 elements representing the joints of the gripper 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classJoints_a0c04b955dbffff11b03db5167d1c70a3}\label{classJoints_a0c04b955dbffff11b03db5167d1c70a3}} 
+\index{Joints@{Joints}!set\_joints\_from\_robot@{set\_joints\_from\_robot}}
+\index{set\_joints\_from\_robot@{set\_joints\_from\_robot}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{set\_joints\_from\_robot()}{set\_joints\_from\_robot()}}
+{\footnotesize\ttfamily void Joints\+::set\+\_\+joints\+\_\+from\+\_\+robot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Update the joints taking the values from the simulation. 
+
+\mbox{\Hypertarget{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}\label{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}} 
+\index{Joints@{Joints}!set\_new@{set\_new}}
+\index{set\_new@{set\_new}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{set\_new()}{set\_new()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Joints\+::set\+\_\+new (\begin{DoxyParamCaption}\item[{Vector3d}]{q\+\_\+gripper }\end{DoxyParamCaption})}
+
+
+
+Set new gripper joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+gripper} & Vector (3 elements) of gripper joints \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classJoints_a23b3806b014345902d1f0ae620d03587}\label{classJoints_a23b3806b014345902d1f0ae620d03587}} 
+\index{Joints@{Joints}!set\_new@{set\_new}}
+\index{set\_new@{set\_new}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{set\_new()}{set\_new()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Joints\+::set\+\_\+new (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm }\end{DoxyParamCaption})}
+
+
+
+Set new arm joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classJoints_aaee5a443b535c183fa2b2b849f71877b}\label{classJoints_aaee5a443b535c183fa2b2b849f71877b}} 
+\index{Joints@{Joints}!set\_new@{set\_new}}
+\index{set\_new@{set\_new}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{set\_new()}{set\_new()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Joints\+::set\+\_\+new (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm,  }\item[{Vector3d}]{q\+\_\+gripper }\end{DoxyParamCaption})}
+
+
+
+Set new arm and gripper set of joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+{\em q\+\_\+gripper} & Vector (3 elements) of gripper joints \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/robot.\+hpp\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/src/\mbox{\hyperlink{robot_8cpp}{robot.\+cpp}}\end{DoxyCompactItemize}

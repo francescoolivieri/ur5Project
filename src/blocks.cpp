@@ -4,7 +4,7 @@
 #include <ros_impedance_controller/final.h>
 
 Lego::Lego(){
-   // this->type = "NULL";
+   
 }
 
 Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw, double pitch, double roll){
@@ -17,7 +17,7 @@ Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw,
     this->roll = roll;
 }
 
-Blocks::Blocks(){
+Models::Models(){
     ros_impedance_controller::finals::ConstPtr msg = ros::topic::waitForMessage<ros_impedance_controller::finals>("/messaggi");
 
     Lego new_list[msg->length];
@@ -26,10 +26,10 @@ Blocks::Blocks(){
         list[i] = Lego(msg->finals[i].type, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll );
     }
 
-    this->size = msg->length;
+    this->length = msg->length;
 }
 
-void Blocks::update_blocks_pos(){
+void Models::update_blocks_pos(){
     this->list = NULL;
 
     ros_impedance_controller::finals::ConstPtr msg = ros::topic::waitForMessage<ros_impedance_controller::finals>("/messaggi");
@@ -40,12 +40,24 @@ void Blocks::update_blocks_pos(){
         list[i] = Lego(msg->finals[i].type, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll );
     }
 
-    this->size = msg->length;
+    this->length = msg->length;
 }
 
-Lego Blocks::get_block(int index){
-    if(this->size > 0)
+Lego Models::get_block(int index){
+    if(this->length > 0)
         return list[index];
     else
         return Lego();
+}
+
+Lego Models::get_block(string model_name){
+    for (int i=0; i<length ; i++){
+        if( model_name == list[i].type )
+            return list[i];
+    }
+     return Lego();
+}
+
+int Models::get_lenght(){
+    return length;
 }
