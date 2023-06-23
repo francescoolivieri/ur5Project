@@ -1,3 +1,13 @@
+/**
+ * @file robot.cpp
+ * @author Federico Adami, Francesco Olivieri, Pirrinz Perroneddesi
+ * @brief This file contains two classes that are crucial for providing to the final user a good level of abstraction and an easy management of the ur5
+ * @version 0.1
+ * @date 2023-06-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include "robot.hpp"
 
 vector<string> models_list;
@@ -91,6 +101,20 @@ Robot::Robot(Vector6d q_arm, Vector3d q_gripper){
 
 Robot::Robot(Vector6d q_arm){
     this->joints = Joints(q_arm);
+}
+
+Vector3d Robot::get_wrist(){
+    Vector3d wrist;
+    wrist << this->joints.wrist_1, this->joints.wrist_2, this->joints.wrist_3;
+
+    return wrist;
+}
+
+Vector3d Robot::get_shoulder(){
+    Vector3d shoulder;
+    shoulder << this->joints.shoulder_pan, this->joints.shoulder_lift, this->joints.elbow;
+
+    return shoulder;
 }
 
 double Robot::mapToGripperJoints(double diameter){
@@ -196,7 +220,7 @@ string Robot::get_string_nearest_model(vector<string> models_list){
         current_model = models_list[i];
         current_distance = (ef_pos - get_pose(current_model)).norm();
 
-        cout << current_distance << endl;
+        //cout << current_distance << endl;
 
         if(current_distance < nearest_distance){
             nearest_distance = current_distance;
@@ -206,32 +230,114 @@ string Robot::get_string_nearest_model(vector<string> models_list){
     return nearest_model;
 }
 
-void Robot::set_block_up_right(Vector3d model_pose){
-
+void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
     vector<string> models_list;
     get_list_models(models_list);
-    move(worldToRobot({model_pose(0), model_pose(1)-0.02, working_height}), {0, 0, M_PI_2});
-    move_gripper(70);
 
-    move(worldToRobot({model_pose(0), model_pose(1)-0.02, grasping_height}), {0, 0, M_PI_2});
-    string handled_model = get_string_nearest_model(models_list);
-    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0, 0, M_PI_2});
-    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
-    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {-M_PI_2, 0, M_PI_2});
+    bool reversed = false;
 
-    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
-    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
-    rotate(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, working_height}), {M_PI_2,M_PI,0});
-    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, releasing_height}), {M_PI_2,M_PI,0});
-    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.01, releasing_height}), {M_PI_2,M_PI,0});
+    string handled_model;
 
-    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
-    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
-    
-    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+    double roll = model_rotation(2);
+    double pitch = model_rotation(1);
+    double yaw = -model_rotation(0); // yaw of approach for the gripper
 
+
+
+    if( (abs(roll) < 0.5 && abs(pitch) < 0.5) || ((0.9 < (abs(pitch)/M_PI) && (abs(pitch)/M_PI) < 1.1) && (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)) ){
+        cout << "Block already up right! " << endl;
+    }else{
+
+        move({model_pose(0), model_pose(1), working_height}, {0, 0, yaw});
+
+        int cont;
+
+        if( ((0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI))) && !(0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ // testa in giù
+            cout << "#capotà" << endl;
+            cin >> cont;
+
+            move_gripper(50);
+
+            move({model_pose(0), model_pose(1), grasping_height}, {0, 0, yaw});
+
+
+            handled_model = get_string_nearest_model(models_list);
+            attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0}); // sarebbe getOrient
+            rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
+            move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2, M_PI, 0}); // sarebbe getOrient
+
+            detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
+            rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
+            
+            reversed = true;
+        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){  // (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1)
+            cout << "#ciapa el sol" << endl;
+            cin >> cont;
+
+            move_gripper(95);
+
+            if(pitch < 0 && yaw<0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
+                cout << "CICI: " << grasping_height << endl;
+                move({model_pose(0), model_pose(1)+-0.025, grasping_height}, {0, 0, yaw});
+            }else if(pitch > 0 && yaw > 0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
+                cout << "LILI: " << grasping_height << endl;
+                move({model_pose(0), model_pose(1)+0.025, grasping_height}, {0, 0, yaw});
+                reversed = true;
+            }else if(pitch < 0 && abs(yaw)<0.3){
+                cout << "BUBI: " << grasping_height << endl;
+                move({model_pose(0)-0.035, model_pose(1), grasping_height}, {0, 0, yaw});
+                reversed = true;
+            }else if(pitch > 0 && abs(yaw)<0.3){
+                cout << "TUTI: " << grasping_height << endl;
+
+                move({model_pose(0)+0.035, model_pose(1), grasping_height}, {0, 0, yaw});
+            }else{
+
+                cout << "ELSE" << endl;
+                move({model_pose(0), model_pose(1), grasping_height-0.015}, {0, 0, yaw});
+            }
+
+            handled_model = get_string_nearest_model(models_list);
+            attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0});
+            rotate({model_pose(0), model_pose(1), working_height}, {-M_PI_2, 0, M_PI_2});
+            move({model_pose(0), model_pose(1), releasing_height}, {-M_PI_2, 0, M_PI_2});  
+
+            detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move({model_pose(0), model_pose(1), working_height}, {-M_PI_2, 0, M_PI_2});
+            rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
+
+        }else{
+            cout << "Block Position & Orientation NOT Handle, Aborting..." << endl;
+            return;
+        }
+
+        /* if arrived here I know that the block is in a vertical position but I don't know it's orientation */
+
+        if(reversed == true){
+                move({model_pose(0), model_pose(1), releasing_height}, {0,0,0});
+                attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+                move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+                rotate({model_pose(0), model_pose(1), working_height}, {0,0,M_PI});
+                move({model_pose(0), model_pose(1), releasing_height}, {0,0,M_PI});
+                detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+                move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+            }
+
+        rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2,M_PI,0});
+        move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2,M_PI,0});
+        move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2,M_PI,0});
+
+        attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+        move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+        move({model_pose(0), model_pose(1), releasing_height}, {0,0,0});
+        
+        detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+        move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+    }
 }

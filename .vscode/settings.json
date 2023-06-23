@@ -1,5 +1,24 @@
 {
     "files.associations": {
-        "*.tcc": "cpp"
-    }
+        "*.tcc": "cpp",
+        "geometry": "cpp",
+        "iostream": "cpp",
+        "string": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp"
+    },
+    "python.autoComplete.extraPaths": [
+        "/home/francesco/ros_ws/devel/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/install/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/opt/openrobots/lib/python3.8/site-packages",
+        "/home/francesco/ros_ws/src/locosim/robot_control"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/francesco/ros_ws/devel/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/install/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/opt/openrobots/lib/python3.8/site-packages",
+        "/home/francesco/ros_ws/src/locosim/robot_control"
+    ]
 }

@@ -32,6 +32,7 @@ extern vector<string> models_list;
 void attach(const char* model1, const char* link1, const char* model2, const char* link2);
 void detach(const char* model1, const char* link1, const char* model2, const char* link2);
 Vector3d get_pose(string model_name);
+Vector3d get_orientation(string model_name);
 void get_list_models(vector<string> &list_models);
 
 #endif
