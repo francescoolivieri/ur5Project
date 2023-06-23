@@ -156,7 +156,7 @@ void Robot::move(Vector3d finalPos, Vector3d finalOrient){
     ros::Rate loop_rate(loop_frequency);
 
     /* Calc. configurations to arrive at the final pos. & orient. */
-    MatrixXd tot_trajectory = inverseDiffKinematicsUr5(this->joints.get_arm(), finalPos, finalOrient);
+    MatrixXd tot_trajectory = Kinematics::inverseDiffKinematicsUr5(this->joints.get_arm(), finalPos, finalOrient);
 
     
     /* Send config. to the robot */
@@ -182,7 +182,7 @@ void Robot::rotate(Vector3d finalPos, Vector3d finalOrient){
     VectorXd startConf(6);
     
     /* Calc. configurations to arrive at the final orientation */
-    MatrixXd tot_trajectory = jointSpace_kinematics(this->joints.get_arm(), finalPos, finalOrient);
+    MatrixXd tot_trajectory = Kinematics::jointSpace_kinematics(this->joints.get_arm(), finalPos, finalOrient);
 
     
     /* Send config. to the robot */
@@ -209,7 +209,7 @@ string Robot::get_string_nearest_model(vector<string> models_list){
         return "err";
     }
 
-    Vector3d ef_pos = robotToWorld(directKinematicsUr5(this->joints.get_arm()).block<3,1>(0,3));
+    Vector3d ef_pos = Mathutils::robotToWorld(Kinematics::directKinematicsUr5(this->joints.get_arm()).block<3,1>(0,3));
 
     string nearest_model = models_list[0];
     double nearest_distance = (ef_pos - get_pose(nearest_model)).norm();
