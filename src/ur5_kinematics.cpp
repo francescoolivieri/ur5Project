@@ -338,11 +338,10 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
 
 
 VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid){
-    
-    VectorXd dotQ;
+
     MatrixXd Jac;
-    Matrix3d Kp;
-    Matrix3d Kphi;
+    Matrix3d Kp = 0.8;
+    Matrix3d Kphi = 6;
     VectorXd V(6);
     Matrix3d w_R_d;
     Vector3d errorOrientation;
@@ -351,29 +350,14 @@ VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re,
     w_R_d = eulerToRotationMatrix(phid);
     errorOrientation = orientationError(Re, w_R_d);
     errorPosition = positionError(xe, xd);
-    //errorOrientation = ComputeErrorQuaternion(qk, xd, phid);
-    
     
     Jac = ur5Jacobian(qk.transpose());
 
-    /*
-    cout << "errore Orienta" << endl;
-    cout << errorOrientation << endl << endl;*/
-    
-    V.block<3,1>(0,0) = 0.8*errorPosition/deltaT;// + Kp*(errorPosition);
-    V.block<3,1>(3,0) = 6*errorOrientation;
-    //V.block<3,1>(3,0) = 0.1*phiddot;
+    V.block<3,1>(0,0) = Kp*errorPosition/deltaT;
+    V.block<3,1>(3,0) = Kphi*errorOrientation;
 
-    //V.block<3,1>(3,0) = 50*ComputeErrorQuaternion(qk, xd, phid);
+    return (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
-    /*
-    cout << "ERRORI------" << endl;
-    cout << errorPosition.norm() << endl << endl;
-    cout << errorOrientation.norm() << endl << endl;*/
-
-    dotQ = (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
-
-    return dotQ;
 }
 
 double Mathutils::centerDist(Vector3d p){
@@ -432,15 +416,6 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
 
         distancePos = endPos - xe;
         distanceOrient = orientationError(Re, eulerToRotationMatrix(endOrientation));
-
-        /*
-        cout << "-------errors-------" << endl;
-        //cout << distancePos.norm() << endl << endl;
-        //cout << err_orient << endl << endl;
-        cout << distanceOrient.norm() << endl << endl;
-        cout << eule << endl << endl;
-        cout << distancePos.norm() << endl << endl;
-        cout << "--------------------" << endl;*/
 
         iter++;
     }
