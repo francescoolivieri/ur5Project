@@ -330,8 +330,8 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
         // cout << error.norm() << endl;
         iter++;
     }
-    cout << "numero di iterazioni: " << endl;
-    cout << iter << endl;
+    //cout << "numero di iterazioni: " << endl;
+    //cout << iter << endl;
     return joints_config;
 }
 
@@ -354,7 +354,7 @@ VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re,
     Jac = ur5Jacobian(qk.transpose());
 
     V.block<3,1>(0,0) = Kp*errorPosition/deltaT;
-    V.block<3,1>(3,0) = Kphi*errorOrientation;
+    V.block<3,1>(3,0) = Kphi*(errorOrientation.normalized());
 
     return (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
@@ -412,7 +412,7 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
         iter++;
     }
     
-    ROS_DEBUG("numero iterazioni: %d", iter );
+    std::cout << "numero iterazioni: " << iter << std::endl;
 
     return joints_config;
 }
