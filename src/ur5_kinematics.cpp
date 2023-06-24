@@ -340,8 +340,8 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
 VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid){
 
     MatrixXd Jac;
-    Matrix3d Kp = 0.8;
-    Matrix3d Kphi = 6;
+    double Kp = 0.8;
+    double Kphi = 6;
     VectorXd V(6);
     Matrix3d w_R_d;
     Vector3d errorOrientation;
@@ -379,9 +379,6 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
     Vector3d xe;
     Matrix3d Re;
     Vector3d eule;
-    //Vector3d phid;
-    Vector3d vd;
-    //Vector3d phiddot;
     VectorXd qk = th;
     VectorXd q = th;
     VectorXd dotq;
@@ -400,13 +397,8 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
         eule = Re.eulerAngles(0,1,2); 
 
         xd = desPos(xe, endPos);
-        //phid = desOrient(eule, endOrientation);
-        
-        //vd = (xd-xe)/deltaT;
-        //phiddot = (phid-eule)/0.001;
         
         dotq = dotQ(qk, xe, xd, Re, endOrientation);
-        //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         qk = q + dotq * deltaT;
         q = qk;
@@ -419,7 +411,9 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
 
         iter++;
     }
-    cout << "numero iterazioni: " << iter << endl;
+    
+    ROS_DEBUG("numero iterazioni: %d", iter );
+
     return joints_config;
 }
 
