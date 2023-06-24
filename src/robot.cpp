@@ -240,25 +240,20 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
 
     double roll = model_rotation(2);
     double pitch = model_rotation(1);
-    double yaw = -model_rotation(0); // yaw of approach for the gripper
-
-
+    double yaw = model_rotation(0); 
 
     if( (abs(roll) < 0.5 && abs(pitch) < 0.5) || ((0.9 < (abs(pitch)/M_PI) && (abs(pitch)/M_PI) < 1.1) && (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)) ){
         cout << "Block already up right! " << endl;
     }else{
 
-        move({model_pose(0), model_pose(1), working_height}, {0, 0, yaw});
-
-        int cont;
+        move({model_pose(0), model_pose(1), working_height}, {0, 0, -yaw});
 
         if( ((0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI))) && !(0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ // testa in giù
             cout << "#capotà" << endl;
-            cin >> cont;
 
             move_gripper(50);
 
-            move({model_pose(0), model_pose(1), grasping_height}, {0, 0, yaw});
+            move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -yaw});
 
 
             handled_model = get_string_nearest_model(models_list);
@@ -275,29 +270,27 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
             reversed = true;
         }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){  // (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1)
             cout << "#ciapa el sol" << endl;
-            cin >> cont;
 
-            move_gripper(95);
+            move_gripper(75);
 
             if(pitch < 0 && yaw<0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
-                cout << "CICI: " << grasping_height << endl;
-                move({model_pose(0), model_pose(1)+-0.025, grasping_height}, {0, 0, yaw});
+                
+                move({model_pose(0), model_pose(1)+0.025, grasping_height}, {0, 0, -yaw});
+                reversed = true;
             }else if(pitch > 0 && yaw > 0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
-                cout << "LILI: " << grasping_height << endl;
-                move({model_pose(0), model_pose(1)+0.025, grasping_height}, {0, 0, yaw});
-                reversed = true;
-            }else if(pitch < 0 && abs(yaw)<0.3){
-                cout << "BUBI: " << grasping_height << endl;
-                move({model_pose(0)-0.035, model_pose(1), grasping_height}, {0, 0, yaw});
-                reversed = true;
-            }else if(pitch > 0 && abs(yaw)<0.3){
-                cout << "TUTI: " << grasping_height << endl;
+                
+                move({model_pose(0), model_pose(1)-0.025, grasping_height}, {0, 0, -yaw});
+            }else if(pitch < 0 && (abs(yaw)<0.3 || ( (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1 && 0.9 < (abs(yaw)/M_PI) && (abs(yaw)/M_PI) < 1.1 ) || ( (abs(yaw)/M_PI) < 0.9 && (abs(roll)/M_PI) < 0.9 ) ) )){
+                
+                move({model_pose(0)-0.028, model_pose(1), grasping_height}, {0, 0, -yaw});
+            }else if(pitch > 0 && (abs(yaw)<0.3 || ( (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1 && 0.9 < (abs(yaw)/M_PI) && (abs(yaw)/M_PI) < 1.1 ) || ( (abs(yaw)/M_PI) < 0.9 && (abs(roll)/M_PI) < 0.9 ) ) )){
 
-                move({model_pose(0)+0.035, model_pose(1), grasping_height}, {0, 0, yaw});
+                move({model_pose(0)+0.028, model_pose(1), grasping_height}, {0, 0, -yaw});
+                reversed = true;
             }else{
+                cout << "[!!!] Orientation of the block NON-Optimal" << endl;
 
-                cout << "ELSE" << endl;
-                move({model_pose(0), model_pose(1), grasping_height-0.015}, {0, 0, yaw});
+                move({model_pose(0), model_pose(1), grasping_height-0.015}, {0, 0, -yaw});
             }
 
             handled_model = get_string_nearest_model(models_list);
@@ -306,6 +299,7 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
             rotate({model_pose(0), model_pose(1), working_height}, {-M_PI_2, 0, M_PI_2});
             move({model_pose(0), model_pose(1), releasing_height}, {-M_PI_2, 0, M_PI_2});  
 
+        
             detach("ur5", "hand_1_link", handled_model.c_str(), "link");
             move({model_pose(0), model_pose(1), working_height}, {-M_PI_2, 0, M_PI_2});
             rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
@@ -331,10 +325,10 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
 
         rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2,M_PI,0});
         move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2,M_PI,0});
-        move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2,M_PI,0});
 
         attach("ur5", "hand_1_link", handled_model.c_str(), "link");
-        move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+        move({model_pose(0), model_pose(1), working_height}, {M_PI_2,M_PI,0});
+        rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
         move({model_pose(0), model_pose(1), releasing_height}, {0,0,0});
         
         detach("ur5", "hand_1_link", handled_model.c_str(), "link");
