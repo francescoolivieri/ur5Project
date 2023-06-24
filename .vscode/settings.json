@@ -1,20 +1,47 @@
 {
     "files.associations": {
         "*.tcc": "cpp",
-        "iostream": "cpp"
+        "geometry": "cpp",
+        "iostream": "cpp",
+        "string": "cpp",
+        "ostream": "cpp",
+        "vector": "cpp",
+        "core": "cpp",
+        "*.ipp": "cpp",
+        "bitset": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "memory_resource": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "hash_set": "cpp",
+        "memory": "cpp",
+        "random": "cpp",
+        "fstream": "cpp",
+        "initializer_list": "cpp",
+        "istream": "cpp",
+        "numeric": "cpp",
+        "streambuf": "cpp",
+        "cmath": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "variant": "cpp"
     },
     "python.autoComplete.extraPaths": [
-        "/home/eddie/ros_ws/devel/lib/python3/dist-packages",
-        "/home/eddie/ros_ws/install/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/devel/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/install/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages",
         "/opt/openrobots/lib/python3.8/site-packages",
-        "/home/eddie/ros_ws/src/locosim/robot_control"
+        "/home/francesco/ros_ws/src/locosim/robot_control"
     ],
     "python.analysis.extraPaths": [
-        "/home/eddie/ros_ws/devel/lib/python3/dist-packages",
-        "/home/eddie/ros_ws/install/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/devel/lib/python3/dist-packages",
+        "/home/francesco/ros_ws/install/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages",
         "/opt/openrobots/lib/python3.8/site-packages",
-        "/home/eddie/ros_ws/src/locosim/robot_control"
+        "/home/francesco/ros_ws/src/locosim/robot_control"
     ]
 }

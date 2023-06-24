@@ -1,0 +1,239 @@
+\hypertarget{classRobot}{}\doxysection{Robot Class Reference}
+\label{classRobot}\index{Robot@{Robot}}
+
+
+Class representing a robot, it provides various functionalities to use it with ease.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRobot_a4fc7c70ae20623f05e06f2ecb388b6c4}\label{classRobot_a4fc7c70ae20623f05e06f2ecb388b6c4}} 
+\mbox{\hyperlink{classRobot_a4fc7c70ae20623f05e06f2ecb388b6c4}{Robot}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for \mbox{\hyperlink{classRobot}{Robot}} class. It sets the joints using the default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRobot_a5a4dfe9c0768a1762fc30311e2414406}{Robot}} (\mbox{\hyperlink{classJoints}{Joints}} joints)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRobot_a0a04145aecab2de64d1b89db4afa0fe4}{Robot}} (Vector6d q\+\_\+arm, Vector3d q\+\_\+gripper)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints separated in arm and gripper joints. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRobot_ad7fd7b576dea4262715e03abfa2da329}{Robot}} (Vector6d q\+\_\+arm)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints of the ur5-\/arm. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{classRobot_a851a87ea7f29169bb3d22dd7778221af}{get\+\_\+wrist}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the joints of the wrist (last 3 joints) \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{classRobot_a9c2229b7cdf36f95aefea28219cc2ef2}{get\+\_\+shoulder}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the joints of the shoulder (first 3 joints) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRobot_a53a7b0223c678ff86b692261e42dd8ed}{move}} (Vector3d final\+Pos, Vector3d final\+Orient)
+\begin{DoxyCompactList}\small\item\em Moves the robot to the specified final position and orientation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRobot_a5d9da1dfaca86b2003fd452deb21ef89}{rotate}} (Vector3d final\+Pos, Vector3d final\+Orient)
+\begin{DoxyCompactList}\small\item\em Rotates the robot to the specified final orientation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRobot_ae8a4f33aaa71277745d9e232d64f9c1a}{move\+\_\+gripper}} (double diameter)
+\begin{DoxyCompactList}\small\item\em Moves the gripper to the specified diameter value. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{classRobot_a813acdc1ac48041c61c01652fd8c6999}{get\+\_\+string\+\_\+nearest\+\_\+model}} (vector$<$ string $>$ models\+\_\+list)
+\begin{DoxyCompactList}\small\item\em Retrieves the name of the model closest to the end effector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRobot_a8d42d00c8cc71ae4ae8f04cdf094ab8e}{set\+\_\+new\+\_\+gripper\+\_\+position}} (double diameter)
+\begin{DoxyCompactList}\small\item\em Sets the gripper to a new position based on the given diameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRobot_a84ad1b6f21b5f41199934783fef5c81b}{set\+\_\+block\+\_\+up\+\_\+right}} (Vector3d model\+\_\+pose, Vector3d model\+\_\+rotation)
+\begin{DoxyCompactList}\small\item\em Sets the block in an upright position using the U\+R5 robot arm. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class representing a robot, it provides various functionalities to use it with ease. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classRobot_a5a4dfe9c0768a1762fc30311e2414406}\label{classRobot_a5a4dfe9c0768a1762fc30311e2414406}} 
+\index{Robot@{Robot}!Robot@{Robot}}
+\index{Robot@{Robot}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{Robot()}{Robot()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Robot\+::\+Robot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classJoints}{Joints}}}]{joints }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joints} & Set of joints that should represent the actual state of the joints \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRobot_a0a04145aecab2de64d1b89db4afa0fe4}\label{classRobot_a0a04145aecab2de64d1b89db4afa0fe4}} 
+\index{Robot@{Robot}!Robot@{Robot}}
+\index{Robot@{Robot}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{Robot()}{Robot()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Robot\+::\+Robot (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm,  }\item[{Vector3d}]{q\+\_\+gripper }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints separated in arm and gripper joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+{\em q\+\_\+gripper} & Vector (3 elements) of gripper joints \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRobot_ad7fd7b576dea4262715e03abfa2da329}\label{classRobot_ad7fd7b576dea4262715e03abfa2da329}} 
+\index{Robot@{Robot}!Robot@{Robot}}
+\index{Robot@{Robot}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{Robot()}{Robot()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Robot\+::\+Robot (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classRobot}{Robot}} object by giving the actual set of joints of the ur5-\/arm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q\+\_\+arm} & Vector (6 elements) of arm joints \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRobot_a9c2229b7cdf36f95aefea28219cc2ef2}\label{classRobot_a9c2229b7cdf36f95aefea28219cc2ef2}} 
+\index{Robot@{Robot}!get\_shoulder@{get\_shoulder}}
+\index{get\_shoulder@{get\_shoulder}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{get\_shoulder()}{get\_shoulder()}}
+{\footnotesize\ttfamily Vector3d Robot\+::get\+\_\+shoulder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves the joints of the shoulder (first 3 joints) 
+
+\begin{DoxyReturn}{Returns}
+Vector3d \mbox{\hyperlink{classJoints}{Joints}} of the wrist 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRobot_a813acdc1ac48041c61c01652fd8c6999}\label{classRobot_a813acdc1ac48041c61c01652fd8c6999}} 
+\index{Robot@{Robot}!get\_string\_nearest\_model@{get\_string\_nearest\_model}}
+\index{get\_string\_nearest\_model@{get\_string\_nearest\_model}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{get\_string\_nearest\_model()}{get\_string\_nearest\_model()}}
+{\footnotesize\ttfamily string Robot\+::get\+\_\+string\+\_\+nearest\+\_\+model (\begin{DoxyParamCaption}\item[{vector$<$ string $>$}]{models\+\_\+list }\end{DoxyParamCaption})}
+
+
+
+Retrieves the name of the model closest to the end effector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em models\+\_\+list} & List of models to look into \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The name of the model nearest to the end effector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRobot_a851a87ea7f29169bb3d22dd7778221af}\label{classRobot_a851a87ea7f29169bb3d22dd7778221af}} 
+\index{Robot@{Robot}!get\_wrist@{get\_wrist}}
+\index{get\_wrist@{get\_wrist}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{get\_wrist()}{get\_wrist()}}
+{\footnotesize\ttfamily Vector3d Robot\+::get\+\_\+wrist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves the joints of the wrist (last 3 joints) 
+
+\begin{DoxyReturn}{Returns}
+Vector3d \mbox{\hyperlink{classJoints}{Joints}} of the wrist 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRobot_a53a7b0223c678ff86b692261e42dd8ed}\label{classRobot_a53a7b0223c678ff86b692261e42dd8ed}} 
+\index{Robot@{Robot}!move@{move}}
+\index{move@{move}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Robot\+::move (\begin{DoxyParamCaption}\item[{Vector3d}]{final\+Pos,  }\item[{Vector3d}]{final\+Orient }\end{DoxyParamCaption})}
+
+
+
+Moves the robot to the specified final position and orientation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em final\+Pos} & Vector representing the final position from the point of view of the robot \\
+\hline
+{\em final\+Orient} & Vector representing the final orientation\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Position must be given from the point of view of the robot base 
+\end{DoxyRemark}
+\mbox{\Hypertarget{classRobot_ae8a4f33aaa71277745d9e232d64f9c1a}\label{classRobot_ae8a4f33aaa71277745d9e232d64f9c1a}} 
+\index{Robot@{Robot}!move\_gripper@{move\_gripper}}
+\index{move\_gripper@{move\_gripper}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{move\_gripper()}{move\_gripper()}}
+{\footnotesize\ttfamily void Robot\+::move\+\_\+gripper (\begin{DoxyParamCaption}\item[{double}]{diameter }\end{DoxyParamCaption})}
+
+
+
+Moves the gripper to the specified diameter value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em diameter} & The diameter value to move the gripper to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRobot_a5d9da1dfaca86b2003fd452deb21ef89}\label{classRobot_a5d9da1dfaca86b2003fd452deb21ef89}} 
+\index{Robot@{Robot}!rotate@{rotate}}
+\index{rotate@{rotate}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily void Robot\+::rotate (\begin{DoxyParamCaption}\item[{Vector3d}]{final\+Pos,  }\item[{Vector3d}]{final\+Orient }\end{DoxyParamCaption})}
+
+
+
+Rotates the robot to the specified final orientation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em final\+Pos} & Vector representing the final position \\
+\hline
+{\em final\+Orient} & Vector representing the final orientation\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+Position must be given from the point of view of the robot base 
+\end{DoxyRemark}
+\mbox{\Hypertarget{classRobot_a84ad1b6f21b5f41199934783fef5c81b}\label{classRobot_a84ad1b6f21b5f41199934783fef5c81b}} 
+\index{Robot@{Robot}!set\_block\_up\_right@{set\_block\_up\_right}}
+\index{set\_block\_up\_right@{set\_block\_up\_right}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{set\_block\_up\_right()}{set\_block\_up\_right()}}
+{\footnotesize\ttfamily void Robot\+::set\+\_\+block\+\_\+up\+\_\+right (\begin{DoxyParamCaption}\item[{Vector3d}]{model\+\_\+pose,  }\item[{Vector3d}]{model\+\_\+rotation }\end{DoxyParamCaption})}
+
+
+
+Sets the block in an upright position using the U\+R5 robot arm. 
+
+This function moves the U\+R5 robot arm to manipulate a block and bring it into an upright position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+pose} & Vector of 3 elements representing the pose . \\
+\hline
+{\em model\+\_\+rotation} & Vector of 3 elements representing the rotation of the block (yaw, pitch, roll).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+This function assumes that the block is initially placed at a position where it can be easily reached by the robot arm. 
+
+Position must be given from the point of view of the robot base 
+\end{DoxyRemark}
+\mbox{\Hypertarget{classRobot_a8d42d00c8cc71ae4ae8f04cdf094ab8e}\label{classRobot_a8d42d00c8cc71ae4ae8f04cdf094ab8e}} 
+\index{Robot@{Robot}!set\_new\_gripper\_position@{set\_new\_gripper\_position}}
+\index{set\_new\_gripper\_position@{set\_new\_gripper\_position}!Robot@{Robot}}
+\doxysubsubsection{\texorpdfstring{set\_new\_gripper\_position()}{set\_new\_gripper\_position()}}
+{\footnotesize\ttfamily void Robot\+::set\+\_\+new\+\_\+gripper\+\_\+position (\begin{DoxyParamCaption}\item[{double}]{diameter }\end{DoxyParamCaption})}
+
+
+
+Sets the gripper to a new position based on the given diameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em diameter} & The diameter value determining the new gripper position. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/robot.\+hpp\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/src/\mbox{\hyperlink{robot_8cpp}{robot.\+cpp}}\end{DoxyCompactItemize}

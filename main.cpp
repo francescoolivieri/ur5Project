@@ -1,15 +1,27 @@
+/**
+ * @file main.cpp
+ * @author Federico Adami, Francesco Olivieri, Eddie Veronese
+ * @brief 
+ * @version 0.1
+ * @date 2023-06-22
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <math.h>
 #include "robot.hpp"
 #include "blocks.hpp"
 #include "link_attacher.hpp"
 #include <iostream>
 #include <string>
+
 using namespace std;
+using namespace Mathutils;
 
 vector<string> models_list;
 
 int main(int argc, char **argv){
-    
     init();
 
     int n_task=0;
@@ -18,8 +30,6 @@ int main(int argc, char **argv){
     }
     
     Robot robot;
-    Vector3d endPos = { -0.4, -0.3, 0.6};
-    Vector3d endOrient = {0, 0, M_PI_2};
 
     Blocks blocks = Blocks();
 

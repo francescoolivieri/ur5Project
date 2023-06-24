@@ -6,7 +6,7 @@
 #include <final_msgs/final.h>
 
 Lego::Lego(){
-   // this->classe = "NULL";
+   
 }
 
 Lego::Lego(string classe, double x_base, double y_base, double z_base, double yaw, double pitch, double roll){
@@ -21,6 +21,8 @@ Lego::Lego(string classe, double x_base, double y_base, double z_base, double ya
 
 Blocks::Blocks(){
     final_msgs::finals::ConstPtr msg = ros::topic::waitForMessage<final_msgs::finals>("/messaggi");
+Models::Models(){
+    ros_impedance_controller::finals::ConstPtr msg = ros::topic::waitForMessage<ros_impedance_controller::finals>("/messaggi");
 
     this->list = new Lego[msg->length];
     for(int i = 0; i < msg->length; i++){
@@ -32,6 +34,8 @@ Blocks::Blocks(){
 
 void Blocks::update_blocks_pos(){
     delete[] this->list; // Dealloca la memoria precedente
+void Models::update_blocks_pos(){
+    this->list = NULL;
 
     final_msgs::finals::ConstPtr msg = ros::topic::waitForMessage<final_msgs::finals>("/messaggi");
 
@@ -44,6 +48,8 @@ void Blocks::update_blocks_pos(){
 }
 
 Lego Blocks::get_block(int index){
+    if(this->length > 0)
+Lego Models::get_block(int index){
     if(this->length > 0)
         return list[index];
     else
@@ -59,5 +65,17 @@ Lego Blocks::get_block(string model_name){
 }
 
 int Blocks::get_length(){
+    return length;
+}
+
+Lego Models::get_block(string model_name){
+    for (int i=0; i<length ; i++){
+        if( model_name == list[i].type )
+            return list[i];
+    }
+     return Lego();
+}
+
+int Models::get_lenght(){
     return length;
 }
