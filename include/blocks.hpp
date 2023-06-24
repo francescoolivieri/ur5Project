@@ -12,7 +12,7 @@ static ros::Subscriber sub_blocks;
 
 class Lego{
     public:
-        string type;
+        string classe;
         double x_base;
         double y_base;
         double z_base;
@@ -21,13 +21,13 @@ class Lego{
         double roll;
 
         Lego();
-        Lego(string type, double x_base, double y_base, double z_base, double yaw, double pitch, double roll);
+        Lego(string classe, double x_base, double y_base, double z_base, double yaw, double pitch, double roll);
 };
 
 class Blocks{
     private:
         Lego *list;
-        int size;
+        int length;
         //vector<Block> list;
 
     public:
@@ -35,6 +35,8 @@ class Blocks{
 
         void update_blocks_pos();
         Lego get_block(int index);
+        Lego get_block(string model_name);
+        int get_length();
 
 };
 

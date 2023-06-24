@@ -93,6 +93,20 @@ Robot::Robot(Vector6d q_arm){
     this->joints = Joints(q_arm);
 }
 
+Vector3d Robot::get_wrist(){
+    Vector3d wrist;
+    wrist << this->joints.wrist_1, this->joints.wrist_2, this->joints.wrist_3;
+
+    return wrist;
+}
+
+Vector3d Robot::get_shoulder(){
+    Vector3d shoulder;
+    shoulder << this->joints.shoulder_pan, this->joints.shoulder_lift, this->joints.elbow;
+
+    return shoulder;
+}
+
 double Robot::mapToGripperJoints(double diameter){
     if(soft_gripper){
         int D0 = 40;
@@ -206,32 +220,85 @@ string Robot::get_string_nearest_model(vector<string> models_list){
     return nearest_model;
 }
 
-void Robot::set_block_up_right(Vector3d model_pose){
-
+void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
     vector<string> models_list;
     get_list_models(models_list);
-    move(worldToRobot({model_pose(0), model_pose(1)-0.02, working_height}), {0, 0, M_PI_2});
-    move_gripper(70);
 
-    move(worldToRobot({model_pose(0), model_pose(1)-0.02, grasping_height}), {0, 0, M_PI_2});
-    string handled_model = get_string_nearest_model(models_list);
-    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0, 0, M_PI_2});
-    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
-    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {-M_PI_2, 0, M_PI_2});
+    string handled_model;
 
-    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
-    rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
-    rotate(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, working_height}), {M_PI_2,M_PI,0});
-    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.05, releasing_height}), {M_PI_2,M_PI,0});
-    move(worldToRobot({model_pose(0)-0.02, model_pose(1)-0.01, releasing_height}), {M_PI_2,M_PI,0});
+    double roll = model_rotation(2);
+    double pitch = model_rotation(1);
+    double yaw = model_rotation(0);
 
-    attach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
-    move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
-    
-    detach("ur5", "hand_1_link", handled_model.c_str(), "link");
-    move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+    if( abs(roll) < 0.5 && abs(pitch) < 0.5 ){
+        cout << "Block already up right! " << endl;
+    }else{
 
+        move(worldToRobot({model_pose(0), model_pose(1)-0.02, working_height}), {0, 0, yaw});
+        move_gripper(70);
+
+        if( (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI) && (abs(pitch)/M_PI) < 1.1) ){ // testa in giù
+            cout << "#capotà" << endl;
+            move(worldToRobot({model_pose(0), model_pose(1), grasping_height}), {0, 0, yaw});
+            handled_model = get_string_nearest_model(models_list);
+            attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0, 0, yaw}); // sarebbe getOrient
+            rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {M_PI_2, M_PI, 0});
+            move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {M_PI_2, M_PI, 0}); // sarebbe getOrient
+
+            detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {M_PI_2, M_PI, 0});
+            rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+            
+            move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
+            attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+            rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,M_PI});
+            move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,M_PI});
+            detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){
+            cout << "#ciapa el sol" << endl;
+
+            if(pitch < 0)
+                move(worldToRobot({model_pose(0), model_pose(1)-0.025, grasping_height}), {0, 0, yaw});
+            else
+                move(worldToRobot({model_pose(0), model_pose(1)+0.025, grasping_height}), {0, 0, yaw});
+
+            handled_model = get_string_nearest_model(models_list);
+            attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0, 0, yaw});
+            rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
+            move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {-M_PI_2, 0, M_PI_2});  
+
+            detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+            move(worldToRobot({model_pose(0), model_pose(1), working_height}), {-M_PI_2, 0, M_PI_2});
+            rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+
+            if(pitch > 0){
+                move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
+                attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+                move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+                rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,M_PI});
+                move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,M_PI});
+                detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+
+                move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+            }
+        }
+
+        rotate(worldToRobot({model_pose(0), model_pose(1), working_height}), {M_PI_2,M_PI,0});
+        move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {M_PI_2,M_PI,0});
+        move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {M_PI_2,M_PI,0});
+
+        attach("ur5", "hand_1_link", handled_model.c_str(), "link");
+        move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+        move(worldToRobot({model_pose(0), model_pose(1), releasing_height}), {0,0,0});
+        
+        detach("ur5", "hand_1_link", handled_model.c_str(), "link");
+        move(worldToRobot({model_pose(0), model_pose(1), working_height}), {0,0,0});
+    }
 }

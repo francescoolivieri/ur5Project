@@ -78,13 +78,16 @@ class Robot{
         Robot(Vector6d q_arm, Vector3d q_gripper);
         Robot(Vector6d q_arm);
 
+        Vector3d get_wrist();
+        Vector3d get_shoulder();
+
         void move(Vector3d finalPos, Vector3d finalOrient);
         void rotate(Vector3d finalPos, Vector3d finalOrient);
         void move_gripper(double diameter);
         string get_string_nearest_model(vector<string> models_list);
 
         void set_new_gripper_position(double diameter);
-        void set_block_up_right(Vector3d model_pose);
+        void set_block_up_right(Vector3d model_pose, Vector3d model_rotation);
     
 };
 

@@ -1,6 +1,7 @@
 #include "custom_joint_pub.hpp"
 
 
+
 void init(){
 
     int argc = 1;
@@ -24,6 +25,8 @@ void init(){
     node.getParam("/real_robot", real_robot);
     node.getParam("/soft_gripper", soft_gripper);
     node.getParam("/gripper_sim", gripper_sim);
+
+    get_list_models(models_list);
     
     cout << "--GRIPPER CHECK---" << endl;
     cout << gripper_sim << endl << endl;

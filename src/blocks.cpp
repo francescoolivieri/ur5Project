@@ -1,14 +1,16 @@
 #include "blocks.hpp"
+#include <cstdlib>
 
-#include <ros_impedance_controller/finals.h>
-#include <ros_impedance_controller/final.h>
+
+#include <final_msgs/finals.h>
+#include <final_msgs/final.h>
 
 Lego::Lego(){
-   // this->type = "NULL";
+   // this->classe = "NULL";
 }
 
-Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw, double pitch, double roll){
-    this->type = type;
+Lego::Lego(string classe, double x_base, double y_base, double z_base, double yaw, double pitch, double roll){
+    this->classe = classe;
     this->x_base = x_base;
     this->y_base = y_base;
     this->z_base = z_base;
@@ -18,34 +20,44 @@ Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw,
 }
 
 Blocks::Blocks(){
-    ros_impedance_controller::finals::ConstPtr msg = ros::topic::waitForMessage<ros_impedance_controller::finals>("/messaggi");
+    final_msgs::finals::ConstPtr msg = ros::topic::waitForMessage<final_msgs::finals>("/messaggi");
 
-    Lego new_list[msg->length];
-    this->list = new_list;
-    for(int i=0 ; i<msg->length ; i++){
-        list[i] = Lego(msg->finals[i].type, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll );
+    this->list = new Lego[msg->length];
+    for(int i = 0; i < msg->length; i++){
+        list[i] = Lego(msg->finals[i].classe, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll);
     }
 
-    this->size = msg->length;
+    this->length = msg->length;
 }
 
 void Blocks::update_blocks_pos(){
-    this->list = NULL;
+    delete[] this->list; // Dealloca la memoria precedente
 
-    ros_impedance_controller::finals::ConstPtr msg = ros::topic::waitForMessage<ros_impedance_controller::finals>("/messaggi");
+    final_msgs::finals::ConstPtr msg = ros::topic::waitForMessage<final_msgs::finals>("/messaggi");
 
-    Lego new_list[msg->length];
-    this->list = new_list;
-    for(int i=0 ; i<msg->length ; i++){
-        list[i] = Lego(msg->finals[i].type, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll );
+    this->list = new Lego[msg->length];
+    for(int i = 0; i < msg->length; i++){
+        list[i] = Lego(msg->finals[i].classe, msg->finals[i].x_base, msg->finals[i].y_base, msg->finals[i].z_base, msg->finals[i].yaw, msg->finals[i].pitch, msg->finals[i].roll);
     }
 
-    this->size = msg->length;
+    this->length = msg->length;
 }
 
 Lego Blocks::get_block(int index){
-    if(this->size > 0)
+    if(this->length > 0)
         return list[index];
     else
         return Lego();
+}
+
+Lego Blocks::get_block(string model_name){
+    for (int i=0; i<length ; i++){
+        if( model_name == list[i].classe )
+            return list[i];
+    }
+     return Lego();
+}
+
+int Blocks::get_length(){
+    return length;
 }

@@ -37,6 +37,23 @@ Vector3d get_pose(string model_name){
     return pose;
 }
 
+Vector3d get_orientation(string model_name){
+    gazebo_msgs::GetModelState gms;
+    gms.request.model_name=model_name.c_str();
+    if (!get_model_client.call(gms))
+        ROS_ERROR("Get model pose failed");
+
+    Quaterniond orient;
+    orient.w() = gms.response.pose.orientation.w;
+    orient.x() = gms.response.pose.orientation.x;
+    orient.y() = gms.response.pose.orientation.y;
+    orient.z() = gms.response.pose.orientation.z;
+
+    Vector3d euler_angles = orient.toRotationMatrix().eulerAngles(2,1,0);
+
+    return euler_angles;
+}
+
 void get_list_models(vector<string> &list_models){
     gazebo_msgs::GetWorldProperties gwp;
     if (!get_list_models_client.call(gwp))
