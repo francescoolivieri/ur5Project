@@ -31,7 +31,7 @@ int main(int argc, char **argv){
     
     Robot robot;
 
-    Blocks blocks = Blocks();
+    Models blocks = Models();
 
     switch (n_task)
     {

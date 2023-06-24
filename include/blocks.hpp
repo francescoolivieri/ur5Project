@@ -67,8 +67,7 @@ class Models{
         Lego get_block(int index);
         Lego get_block(string model_name);
         int get_length();
-        Lego get_block(string model_name);
-        int get_lenght();
+
 
 };
 

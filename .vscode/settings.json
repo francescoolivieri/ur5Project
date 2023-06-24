@@ -28,7 +28,8 @@
         "utility": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "string_view": "cpp"
     },
     "python.autoComplete.extraPaths": [
         "/home/francesco/ros_ws/devel/lib/python3/dist-packages",
