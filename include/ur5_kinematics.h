@@ -16,6 +16,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include <ros/console.h>
 
 #define SCALE_FACTOR 1
 #define GRIPPER_LENGTH 0.15 // needs to be replaced with 0.12 later (0 is just for testing)

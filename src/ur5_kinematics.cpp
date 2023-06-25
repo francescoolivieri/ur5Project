@@ -329,8 +329,8 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
         // cout << error.norm() << endl;
         iter++;
     }
-    cout << "numero di iterazioni: " << endl;
-    cout << iter << endl;
+    //cout << "numero di iterazioni: " << endl;
+    //cout << iter << endl;
     return joints_config;
 }
 
@@ -353,7 +353,7 @@ VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re,
     Jac = ur5Jacobian(qk.transpose());
 
     V.block<3,1>(0,0) = Kp*errorPosition/deltaT;
-    V.block<3,1>(3,0) = Kphi*errorOrientation;
+    V.block<3,1>(3,0) = Kphi*(errorOrientation.normalized());
 
     return (Jac + MatrixXd::Identity(6,6)*(0.001)).inverse()*V;
 
@@ -378,9 +378,6 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
     Vector3d xe;
     Matrix3d Re;
     Vector3d eule;
-    //Vector3d phid;
-    Vector3d vd;
-    //Vector3d phiddot;
     VectorXd qk = th;
     VectorXd q = th;
     VectorXd dotq;
@@ -399,13 +396,8 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
         eule = Re.eulerAngles(0,1,2); 
 
         xd = desPos(xe, endPos);
-        //phid = desOrient(eule, endOrientation);
-        
-        //vd = (xd-xe)/deltaT;
-        //phiddot = (phid-eule)/0.001;
         
         dotq = dotQ(qk, xe, xd, Re, endOrientation);
-        //dotq = dotQquaternion(qk, xd, phid, vd, phiddot);
         
         qk = q + dotq * deltaT;
         q = qk;
@@ -418,7 +410,9 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
 
         iter++;
     }
-    cout << "numero iterazioni: " << iter << endl;
+    
+    std::cout << "numero iterazioni: " << iter << std::endl;
+
     return joints_config;
 }
 
