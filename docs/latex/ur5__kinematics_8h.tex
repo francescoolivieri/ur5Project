@@ -1,0 +1,141 @@
+\hypertarget{ur5__kinematics_8h}{}\doxysection{/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/ur5\+\_\+kinematics.h File Reference}
+\label{ur5__kinematics_8h}\index{/home/francesco/ros\_ws/src/ur5Project/include/ur5\_kinematics.h@{/home/francesco/ros\_ws/src/ur5Project/include/ur5\_kinematics.h}}
+
+
+Library that contains all the functions and utilities to handle the kinematics of the ur5 properly.  
+
+
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Core$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Geometry$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$ros/console.\+h$>$}\newline
+Include dependency graph for ur5\+\_\+kinematics.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ur5__kinematics_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{ur5__kinematics_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceKinematics}{Kinematics}}
+\begin{DoxyCompactList}\small\item\em Contains all the functions related with the kinematic of the robot arm. \end{DoxyCompactList}\item 
+ \mbox{\hyperlink{namespaceMathutils}{Mathutils}}
+\begin{DoxyCompactList}\small\item\em Contains all the mathematical tools useful for the calculations about the ur5-\/robot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a40f4468f6ca0fcc14337d9b778945d08}\label{ur5__kinematics_8h_a40f4468f6ca0fcc14337d9b778945d08}} 
+\#define {\bfseries U\+R5\+\_\+\+K\+I\+N\+A\+M\+E\+T\+I\+C\+S\+\_\+H}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_adb1f1d5b685f5a444190abe4ac18d972}\label{ur5__kinematics_8h_adb1f1d5b685f5a444190abe4ac18d972}} 
+\#define {\bfseries S\+C\+A\+L\+E\+\_\+\+F\+A\+C\+T\+OR}~1
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a6f2e1916a7fcce65ec53c94e8967032b}\label{ur5__kinematics_8h_a6f2e1916a7fcce65ec53c94e8967032b}} 
+\#define {\bfseries G\+R\+I\+P\+P\+E\+R\+\_\+\+L\+E\+N\+G\+TH}~0.\+15
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_aa4f8ea40228c3c3a9a7143b1d1ad8956}\label{ur5__kinematics_8h_aa4f8ea40228c3c3a9a7143b1d1ad8956}} 
+\#define {\bfseries R\+A\+D\+I\+US}~0.\+20
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a98c311f8f84d62784ec0499c9df9816d}\label{ur5__kinematics_8h_a98c311f8f84d62784ec0499c9df9816d}} 
+typedef Matrix$<$ double, 6, 1 $>$ {\bfseries Vector6d}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a1a6b6fb557d8d37d59700faf4e4c9167}\label{ur5__kinematics_8h_a1a6b6fb557d8d37d59700faf4e4c9167}} 
+enum {\bfseries mode} \{ {\bfseries S\+IN}, 
+{\bfseries C\+I\+RC}, 
+{\bfseries L\+IN}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Matrix4d \mbox{\hyperlink{namespaceKinematics_aada040ce83c5bd12b0d45085c029cfe4}{Kinematics\+::direct\+Kinematics\+Ur5}} (Vector\+Xd th)
+\begin{DoxyCompactList}\small\item\em This function calculate the direct kinematics of the ur5. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a73a479cda16e3881b65e23012b163efd}{Kinematics\+::inverse\+Kinematics\+Ur5}} (Vector3d pe, Matrix3d Re)
+\begin{DoxyCompactList}\small\item\em This function calculate the inverse kinematics of the ur5. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_aa71af13340693e0565a3b5a763044543}{Kinematics\+::attr\+Force\+\_\+pos}} (Vector3d error)
+\begin{DoxyCompactList}\small\item\em This function calculates the attractive force based on position error (normalized). \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_adadb6d6f78745a2cef0a000add1a1a19}{Kinematics\+::repul\+Force}} (Vector3d xe)
+\begin{DoxyCompactList}\small\item\em This function calculates the repulsive force that keeps the end effector away from the point of shoulder singularity. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_ad29ccb6917f8cb745c3ce3e05d320c29}{Kinematics\+::des\+Pos}} (Vector3d xe, Vector3d xf)
+\begin{DoxyCompactList}\small\item\em This function calculates the desired position of the end effector, it combines the attractive force towards the target position and the repulsive force from point of singularity. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_ae708e86535fc8fe028f657257ff0dc70}{Kinematics\+::des\+Orient}} (Vector3d phie, Vector3d phif)
+\begin{DoxyCompactList}\small\item\em This function calculates the desired orientation of the end effector. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_aec7c725f4596bad5627e5608adb41794}{Kinematics\+::attr\+Force\+\_\+orient}} (Vector3d error)
+\begin{DoxyCompactList}\small\item\em This function calculates the attractive force based on orientation error (normalized). \end{DoxyCompactList}\item 
+Vector\+Xd \mbox{\hyperlink{namespaceKinematics_a3af82f9ce6d10c61431a82b35388bc23}{Kinematics\+::dotQ}} (Row\+Vector\+Xd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)
+\begin{DoxyCompactList}\small\item\em This function calculate the derivative of joint angles using a proportional control law. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a3aa1c5da19ddad88af1128186b0e9205}{Kinematics\+::inverse\+Diff\+Kinematics\+Ur5}} (Vector\+Xd th, Vector3d end\+Pos, Vector3d end\+Orientation)
+\begin{DoxyCompactList}\small\item\em Function that calculate the inverse differential kinematics for ur5 robot. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a85f8506586359437a5bf6195167f6e88}{Kinematics\+::joint\+Space\+\_\+kinematics}} (Vector\+Xd qk, Vector3d end\+Pos, Vector3d end\+Orient)
+\begin{DoxyCompactList}\small\item\em Function that performs joint space kinematics for ur5 robot. \end{DoxyCompactList}\item 
+Vector\+Xd \mbox{\hyperlink{namespaceKinematics_abd74c1d156c380763bfb262ad67ae691}{Kinematics\+::nearest\+\_\+config}} (Vector\+Xd qk, Matrix\+Xd val)
+\begin{DoxyCompactList}\small\item\em Function that find the nearest configuration between a set of different configurations. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_a5aa63690c00b1d646862b4c3eda9520b}{Kinematics\+::position\+Error}} (Vector3d xe, Vector3d xd)
+\begin{DoxyCompactList}\small\item\em This function calculate the error between the actual position and the desired one. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_a0fd0827f35ce58c442badf8ab12ca8da}{Kinematics\+::orientation\+Error}} (Matrix3d w\+\_\+\+R\+\_\+e, Matrix3d w\+\_\+\+R\+\_\+d)
+\begin{DoxyCompactList}\small\item\em This function calculates the orentation error between the desired and the current one. (Provided by Focchi) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceKinematics_a69ba017bd077db299f5f0b04864f8e4f}\label{namespaceKinematics_a69ba017bd077db299f5f0b04864f8e4f}} 
+Matrix\+Xd {\bfseries Kinematics\+::inverse\+Diff\+Kinematics\+Ur5\+Quaternions} (Vector\+Xd q\+\_\+k, Vector3d end\+Pos, Vector3d end\+Orient)
+\item 
+\mbox{\Hypertarget{namespaceKinematics_a760d23eaa4c1226458c183cb5d65ce62}\label{namespaceKinematics_a760d23eaa4c1226458c183cb5d65ce62}} 
+Vector\+Xd {\bfseries Kinematics\+::\+Compute\+Error\+Quaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des)
+\item 
+\mbox{\Hypertarget{namespaceKinematics_a547bf2dcf1a21caf277305094a4a162c}\label{namespaceKinematics_a547bf2dcf1a21caf277305094a4a162c}} 
+Vector\+Xd {\bfseries Kinematics\+::dot\+Qquaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des, Vector3d v\+\_\+des, Vector3d w\+\_\+des)
+\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_adc7f6a6f23b21cc03b87b968a3f14b1b}{Mathutils\+::world\+To\+Robot}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculates the change of base frame starting from a world frame point to a point with respect to the base frame of the robot. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_ad29af7571ec2f06927ec144fab7a7be0}{Mathutils\+::robot\+To\+World}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculates the change of base frame starting from a robot base frame point to a point with respect to the world frame. \end{DoxyCompactList}\item 
+Matrix4d \mbox{\hyperlink{namespaceMathutils_a768da9b748aa73c4d9499a310f30c00c}{Mathutils\+::get\+T\+\_\+i}} (int i, double th)
+\begin{DoxyCompactList}\small\item\em Get the trasformation matrix between the frames of the robot\textquotesingle{}s joints. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceMathutils_a548a12516e4f8c207cbb4516264c5dc4}{Mathutils\+::ur5\+Jacobian}} (Vector\+Xd th)
+\begin{DoxyCompactList}\small\item\em Function that calculate the Jacobian matrix of the U\+R5 robot. \end{DoxyCompactList}\item 
+Matrix3d \mbox{\hyperlink{namespaceMathutils_a8a655a0b57071a622489683463512e72}{Mathutils\+::euler\+To\+Rotation\+Matrix}} (Vector3d euler)
+\begin{DoxyCompactList}\small\item\em Convert Euler angles to a rotation matrix. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a396f7c16da640cb1b1d4ef3c695cba2e}{Mathutils\+::vect\+Magnitude}} (const Vector3d \&v)
+\begin{DoxyCompactList}\small\item\em Function that calculate the magnitude of a vector. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a35ed5ffff50db796b7f868577a2b7fdc}{Mathutils\+::quat\+Magnitude}} (const Quaterniond \&q)
+\begin{DoxyCompactList}\small\item\em Function that calculate the magnitude of a quaternion. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a84f89b94f8e4be490c60d6b443fea4eb}{Mathutils\+::center\+Dist}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculate the distance from the center (below the base frame of the ur5-\/robot) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespaceMathutils_ab35d10ed4e920f772a5abd807cf3d952}{Mathutils\+::touch\+Center\+Circle}} (Vector3d start\+\_\+pos, Vector3d end\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Function that calculate if the trajectory between the starting position and ending position touch the circle defined around the origin. \end{DoxyCompactList}\item 
+Quaterniond \mbox{\hyperlink{namespaceMathutils_abb0f12ffd29ac761b36a149bfd7d6efa}{Mathutils\+::\+Euler\+To\+Quaternion}} (Vector3d euler)
+\begin{DoxyCompactList}\small\item\em Function that trasforms euler angles in quaternion. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_a66ee328924ba859a7804bc2bc7c90c57}{Mathutils\+::tangential\+Point}} (Vector3d start\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Function that calculate the tangential point on a circle given a starting position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Library that contains all the functions and utilities to handle the kinematics of the ur5 properly. 
+
+\begin{DoxyAuthor}{Author}
+Federico Adami, Francesco Olivieri, Eddie Veronese 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/06-\/23
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}

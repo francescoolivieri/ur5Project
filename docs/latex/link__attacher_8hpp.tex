@@ -1,0 +1,180 @@
+\hypertarget{link__attacher_8hpp}{}\doxysection{/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/link\+\_\+attacher.hpp File Reference}
+\label{link__attacher_8hpp}\index{/home/francesco/ros\_ws/src/ur5Project/include/link\_attacher.hpp@{/home/francesco/ros\_ws/src/ur5Project/include/link\_attacher.hpp}}
+
+
+It provides a useful set of functions that manages the linker service.  
+
+
+{\ttfamily \#include $<$ros/ros.\+h$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Core$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Geometry$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include \char`\"{}gazebo\+\_\+ros\+\_\+link\+\_\+attacher/\+Attach.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$gazebo\+\_\+msgs/\+Link\+States.\+h$>$}\newline
+{\ttfamily \#include $<$gazebo\+\_\+msgs/\+Model\+States.\+h$>$}\newline
+{\ttfamily \#include $<$gazebo\+\_\+msgs/\+Get\+Model\+State.\+h$>$}\newline
+{\ttfamily \#include $<$gazebo\+\_\+msgs/\+Get\+World\+Properties.\+h$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/\+Pose.\+h$>$}\newline
+{\ttfamily \#include $<$geometry\+\_\+msgs/\+Twist.\+h$>$}\newline
+Include dependency graph for link\+\_\+attacher.\+hpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{link__attacher_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{link__attacher_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{link__attacher_8hpp_acdf1e9014b400ae4775526b6dc70d104}{attach}} (const char $\ast$model1, const char $\ast$link1, const char $\ast$model2, const char $\ast$link2)
+\begin{DoxyCompactList}\small\item\em Function that send a request to create a dynamic link to attach the two models specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{link__attacher_8hpp_a93f83e5501e90654fa2bbfcf5798b281}{detach}} (const char $\ast$model1, const char $\ast$link1, const char $\ast$model2, const char $\ast$link2)
+\begin{DoxyCompactList}\small\item\em Function that send a request to delete a dynamic link to detach the two models specified. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{link__attacher_8hpp_a127d09dae6c1325971af57454832b522}{get\+\_\+pose}} (string model\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Function that retrieves the position of the model specified. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{link__attacher_8hpp_a6d10e051d644bdbb0fbc564aa4387c57}{get\+\_\+orientation}} (string model\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Function that retrieves the orientation of the model specified. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{link__attacher_8hpp_ada53f15d7c997a6bb0865d45be717141}{get\+\_\+list\+\_\+models}} (vector$<$ string $>$ \&list\+\_\+models)
+\begin{DoxyCompactList}\small\item\em Function that retrieves the list of the models (filter to find only lego models) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{link__attacher_8hpp_aad6c40f6b282823919d49b87390edcd5}\label{link__attacher_8hpp_aad6c40f6b282823919d49b87390edcd5}} 
+ros\+::\+Service\+Client {\bfseries attach\+\_\+client}
+\item 
+\mbox{\Hypertarget{link__attacher_8hpp_a72b9a3f852468b840dd2608248baeacb}\label{link__attacher_8hpp_a72b9a3f852468b840dd2608248baeacb}} 
+ros\+::\+Service\+Client {\bfseries detach\+\_\+client}
+\item 
+\mbox{\Hypertarget{link__attacher_8hpp_a40fc10d8480ebe15b45ee631318039c7}\label{link__attacher_8hpp_a40fc10d8480ebe15b45ee631318039c7}} 
+ros\+::\+Service\+Client {\bfseries get\+\_\+model\+\_\+client}
+\item 
+\mbox{\Hypertarget{link__attacher_8hpp_abfd06575ad4982cc54573958b8a8c1ff}\label{link__attacher_8hpp_abfd06575ad4982cc54573958b8a8c1ff}} 
+ros\+::\+Service\+Client {\bfseries get\+\_\+list\+\_\+models\+\_\+client}
+\item 
+\mbox{\Hypertarget{link__attacher_8hpp_a68c9079103380dd96779936d57c37d38}\label{link__attacher_8hpp_a68c9079103380dd96779936d57c37d38}} 
+vector$<$ string $>$ {\bfseries models\+\_\+list}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+It provides a useful set of functions that manages the linker service. 
+
+\begin{DoxyAuthor}{Author}
+Federico Adami, Francesco Oliveri, Eddie Veronese 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/06-\/25
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{link__attacher_8hpp_acdf1e9014b400ae4775526b6dc70d104}\label{link__attacher_8hpp_acdf1e9014b400ae4775526b6dc70d104}} 
+\index{link\_attacher.hpp@{link\_attacher.hpp}!attach@{attach}}
+\index{attach@{attach}!link\_attacher.hpp@{link\_attacher.hpp}}
+\doxysubsubsection{\texorpdfstring{attach()}{attach()}}
+{\footnotesize\ttfamily void attach (\begin{DoxyParamCaption}\item[{const char $\ast$}]{model1,  }\item[{const char $\ast$}]{link1,  }\item[{const char $\ast$}]{model2,  }\item[{const char $\ast$}]{link2 }\end{DoxyParamCaption})}
+
+
+
+Function that send a request to create a dynamic link to attach the two models specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model1} & Name of the first model \\
+\hline
+{\em link1} & Name of the link in the first model \\
+\hline
+{\em model2} & Name of the second model \\
+\hline
+{\em link2} & Name of the link in the second model \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{link__attacher_8hpp_a93f83e5501e90654fa2bbfcf5798b281}\label{link__attacher_8hpp_a93f83e5501e90654fa2bbfcf5798b281}} 
+\index{link\_attacher.hpp@{link\_attacher.hpp}!detach@{detach}}
+\index{detach@{detach}!link\_attacher.hpp@{link\_attacher.hpp}}
+\doxysubsubsection{\texorpdfstring{detach()}{detach()}}
+{\footnotesize\ttfamily void detach (\begin{DoxyParamCaption}\item[{const char $\ast$}]{model1,  }\item[{const char $\ast$}]{link1,  }\item[{const char $\ast$}]{model2,  }\item[{const char $\ast$}]{link2 }\end{DoxyParamCaption})}
+
+
+
+Function that send a request to delete a dynamic link to detach the two models specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model1} & Name of the first model \\
+\hline
+{\em link1} & Name of the link in the first model \\
+\hline
+{\em model2} & Name of the second model \\
+\hline
+{\em link2} & Name of the link in the second model \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{link__attacher_8hpp_ada53f15d7c997a6bb0865d45be717141}\label{link__attacher_8hpp_ada53f15d7c997a6bb0865d45be717141}} 
+\index{link\_attacher.hpp@{link\_attacher.hpp}!get\_list\_models@{get\_list\_models}}
+\index{get\_list\_models@{get\_list\_models}!link\_attacher.hpp@{link\_attacher.hpp}}
+\doxysubsubsection{\texorpdfstring{get\_list\_models()}{get\_list\_models()}}
+{\footnotesize\ttfamily void get\+\_\+list\+\_\+models (\begin{DoxyParamCaption}\item[{vector$<$ string $>$ \&}]{list\+\_\+models }\end{DoxyParamCaption})}
+
+
+
+Function that retrieves the list of the models (filter to find only lego models) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list\+\_\+models} & List of models present\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRemark}{Remarks}
+This function has a filter to retrieve only lego models 
+\end{DoxyRemark}
+\mbox{\Hypertarget{link__attacher_8hpp_a6d10e051d644bdbb0fbc564aa4387c57}\label{link__attacher_8hpp_a6d10e051d644bdbb0fbc564aa4387c57}} 
+\index{link\_attacher.hpp@{link\_attacher.hpp}!get\_orientation@{get\_orientation}}
+\index{get\_orientation@{get\_orientation}!link\_attacher.hpp@{link\_attacher.hpp}}
+\doxysubsubsection{\texorpdfstring{get\_orientation()}{get\_orientation()}}
+{\footnotesize\ttfamily Vector3d get\+\_\+orientation (\begin{DoxyParamCaption}\item[{string}]{model\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Function that retrieves the orientation of the model specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+name} & Name of the model \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Orientation of the model 
+\end{DoxyReturn}
+\mbox{\Hypertarget{link__attacher_8hpp_a127d09dae6c1325971af57454832b522}\label{link__attacher_8hpp_a127d09dae6c1325971af57454832b522}} 
+\index{link\_attacher.hpp@{link\_attacher.hpp}!get\_pose@{get\_pose}}
+\index{get\_pose@{get\_pose}!link\_attacher.hpp@{link\_attacher.hpp}}
+\doxysubsubsection{\texorpdfstring{get\_pose()}{get\_pose()}}
+{\footnotesize\ttfamily Vector3d get\+\_\+pose (\begin{DoxyParamCaption}\item[{string}]{model\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Function that retrieves the position of the model specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+name} & Name of the model \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Position of the model 
+\end{DoxyReturn}

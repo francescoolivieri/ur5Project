@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['main_2ecpp_8',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['move_9',['move',['../classRobot.html#a53a7b0223c678ff86b692261e42dd8ed',1,'Robot']]],
-  ['move_5fgripper_10',['move_gripper',['../classRobot.html#ae8a4f33aaa71277745d9e232d64f9c1a',1,'Robot']]]
+  ['eulertoquaternion_11',['EulerToQuaternion',['../namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa',1,'Mathutils']]],
+  ['eulertorotationmatrix_12',['eulerToRotationMatrix',['../namespaceMathutils.html#a8a655a0b57071a622489683463512e72',1,'Mathutils']]]
 ];

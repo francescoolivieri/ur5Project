@@ -1,0 +1,80 @@
+\hypertarget{robot_8hpp}{}\doxysection{/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/robot.hpp File Reference}
+\label{robot_8hpp}\index{/home/francesco/ros\_ws/src/ur5Project/include/robot.hpp@{/home/francesco/ros\_ws/src/ur5Project/include/robot.hpp}}
+
+
+This file contains two classes that are crucial. They provide to the final user a good level of abstraction and an easy management of the ur5 robotic arm.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Core$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Geometry$>$}\newline
+{\ttfamily \#include \char`\"{}custom\+\_\+joint\+\_\+pub.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}link\+\_\+attacher.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ur5\+\_\+kinematics.\+h\char`\"{}}\newline
+Include dependency graph for robot.\+hpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{robot_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{robot_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classJoints}{Joints}}
+\begin{DoxyCompactList}\small\item\em Class representing the robot\textquotesingle{}s joints, used to both store and update. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRobot}{Robot}}
+\begin{DoxyCompactList}\small\item\em Class representing a robot, it provides various functionalities to use it with ease. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{robot_8hpp_a338263a7a387f2244953adcd9672c26c}\label{robot_8hpp_a338263a7a387f2244953adcd9672c26c}} 
+\#define {\bfseries U\+P\+D\+A\+T\+E\+\_\+\+F\+R\+O\+M\+\_\+\+R\+O\+B\+OT}~0
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{robot_8hpp_a98c311f8f84d62784ec0499c9df9816d}\label{robot_8hpp_a98c311f8f84d62784ec0499c9df9816d}} 
+typedef Matrix$<$ double, 6, 1 $>$ {\bfseries Vector6d}
+\item 
+\mbox{\Hypertarget{robot_8hpp_ac03ac42f1675ef0c3fbdb37a6ae5f64e}\label{robot_8hpp_ac03ac42f1675ef0c3fbdb37a6ae5f64e}} 
+typedef Matrix$<$ double, 9, 1 $>$ {\bfseries Vector9d}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{robot_8hpp_aa7270f0ca0f39d26268309d1ea08e964}\label{robot_8hpp_aa7270f0ca0f39d26268309d1ea08e964}} 
+bool {\bfseries real\+\_\+robot}
+\item 
+\mbox{\Hypertarget{robot_8hpp_a73bf9c03a7aad3dff1b57f290aae8351}\label{robot_8hpp_a73bf9c03a7aad3dff1b57f290aae8351}} 
+bool {\bfseries soft\+\_\+gripper}
+\item 
+\mbox{\Hypertarget{robot_8hpp_a0b4a845684c8ab2acfd08359ed138a1e}\label{robot_8hpp_a0b4a845684c8ab2acfd08359ed138a1e}} 
+bool {\bfseries gripper\+\_\+sim}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains two classes that are crucial. They provide to the final user a good level of abstraction and an easy management of the ur5 robotic arm. 
+
+\begin{DoxyAuthor}{Author}
+Federico Adami, Francesco Olivieri, Pirrinz Perroneddesi 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/06-\/23
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}

@@ -77,9 +77,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae40766f698d114f9276e6e76672636c2"><td class="memItemLeft" align="right" valign="top"><a id="ae40766f698d114f9276e6e76672636c2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJoints.html#ae40766f698d114f9276e6e76672636c2">Joints</a> ()</td></tr>
-<tr class="memdesc:ae40766f698d114f9276e6e76672636c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classJoints.html" title="Class representing the robot&#39;s joints, used to both store and update.">Joints</a> object. It sets all the joints to their actual values. <br /></td></tr>
+<tr class="memitem:ae40766f698d114f9276e6e76672636c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJoints.html#ae40766f698d114f9276e6e76672636c2">Joints</a> ()</td></tr>
+<tr class="memdesc:ae40766f698d114f9276e6e76672636c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classJoints.html" title="Class representing the robot&#39;s joints, used to both store and update.">Joints</a> object. It sets all the joints to their actual values.  <a href="classJoints.html#ae40766f698d114f9276e6e76672636c2">More...</a><br /></td></tr>
 <tr class="separator:ae40766f698d114f9276e6e76672636c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ccfbf20151f1b3a91d9ce6b67356045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJoints.html#a5ccfbf20151f1b3a91d9ce6b67356045">Joints</a> (Vector6d q_arm)</td></tr>
 <tr class="memdesc:a5ccfbf20151f1b3a91d9ce6b67356045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classJoints.html" title="Class representing the robot&#39;s joints, used to both store and update.">Joints</a> object- It sets all the joints of ur5-arm to the specified passed by argument.  <a href="classJoints.html#a5ccfbf20151f1b3a91d9ce6b67356045">More...</a><br /></td></tr>
@@ -97,7 +96,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac3519fc67a0152cb69ea6150aefe47e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new gripper joints.  <a href="classJoints.html#ac3519fc67a0152cb69ea6150aefe47e4">More...</a><br /></td></tr>
 <tr class="separator:ac3519fc67a0152cb69ea6150aefe47e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c04b955dbffff11b03db5167d1c70a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJoints.html#a0c04b955dbffff11b03db5167d1c70a3">set_joints_from_robot</a> ()</td></tr>
-<tr class="memdesc:a0c04b955dbffff11b03db5167d1c70a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the joints taking the values from the simulation.  <a href="classJoints.html#a0c04b955dbffff11b03db5167d1c70a3">More...</a><br /></td></tr>
+<tr class="memdesc:a0c04b955dbffff11b03db5167d1c70a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the joints taking the values from the proper ROS topic.  <a href="classJoints.html#a0c04b955dbffff11b03db5167d1c70a3">More...</a><br /></td></tr>
 <tr class="separator:a0c04b955dbffff11b03db5167d1c70a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d1149262bcd8d66ac2db249aa2079c4"><td class="memItemLeft" align="right" valign="top">Vector6d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJoints.html#a5d1149262bcd8d66ac2db249aa2079c4">get_arm</a> ()</td></tr>
 <tr class="memdesc:a5d1149262bcd8d66ac2db249aa2079c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the ur5-arm joints.  <a href="classJoints.html#a5d1149262bcd8d66ac2db249aa2079c4">More...</a><br /></td></tr>
@@ -138,9 +137,30 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>gripper_3</b></td><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing the robot's joints, used to both store and update. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>It might change behaviour, if UPDATE_FROM_ROBOT is defined all the joints will be updated according their actual state published on the ROS topic: "/ur5/joint_states". </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ae40766f698d114f9276e6e76672636c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae40766f698d114f9276e6e76672636c2">&#9670;&nbsp;</a></span>Joints() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Joints::Joints </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="classJoints.html" title="Class representing the robot&#39;s joints, used to both store and update.">Joints</a> object. It sets all the joints to their actual values. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>This function could be blocking, if UPDATE_FROM_ROBOT is defined (waits for messages). </dd></dl>
+
+</div>
+</div>
 <a id="a5ccfbf20151f1b3a91d9ce6b67356045"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ccfbf20151f1b3a91d9ce6b67356045">&#9670;&nbsp;</a></span>Joints() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ccfbf20151f1b3a91d9ce6b67356045">&#9670;&nbsp;</a></span>Joints() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,7 +186,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>gripper_3</b></td><
 </div>
 </div>
 <a id="a8c8a5c92483d2fd1fa04951d347f81f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c8a5c92483d2fd1fa04951d347f81f2">&#9670;&nbsp;</a></span>Joints() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c8a5c92483d2fd1fa04951d347f81f2">&#9670;&nbsp;</a></span>Joints() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,7 +278,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>gripper_3</b></td><
       </table>
 </div><div class="memdoc">
 
-<p>Update the joints taking the values from the simulation. </p>
+<p>Update the joints taking the values from the proper ROS topic. </p>
+<dl class="section remark"><dt>Remarks</dt><dd>This function waits until a message is received on the proper topic (/ur5/joint_states) </dd></dl>
 
 </div>
 </div>
@@ -353,7 +374,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>gripper_3</b></td><
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/francesco/ros_ws/src/ur5Project/include/<a class="el" href="robot_8hpp_source.html">robot.hpp</a></li>
-<li>/home/francesco/ros_ws/src/ur5Project/src/<a class="el" href="robot_8cpp.html">robot.cpp</a></li>
+<li>/home/francesco/ros_ws/src/ur5Project/src/robot.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

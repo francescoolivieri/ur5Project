@@ -1,0 +1,114 @@
+\hypertarget{classModels}{}\doxysection{Models Class Reference}
+\label{classModels}\index{Models@{Models}}
+
+
+Class used to retrieves and store models info.  
+
+
+
+
+{\ttfamily \#include $<$blocks.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModels_a3d822d79de8a3a3e4a89b48231110cec}{Models}} ()
+\begin{DoxyCompactList}\small\item\em Default Constructor. Retrieves from the topic the list of \mbox{\hyperlink{classLego}{Lego}} found by the vision. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classModels_aead054534b27ad9f4b89d1b2cbabafd6}{update\+\_\+blocks\+\_\+pos}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves from the topic the list of \mbox{\hyperlink{classLego}{Lego}} found by the vision. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classLego}{Lego}} \mbox{\hyperlink{classModels_a7d3a55cd2779b8f1aae061ce887fea86}{get\+\_\+block}} (int index)
+\begin{DoxyCompactList}\small\item\em Get the \mbox{\hyperlink{classLego}{Lego}} object in the list at the index specified. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classLego}{Lego}} \mbox{\hyperlink{classModels_a67f262d79d234613925e2b88d5b0ff3a}{get\+\_\+block}} (string model\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get the \mbox{\hyperlink{classLego}{Lego}} object in the list with model name equal to the one passed by argument. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classModels_a64a12be6917d6605de3ce2c21dfb0047}{get\+\_\+lenght}} ()
+\begin{DoxyCompactList}\small\item\em Get the length of the list of \mbox{\hyperlink{classLego}{Lego}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to retrieves and store models info. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classModels_a3d822d79de8a3a3e4a89b48231110cec}\label{classModels_a3d822d79de8a3a3e4a89b48231110cec}} 
+\index{Models@{Models}!Models@{Models}}
+\index{Models@{Models}!Models@{Models}}
+\doxysubsubsection{\texorpdfstring{Models()}{Models()}}
+{\footnotesize\ttfamily Models\+::\+Models (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default Constructor. Retrieves from the topic the list of \mbox{\hyperlink{classLego}{Lego}} found by the vision. 
+
+\begin{DoxyRemark}{Remarks}
+This function waits until a message is received on the proper topic 
+\end{DoxyRemark}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classModels_a7d3a55cd2779b8f1aae061ce887fea86}\label{classModels_a7d3a55cd2779b8f1aae061ce887fea86}} 
+\index{Models@{Models}!get\_block@{get\_block}}
+\index{get\_block@{get\_block}!Models@{Models}}
+\doxysubsubsection{\texorpdfstring{get\_block()}{get\_block()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLego}{Lego}} Models\+::get\+\_\+block (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Get the \mbox{\hyperlink{classLego}{Lego}} object in the list at the index specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Array index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classLego}{Lego}} \mbox{\hyperlink{classLego}{Lego}} Class at the index specified 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classModels_a67f262d79d234613925e2b88d5b0ff3a}\label{classModels_a67f262d79d234613925e2b88d5b0ff3a}} 
+\index{Models@{Models}!get\_block@{get\_block}}
+\index{get\_block@{get\_block}!Models@{Models}}
+\doxysubsubsection{\texorpdfstring{get\_block()}{get\_block()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLego}{Lego}} Models\+::get\+\_\+block (\begin{DoxyParamCaption}\item[{string}]{model\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get the \mbox{\hyperlink{classLego}{Lego}} object in the list with model name equal to the one passed by argument. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model\+\_\+name} & Name of the model I\textquotesingle{}m looking for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classLego}{Lego}} \mbox{\hyperlink{classLego}{Lego}} with the same name of the parameter passed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classModels_a64a12be6917d6605de3ce2c21dfb0047}\label{classModels_a64a12be6917d6605de3ce2c21dfb0047}} 
+\index{Models@{Models}!get\_lenght@{get\_lenght}}
+\index{get\_lenght@{get\_lenght}!Models@{Models}}
+\doxysubsubsection{\texorpdfstring{get\_lenght()}{get\_lenght()}}
+{\footnotesize\ttfamily int Models\+::get\+\_\+lenght (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the length of the list of \mbox{\hyperlink{classLego}{Lego}}. 
+
+\begin{DoxyReturn}{Returns}
+int Length of the list of \mbox{\hyperlink{classLego}{Lego}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classModels_aead054534b27ad9f4b89d1b2cbabafd6}\label{classModels_aead054534b27ad9f4b89d1b2cbabafd6}} 
+\index{Models@{Models}!update\_blocks\_pos@{update\_blocks\_pos}}
+\index{update\_blocks\_pos@{update\_blocks\_pos}!Models@{Models}}
+\doxysubsubsection{\texorpdfstring{update\_blocks\_pos()}{update\_blocks\_pos()}}
+{\footnotesize\ttfamily void Models\+::update\+\_\+blocks\+\_\+pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves from the topic the list of \mbox{\hyperlink{classLego}{Lego}} found by the vision. 
+
+\begin{DoxyRemark}{Remarks}
+This function waits until a message is received on the proper topic 
+\end{DoxyRemark}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/\mbox{\hyperlink{blocks_8hpp}{blocks.\+hpp}}\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/src/blocks.\+cpp\end{DoxyCompactItemize}

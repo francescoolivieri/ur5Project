@@ -61,7 +61,7 @@ void robot_send_des_jstate(const Vector6d & joint_pos, const double diameter, co
     pub_des_jstate.publish(jointState_msg_robot);
 
   }else{
-    cout << "Function call wrongly (robot_send_des_jstate) " << endl;
+    cout << "Function call wrong (robot_send_des_jstate) " << endl;
   }
 }
 

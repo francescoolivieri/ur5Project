@@ -1,3 +1,13 @@
+/**
+ * @file robot.hpp
+ * @author Federico Adami, Francesco Olivieri, Pirrinz Perroneddesi
+ * @brief This file contains two classes that are crucial. They provide to the final user a good level of abstraction and an easy management of the ur5 robotic arm.
+ * @version 0.1
+ * @date 2023-06-23
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef ROBOT_HPP
 #define ROBOT_HPP
 
@@ -26,14 +36,16 @@ bool real_robot;
 bool soft_gripper;
 bool gripper_sim;
 
-static double working_height = Mathutils::worldToRobot({0, 0, 1.1})(2);
+static double working_height = Mathutils::robotToWorld({0, 0, 1.1})(2);
 static double grasping_height = Mathutils::worldToRobot({0, 0, 0.89})(2);
-static double releasing_height = Mathutils::worldToRobot({0, 0, 0.92})(2);
+static double releasing_height = Mathutils::worldToRobot({0, 0, 0.92})(2); //0.94
 static double height_offset = 0.22;
 
 /**
  * @class Joints
- * @brief Class representing the robot's joints, used to both store and update
+ * @brief Class representing the robot's joints, used to both store and update.
+ * 
+ * @remarks It might change behaviour, if UPDATE_FROM_ROBOT is defined all the joints will be updated according their actual state published on the ROS topic: "/ur5/joint_states".
  */
 class Joints{
     public:
@@ -51,6 +63,8 @@ class Joints{
         /**
          * @brief Construct a new Joints object.
          * It sets all the joints to their actual values.
+         * 
+         * @remarks This function could be blocking, if UPDATE_FROM_ROBOT is defined (waits for messages).
          */
         Joints();
 
@@ -94,8 +108,9 @@ class Joints{
         void set_new(Vector3d q_gripper);
 
         /**
-         * @brief Update the joints taking the values from the simulation
+         * @brief Update the joints taking the values from the proper ROS topic 
          * 
+         * @remarks This function waits until a message is received on the proper topic (/ur5/joint_states)
          */
         void set_joints_from_robot();
         
@@ -117,7 +132,7 @@ class Joints{
 
 /**
  * @class Robot
- * @brief Class representing a robot, it provides various functionalities to use it with ease
+ * @brief Class representing a robot, it provides various functionalities to use it with ease.
  */
 class Robot{
     private:
