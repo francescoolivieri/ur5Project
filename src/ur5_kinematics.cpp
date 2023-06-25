@@ -1,4 +1,3 @@
-
 #include "ur5_kinematics.h"
 
 using namespace Mathutils;
@@ -223,7 +222,7 @@ Vector3d Kinematics::attrForce_orient(Vector3d error){
 
 Vector3d Kinematics::repulForce(Vector3d xe){
 
-    double distance = sqrt(xe(0)*xe(0) + xe(1)*xe(1));
+    double distance = sqrt(xe(0)*xe(0) + xe(1)*xe(1));  // distance from the point below the shoudler of the robot (x=0, y=0)
     if(distance < RADIUS){
         Vector3d pot = 0.001*(xe/distance);
         pot(2) = 0;
@@ -340,8 +339,8 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
 VectorXd Kinematics::dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid){
 
     MatrixXd Jac;
-    Matrix3d Kp = 0.8;
-    Matrix3d Kphi = 6;
+    double Kp = 0.8;
+    double Kphi = 6;
     VectorXd V(6);
     Matrix3d w_R_d;
     Vector3d errorOrientation;
@@ -506,7 +505,7 @@ Vector3d Kinematics::orientationError(Matrix3d w_R_e, Matrix3d w_R_d){
 
     Vector3d error;
     Vector3d toNormalize; 
-    Matrix3d e_R_d = w_R_e.transpose()*w_R_d;
+    Matrix3d e_R_d = w_R_e.transpose()*w_R_d;  // error rotation matrix
 
     double cos_dtheta = (e_R_d(0,0) + e_R_d(1,1) + e_R_d(2,2) - 1)/2;
     toNormalize << e_R_d(2,1) - e_R_d(1,2), e_R_d(0,2) - e_R_d(2,0), e_R_d(1,0) - e_R_d(0,1); 

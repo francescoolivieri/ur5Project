@@ -1,0 +1,162 @@
+\hypertarget{ur5__kinematics_8h}{}\doxysection{/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/ur5\+\_\+kinematics.h File Reference}
+\label{ur5__kinematics_8h}\index{/home/francesco/ros\_ws/src/ur5Project/include/ur5\_kinematics.h@{/home/francesco/ros\_ws/src/ur5Project/include/ur5\_kinematics.h}}
+
+
+Library that contains all the functions and utilities to handle the kinematics of the ur5 properly.  
+
+
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Core$>$}\newline
+{\ttfamily \#include $<$eigen3/\+Eigen/\+Geometry$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+Include dependency graph for ur5\+\_\+kinematics.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ur5__kinematics_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{ur5__kinematics_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a40f4468f6ca0fcc14337d9b778945d08}\label{ur5__kinematics_8h_a40f4468f6ca0fcc14337d9b778945d08}} 
+\#define {\bfseries U\+R5\+\_\+\+K\+I\+N\+A\+M\+E\+T\+I\+C\+S\+\_\+H}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_adb1f1d5b685f5a444190abe4ac18d972}\label{ur5__kinematics_8h_adb1f1d5b685f5a444190abe4ac18d972}} 
+\#define {\bfseries S\+C\+A\+L\+E\+\_\+\+F\+A\+C\+T\+OR}~1
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a6f2e1916a7fcce65ec53c94e8967032b}\label{ur5__kinematics_8h_a6f2e1916a7fcce65ec53c94e8967032b}} 
+\#define {\bfseries G\+R\+I\+P\+P\+E\+R\+\_\+\+L\+E\+N\+G\+TH}~0.\+15
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_aa4f8ea40228c3c3a9a7143b1d1ad8956}\label{ur5__kinematics_8h_aa4f8ea40228c3c3a9a7143b1d1ad8956}} 
+\#define {\bfseries R\+A\+D\+I\+US}~0.\+20
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a98c311f8f84d62784ec0499c9df9816d}\label{ur5__kinematics_8h_a98c311f8f84d62784ec0499c9df9816d}} 
+typedef Matrix$<$ double, 6, 1 $>$ {\bfseries Vector6d}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a1a6b6fb557d8d37d59700faf4e4c9167}\label{ur5__kinematics_8h_a1a6b6fb557d8d37d59700faf4e4c9167}} 
+enum {\bfseries mode} \{ {\bfseries S\+IN}, 
+{\bfseries C\+I\+RC}, 
+{\bfseries L\+IN}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_aada040ce83c5bd12b0d45085c029cfe4}\label{ur5__kinematics_8h_aada040ce83c5bd12b0d45085c029cfe4}} 
+Matrix4d {\bfseries Kinematics\+::direct\+Kinematics\+Ur5} (Vector\+Xd th)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a73a479cda16e3881b65e23012b163efd}\label{ur5__kinematics_8h_a73a479cda16e3881b65e23012b163efd}} 
+Matrix\+Xd {\bfseries Kinematics\+::inverse\+Kinematics\+Ur5} (Vector3d pe, Matrix3d Re)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_aa71af13340693e0565a3b5a763044543}\label{ur5__kinematics_8h_aa71af13340693e0565a3b5a763044543}} 
+Vector3d {\bfseries Kinematics\+::attr\+Force\+\_\+pos} (Vector3d error)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_adadb6d6f78745a2cef0a000add1a1a19}\label{ur5__kinematics_8h_adadb6d6f78745a2cef0a000add1a1a19}} 
+Vector3d {\bfseries Kinematics\+::repul\+Force} (Vector3d xe)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_ad29ccb6917f8cb745c3ce3e05d320c29}\label{ur5__kinematics_8h_ad29ccb6917f8cb745c3ce3e05d320c29}} 
+Vector3d {\bfseries Kinematics\+::des\+Pos} (Vector3d xe, Vector3d xf)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_ae708e86535fc8fe028f657257ff0dc70}\label{ur5__kinematics_8h_ae708e86535fc8fe028f657257ff0dc70}} 
+Vector3d {\bfseries Kinematics\+::des\+Orient} (Vector3d phie, Vector3d phif)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_aec7c725f4596bad5627e5608adb41794}\label{ur5__kinematics_8h_aec7c725f4596bad5627e5608adb41794}} 
+Vector3d {\bfseries Kinematics\+::attr\+Force\+\_\+orient} (Vector3d error)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a3af82f9ce6d10c61431a82b35388bc23}\label{ur5__kinematics_8h_a3af82f9ce6d10c61431a82b35388bc23}} 
+Vector\+Xd {\bfseries Kinematics\+::dotQ} (Row\+Vector\+Xd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a3aa1c5da19ddad88af1128186b0e9205}\label{ur5__kinematics_8h_a3aa1c5da19ddad88af1128186b0e9205}} 
+Matrix\+Xd {\bfseries Kinematics\+::inverse\+Diff\+Kinematics\+Ur5} (Vector\+Xd th, Vector3d end\+Pos, Vector3d end\+Orientation)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a50aab70034c9a61f870d09c4a8efb134}\label{ur5__kinematics_8h_a50aab70034c9a61f870d09c4a8efb134}} 
+Vector3d {\bfseries Kinematics\+::velocity} (Vector3d xe, Vector3d xd, double delta)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a85f8506586359437a5bf6195167f6e88}\label{ur5__kinematics_8h_a85f8506586359437a5bf6195167f6e88}} 
+Matrix\+Xd {\bfseries Kinematics\+::joint\+Space\+\_\+kinematics} (Vector\+Xd qk, Vector3d end\+Pos, Vector3d end\+Orient)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_abd74c1d156c380763bfb262ad67ae691}\label{ur5__kinematics_8h_abd74c1d156c380763bfb262ad67ae691}} 
+Vector\+Xd {\bfseries Kinematics\+::nearest\+\_\+config} (Vector\+Xd qk, Matrix\+Xd val)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a5aa63690c00b1d646862b4c3eda9520b}\label{ur5__kinematics_8h_a5aa63690c00b1d646862b4c3eda9520b}} 
+Vector3d {\bfseries Kinematics\+::position\+Error} (Vector3d xe, Vector3d xd)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a0fd0827f35ce58c442badf8ab12ca8da}\label{ur5__kinematics_8h_a0fd0827f35ce58c442badf8ab12ca8da}} 
+Vector3d {\bfseries Kinematics\+::orientation\+Error} (Matrix3d w\+\_\+\+R\+\_\+e, Matrix3d w\+\_\+\+R\+\_\+d)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a69ba017bd077db299f5f0b04864f8e4f}\label{ur5__kinematics_8h_a69ba017bd077db299f5f0b04864f8e4f}} 
+Matrix\+Xd {\bfseries Kinematics\+::inverse\+Diff\+Kinematics\+Ur5\+Quaternions} (Vector\+Xd q\+\_\+k, Vector3d end\+Pos, Vector3d end\+Orient)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a760d23eaa4c1226458c183cb5d65ce62}\label{ur5__kinematics_8h_a760d23eaa4c1226458c183cb5d65ce62}} 
+Vector\+Xd {\bfseries Kinematics\+::\+Compute\+Error\+Quaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a547bf2dcf1a21caf277305094a4a162c}\label{ur5__kinematics_8h_a547bf2dcf1a21caf277305094a4a162c}} 
+Vector\+Xd {\bfseries Kinematics\+::dot\+Qquaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des, Vector3d v\+\_\+des, Vector3d w\+\_\+des)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_adc7f6a6f23b21cc03b87b968a3f14b1b}\label{ur5__kinematics_8h_adc7f6a6f23b21cc03b87b968a3f14b1b}} 
+Vector3d {\bfseries Mathutils\+::world\+To\+Robot} (Vector3d p)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_ad29af7571ec2f06927ec144fab7a7be0}\label{ur5__kinematics_8h_ad29af7571ec2f06927ec144fab7a7be0}} 
+Vector3d {\bfseries Mathutils\+::robot\+To\+World} (Vector3d p)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a768da9b748aa73c4d9499a310f30c00c}\label{ur5__kinematics_8h_a768da9b748aa73c4d9499a310f30c00c}} 
+Matrix4d {\bfseries Mathutils\+::get\+T\+\_\+i} (int i, double th)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a548a12516e4f8c207cbb4516264c5dc4}\label{ur5__kinematics_8h_a548a12516e4f8c207cbb4516264c5dc4}} 
+Matrix\+Xd {\bfseries Mathutils\+::ur5\+Jacobian} (Vector\+Xd th)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a8a655a0b57071a622489683463512e72}\label{ur5__kinematics_8h_a8a655a0b57071a622489683463512e72}} 
+Matrix3d {\bfseries Mathutils\+::euler\+To\+Rotation\+Matrix} (Vector3d euler)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a396f7c16da640cb1b1d4ef3c695cba2e}\label{ur5__kinematics_8h_a396f7c16da640cb1b1d4ef3c695cba2e}} 
+double {\bfseries Mathutils\+::vect\+Magnitude} (const Vector3d \&v)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a35ed5ffff50db796b7f868577a2b7fdc}\label{ur5__kinematics_8h_a35ed5ffff50db796b7f868577a2b7fdc}} 
+double {\bfseries Mathutils\+::quat\+Magnitude} (const Quaterniond \&q)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a84f89b94f8e4be490c60d6b443fea4eb}\label{ur5__kinematics_8h_a84f89b94f8e4be490c60d6b443fea4eb}} 
+double {\bfseries Mathutils\+::center\+Dist} (Vector3d p)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_ab35d10ed4e920f772a5abd807cf3d952}\label{ur5__kinematics_8h_ab35d10ed4e920f772a5abd807cf3d952}} 
+int {\bfseries Mathutils\+::touch\+Center\+Circle} (Vector3d start\+\_\+pos, Vector3d end\+\_\+pos)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_abb0f12ffd29ac761b36a149bfd7d6efa}\label{ur5__kinematics_8h_abb0f12ffd29ac761b36a149bfd7d6efa}} 
+Quaterniond {\bfseries Mathutils\+::\+Euler\+To\+Quaternion} (Vector3d euler)
+\item 
+\mbox{\Hypertarget{ur5__kinematics_8h_a66ee328924ba859a7804bc2bc7c90c57}\label{ur5__kinematics_8h_a66ee328924ba859a7804bc2bc7c90c57}} 
+Vector3d {\bfseries Mathutils\+::tangential\+Point} (Vector3d start\+\_\+pos)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Library that contains all the functions and utilities to handle the kinematics of the ur5 properly. 
+
+\begin{DoxyAuthor}{Author}
+Federico Adami, Francesco Olivieri, Eddie Veronese 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/06-\/23
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['joints_6',['Joints',['../classJoints.html',1,'Joints'],['../classJoints.html#ae40766f698d114f9276e6e76672636c2',1,'Joints::Joints()'],['../classJoints.html#a5ccfbf20151f1b3a91d9ce6b67356045',1,'Joints::Joints(Vector6d q_arm)'],['../classJoints.html#a8c8a5c92483d2fd1fa04951d347f81f2',1,'Joints::Joints(Vector6d q_arm, Vector3d q_gripper)']]]
+  ['lego_8',['Lego',['../classLego.html',1,'Lego'],['../classLego.html#ab6b015ff6bd5287d00cac191904da2ba',1,'Lego::Lego()'],['../classLego.html#a15c598953e7e9a7dd8e32d88b6f0e44b',1,'Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw, double pitch, double roll)']]]
 ];

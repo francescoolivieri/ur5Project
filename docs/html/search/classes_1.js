@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['joints_20',['Joints',['../classJoints.html',1,'']]]
+  ['lego_24',['Lego',['../classLego.html',1,'']]]
 ];
