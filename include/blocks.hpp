@@ -1,3 +1,13 @@
+/**
+ * @file blocks.hpp
+ * @author Federico Adami, Francesco Olivieri, Eddie Veronese
+ * @brief Library that contains classes useful to handle the messages from the vision and storing the informations retrieved.
+ * @version 0.1
+ * @date 2023-06-25
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef BLOCKS_HPP
 #define BLOCK_HPP
 

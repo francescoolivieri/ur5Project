@@ -1,0 +1,318 @@
+\hypertarget{namespaceKinematics}{}\doxysection{Kinematics Namespace Reference}
+\label{namespaceKinematics}\index{Kinematics@{Kinematics}}
+
+
+Contains all the functions related with the kinematic of the robot arm.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Matrix4d \mbox{\hyperlink{namespaceKinematics_aada040ce83c5bd12b0d45085c029cfe4}{direct\+Kinematics\+Ur5}} (Vector\+Xd th)
+\begin{DoxyCompactList}\small\item\em This function calculate the direct kinematics of the ur5. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a73a479cda16e3881b65e23012b163efd}{inverse\+Kinematics\+Ur5}} (Vector3d pe, Matrix3d Re)
+\begin{DoxyCompactList}\small\item\em This function calculate the inverse kinematics of the ur5. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_aa71af13340693e0565a3b5a763044543}{attr\+Force\+\_\+pos}} (Vector3d error)
+\begin{DoxyCompactList}\small\item\em This function calculates the attractive force based on position error (normalized). \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_adadb6d6f78745a2cef0a000add1a1a19}{repul\+Force}} (Vector3d xe)
+\begin{DoxyCompactList}\small\item\em This function calculates the repulsive force that keeps the end effector away from the point of shoulder singularity. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_ad29ccb6917f8cb745c3ce3e05d320c29}{des\+Pos}} (Vector3d xe, Vector3d xf)
+\begin{DoxyCompactList}\small\item\em This function calculates the desired position of the end effector, it combines the attractive force towards the target position and the repulsive force from point of singularity. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_ae708e86535fc8fe028f657257ff0dc70}{des\+Orient}} (Vector3d phie, Vector3d phif)
+\begin{DoxyCompactList}\small\item\em This function calculates the desired orientation of the end effector. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_aec7c725f4596bad5627e5608adb41794}{attr\+Force\+\_\+orient}} (Vector3d error)
+\begin{DoxyCompactList}\small\item\em This function calculates the attractive force based on orientation error (normalized). \end{DoxyCompactList}\item 
+Vector\+Xd \mbox{\hyperlink{namespaceKinematics_a3af82f9ce6d10c61431a82b35388bc23}{dotQ}} (Row\+Vector\+Xd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)
+\begin{DoxyCompactList}\small\item\em This function calculate the derivative of joint angles using a proportional control law. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a3aa1c5da19ddad88af1128186b0e9205}{inverse\+Diff\+Kinematics\+Ur5}} (Vector\+Xd th, Vector3d end\+Pos, Vector3d end\+Orientation)
+\begin{DoxyCompactList}\small\item\em Function that calculate the inverse differential kinematics for ur5 robot. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceKinematics_a85f8506586359437a5bf6195167f6e88}{joint\+Space\+\_\+kinematics}} (Vector\+Xd qk, Vector3d end\+Pos, Vector3d end\+Orient)
+\begin{DoxyCompactList}\small\item\em Function that performs joint space kinematics for ur5 robot. \end{DoxyCompactList}\item 
+Vector\+Xd \mbox{\hyperlink{namespaceKinematics_abd74c1d156c380763bfb262ad67ae691}{nearest\+\_\+config}} (Vector\+Xd qk, Matrix\+Xd val)
+\begin{DoxyCompactList}\small\item\em Function that find the nearest configuration between a set of different configurations. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_a5aa63690c00b1d646862b4c3eda9520b}{position\+Error}} (Vector3d xe, Vector3d xd)
+\begin{DoxyCompactList}\small\item\em This function calculate the error between the actual position and the desired one. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceKinematics_a0fd0827f35ce58c442badf8ab12ca8da}{orientation\+Error}} (Matrix3d w\+\_\+\+R\+\_\+e, Matrix3d w\+\_\+\+R\+\_\+d)
+\begin{DoxyCompactList}\small\item\em This function calculates the orentation error between the desired and the current one. (Provided by Focchi) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceKinematics_a69ba017bd077db299f5f0b04864f8e4f}\label{namespaceKinematics_a69ba017bd077db299f5f0b04864f8e4f}} 
+Matrix\+Xd {\bfseries inverse\+Diff\+Kinematics\+Ur5\+Quaternions} (Vector\+Xd q\+\_\+k, Vector3d end\+Pos, Vector3d end\+Orient)
+\item 
+\mbox{\Hypertarget{namespaceKinematics_a760d23eaa4c1226458c183cb5d65ce62}\label{namespaceKinematics_a760d23eaa4c1226458c183cb5d65ce62}} 
+Vector\+Xd {\bfseries Compute\+Error\+Quaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des)
+\item 
+\mbox{\Hypertarget{namespaceKinematics_a547bf2dcf1a21caf277305094a4a162c}\label{namespaceKinematics_a547bf2dcf1a21caf277305094a4a162c}} 
+Vector\+Xd {\bfseries dot\+Qquaternion} (Vector\+Xd q, Vector3d pos\+\_\+des, Vector3d orient\+\_\+des, Vector3d v\+\_\+des, Vector3d w\+\_\+des)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains all the functions related with the kinematic of the robot arm. 
+
+\begin{DoxyRemark}{Remarks}
+All the position are with respect to robot base frame 
+\end{DoxyRemark}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceKinematics_aec7c725f4596bad5627e5608adb41794}\label{namespaceKinematics_aec7c725f4596bad5627e5608adb41794}} 
+\index{Kinematics@{Kinematics}!attrForce\_orient@{attrForce\_orient}}
+\index{attrForce\_orient@{attrForce\_orient}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{attrForce\_orient()}{attrForce\_orient()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::attr\+Force\+\_\+orient (\begin{DoxyParamCaption}\item[{Vector3d}]{error }\end{DoxyParamCaption})}
+
+
+
+This function calculates the attractive force based on orientation error (normalized). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Difference between where actual position and final orientation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Attractive force towards the final orientation I want to achieve 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_aa71af13340693e0565a3b5a763044543}\label{namespaceKinematics_aa71af13340693e0565a3b5a763044543}} 
+\index{Kinematics@{Kinematics}!attrForce\_pos@{attrForce\_pos}}
+\index{attrForce\_pos@{attrForce\_pos}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{attrForce\_pos()}{attrForce\_pos()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::attr\+Force\+\_\+pos (\begin{DoxyParamCaption}\item[{Vector3d}]{error }\end{DoxyParamCaption})}
+
+
+
+This function calculates the attractive force based on position error (normalized). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error} & Difference between where actual position and final position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Attractive force towards the final postion I want to achieve 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_ae708e86535fc8fe028f657257ff0dc70}\label{namespaceKinematics_ae708e86535fc8fe028f657257ff0dc70}} 
+\index{Kinematics@{Kinematics}!desOrient@{desOrient}}
+\index{desOrient@{desOrient}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{desOrient()}{desOrient()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::des\+Orient (\begin{DoxyParamCaption}\item[{Vector3d}]{phie,  }\item[{Vector3d}]{phif }\end{DoxyParamCaption})}
+
+
+
+This function calculates the desired orientation of the end effector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em phie} & Current end effector orientation \\
+\hline
+{\em phif} & Target end effector orientation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Desired orientation of the end effector (step towards the target orientation) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_ad29ccb6917f8cb745c3ce3e05d320c29}\label{namespaceKinematics_ad29ccb6917f8cb745c3ce3e05d320c29}} 
+\index{Kinematics@{Kinematics}!desPos@{desPos}}
+\index{desPos@{desPos}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{desPos()}{desPos()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::des\+Pos (\begin{DoxyParamCaption}\item[{Vector3d}]{xe,  }\item[{Vector3d}]{xf }\end{DoxyParamCaption})}
+
+
+
+This function calculates the desired position of the end effector, it combines the attractive force towards the target position and the repulsive force from point of singularity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & Current end effector position \\
+\hline
+{\em xf} & Target end effector position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Desired position of the end effector (step towards the target position) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_aada040ce83c5bd12b0d45085c029cfe4}\label{namespaceKinematics_aada040ce83c5bd12b0d45085c029cfe4}} 
+\index{Kinematics@{Kinematics}!directKinematicsUr5@{directKinematicsUr5}}
+\index{directKinematicsUr5@{directKinematicsUr5}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{directKinematicsUr5()}{directKinematicsUr5()}}
+{\footnotesize\ttfamily Matrix4d Kinematics\+::direct\+Kinematics\+Ur5 (\begin{DoxyParamCaption}\item[{Vector\+Xd}]{th }\end{DoxyParamCaption})}
+
+
+
+This function calculate the direct kinematics of the ur5. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em th} & Vector of 6 elements that contains the state of the ur5-\/joints \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix4d Matrix representing orientation and position of the end-\/effector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a3af82f9ce6d10c61431a82b35388bc23}\label{namespaceKinematics_a3af82f9ce6d10c61431a82b35388bc23}} 
+\index{Kinematics@{Kinematics}!dotQ@{dotQ}}
+\index{dotQ@{dotQ}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{dotQ()}{dotQ()}}
+{\footnotesize\ttfamily Vector\+Xd Kinematics\+::dotQ (\begin{DoxyParamCaption}\item[{Row\+Vector\+Xd}]{qk,  }\item[{Vector3d}]{xe,  }\item[{Vector3d}]{xd,  }\item[{Matrix3d}]{Re,  }\item[{Vector3d}]{phid }\end{DoxyParamCaption})}
+
+
+
+This function calculate the derivative of joint angles using a proportional control law. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em qk} & Current joint angles (as a R\+OW V\+E\+C\+T\+OR) \\
+\hline
+{\em xe} & Current end effector position \\
+\hline
+{\em xd} & Desired end effector position \\
+\hline
+{\em Re} & Current end effector orentation \\
+\hline
+{\em phid} & Desired end effector orientation (E\+U\+L\+ER A\+N\+G\+L\+ES) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector\+Xd The derivative of joint angles 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a3aa1c5da19ddad88af1128186b0e9205}\label{namespaceKinematics_a3aa1c5da19ddad88af1128186b0e9205}} 
+\index{Kinematics@{Kinematics}!inverseDiffKinematicsUr5@{inverseDiffKinematicsUr5}}
+\index{inverseDiffKinematicsUr5@{inverseDiffKinematicsUr5}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{inverseDiffKinematicsUr5()}{inverseDiffKinematicsUr5()}}
+{\footnotesize\ttfamily Matrix\+Xd Kinematics\+::inverse\+Diff\+Kinematics\+Ur5 (\begin{DoxyParamCaption}\item[{Vector\+Xd}]{th,  }\item[{Vector3d}]{end\+Pos,  }\item[{Vector3d}]{end\+Orientation }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the inverse differential kinematics for ur5 robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em th} & Actual joints configuration \\
+\hline
+{\em end\+Pos} & Target end effector position \\
+\hline
+{\em end\+Orientation} & Target end effector orientation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+Xd \mbox{\hyperlink{classJoints}{Joints}} configurations to arrive at the wanted positio and orientation (each row is a configuration) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a73a479cda16e3881b65e23012b163efd}\label{namespaceKinematics_a73a479cda16e3881b65e23012b163efd}} 
+\index{Kinematics@{Kinematics}!inverseKinematicsUr5@{inverseKinematicsUr5}}
+\index{inverseKinematicsUr5@{inverseKinematicsUr5}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{inverseKinematicsUr5()}{inverseKinematicsUr5()}}
+{\footnotesize\ttfamily Matrix\+Xd Kinematics\+::inverse\+Kinematics\+Ur5 (\begin{DoxyParamCaption}\item[{Vector3d}]{pe,  }\item[{Matrix3d}]{Re }\end{DoxyParamCaption})}
+
+
+
+This function calculate the inverse kinematics of the ur5. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pe} & Position of the end effector \\
+\hline
+{\em Re} & Orientation of the end effector \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+Xd Represent the 8 different configurations of joints to achieve the position and orientation specified (every row is a different configuration) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a85f8506586359437a5bf6195167f6e88}\label{namespaceKinematics_a85f8506586359437a5bf6195167f6e88}} 
+\index{Kinematics@{Kinematics}!jointSpace\_kinematics@{jointSpace\_kinematics}}
+\index{jointSpace\_kinematics@{jointSpace\_kinematics}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{jointSpace\_kinematics()}{jointSpace\_kinematics()}}
+{\footnotesize\ttfamily Matrix\+Xd Kinematics\+::joint\+Space\+\_\+kinematics (\begin{DoxyParamCaption}\item[{Vector\+Xd}]{qk,  }\item[{Vector3d}]{end\+Pos,  }\item[{Vector3d}]{end\+Orient }\end{DoxyParamCaption})}
+
+
+
+Function that performs joint space kinematics for ur5 robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em qk} & Current joint configuration \\
+\hline
+{\em end\+Pos} & Target Position \\
+\hline
+{\em end\+Orient} & Target Orientation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+Xd \mbox{\hyperlink{classJoints}{Joints}} configurations to arrive at the wanted positio and orientation (each row is a configuration) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_abd74c1d156c380763bfb262ad67ae691}\label{namespaceKinematics_abd74c1d156c380763bfb262ad67ae691}} 
+\index{Kinematics@{Kinematics}!nearest\_config@{nearest\_config}}
+\index{nearest\_config@{nearest\_config}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{nearest\_config()}{nearest\_config()}}
+{\footnotesize\ttfamily Vector\+Xd Kinematics\+::nearest\+\_\+config (\begin{DoxyParamCaption}\item[{Vector\+Xd}]{qk,  }\item[{Matrix\+Xd}]{val }\end{DoxyParamCaption})}
+
+
+
+Function that find the nearest configuration between a set of different configurations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em qk} & Current configuration \\
+\hline
+{\em val} & Matrix that contains the set of different configurations (each row is a configuration) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector\+Xd Nearest joint configuration to the current one 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a0fd0827f35ce58c442badf8ab12ca8da}\label{namespaceKinematics_a0fd0827f35ce58c442badf8ab12ca8da}} 
+\index{Kinematics@{Kinematics}!orientationError@{orientationError}}
+\index{orientationError@{orientationError}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{orientationError()}{orientationError()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::orientation\+Error (\begin{DoxyParamCaption}\item[{Matrix3d}]{w\+\_\+\+R\+\_\+e,  }\item[{Matrix3d}]{w\+\_\+\+R\+\_\+d }\end{DoxyParamCaption})}
+
+
+
+This function calculates the orentation error between the desired and the current one. (Provided by Focchi) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em w\+\_\+\+R\+\_\+e} & Current orientation of the end effector represented as a rotation matrix \\
+\hline
+{\em w\+\_\+\+R\+\_\+d} & Desider orientation of the end effector represented as a rotation matrix \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Oritentation error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_a5aa63690c00b1d646862b4c3eda9520b}\label{namespaceKinematics_a5aa63690c00b1d646862b4c3eda9520b}} 
+\index{Kinematics@{Kinematics}!positionError@{positionError}}
+\index{positionError@{positionError}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{positionError()}{positionError()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::position\+Error (\begin{DoxyParamCaption}\item[{Vector3d}]{xe,  }\item[{Vector3d}]{xd }\end{DoxyParamCaption})}
+
+
+
+This function calculate the error between the actual position and the desired one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & Current end effector position \\
+\hline
+{\em xd} & Desired end effector position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Position error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceKinematics_adadb6d6f78745a2cef0a000add1a1a19}\label{namespaceKinematics_adadb6d6f78745a2cef0a000add1a1a19}} 
+\index{Kinematics@{Kinematics}!repulForce@{repulForce}}
+\index{repulForce@{repulForce}!Kinematics@{Kinematics}}
+\doxysubsubsection{\texorpdfstring{repulForce()}{repulForce()}}
+{\footnotesize\ttfamily Vector3d Kinematics\+::repul\+Force (\begin{DoxyParamCaption}\item[{Vector3d}]{xe }\end{DoxyParamCaption})}
+
+
+
+This function calculates the repulsive force that keeps the end effector away from the point of shoulder singularity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & Current end effector position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Repulsive force 
+\end{DoxyReturn}

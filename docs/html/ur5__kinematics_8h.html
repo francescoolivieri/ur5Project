@@ -66,6 +66,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
@@ -82,17 +83,19 @@ $(function() {
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;ros/console.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ur5_kinematics.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="ur5__kinematics_8h__incl.png" border="0" usemap="#_2home_2francesco_2ros__ws_2src_2ur5Project_2include_2ur5__kinematics_8h" alt=""/></div>
 <map name="_2home_2francesco_2ros__ws_2src_2ur5Project_2include_2ur5__kinematics_8h" id="_2home_2francesco_2ros__ws_2src_2ur5Project_2include_2ur5__kinematics_8h">
-<area shape="rect" title="Library that contains all the functions and utilities to handle the kinematics of the ur5 properly." alt="" coords="304,5,495,61"/>
+<area shape="rect" title="Library that contains all the functions and utilities to handle the kinematics of the ur5 properly." alt="" coords="352,5,543,61"/>
 <area shape="rect" title=" " alt="" coords="5,109,145,136"/>
 <area shape="rect" title=" " alt="" coords="169,109,344,136"/>
 <area shape="rect" title=" " alt="" coords="368,109,431,136"/>
 <area shape="rect" title=" " alt="" coords="455,109,535,136"/>
 <area shape="rect" title=" " alt="" coords="560,109,623,136"/>
+<area shape="rect" title=" " alt="" coords="647,109,755,136"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -108,6 +111,15 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="ur5__kinematics_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceKinematics"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html">Kinematics</a></td></tr>
+<tr class="memdesc:namespaceKinematics"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the functions related with the kinematic of the robot arm. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceMathutils"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html">Mathutils</a></td></tr>
+<tr class="memdesc:namespaceMathutils"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the mathematical tools useful for the calculations about the ur5-robot. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a40f4468f6ca0fcc14337d9b778945d08"><td class="memItemLeft" align="right" valign="top"><a id="a40f4468f6ca0fcc14337d9b778945d08"></a>
@@ -139,47 +151,44 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aada040ce83c5bd12b0d45085c029cfe4"><td class="memItemLeft" align="right" valign="top"><a id="aada040ce83c5bd12b0d45085c029cfe4"></a>
-Matrix4d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::directKinematicsUr5</b> (VectorXd th)</td></tr>
+<tr class="memitem:aada040ce83c5bd12b0d45085c029cfe4"><td class="memItemLeft" align="right" valign="top">Matrix4d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#aada040ce83c5bd12b0d45085c029cfe4">Kinematics::directKinematicsUr5</a> (VectorXd th)</td></tr>
+<tr class="memdesc:aada040ce83c5bd12b0d45085c029cfe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculate the direct kinematics of the ur5.  <a href="namespaceKinematics.html#aada040ce83c5bd12b0d45085c029cfe4">More...</a><br /></td></tr>
 <tr class="separator:aada040ce83c5bd12b0d45085c029cfe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73a479cda16e3881b65e23012b163efd"><td class="memItemLeft" align="right" valign="top"><a id="a73a479cda16e3881b65e23012b163efd"></a>
-MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::inverseKinematicsUr5</b> (Vector3d pe, Matrix3d Re)</td></tr>
+<tr class="memitem:a73a479cda16e3881b65e23012b163efd"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a73a479cda16e3881b65e23012b163efd">Kinematics::inverseKinematicsUr5</a> (Vector3d pe, Matrix3d Re)</td></tr>
+<tr class="memdesc:a73a479cda16e3881b65e23012b163efd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculate the inverse kinematics of the ur5.  <a href="namespaceKinematics.html#a73a479cda16e3881b65e23012b163efd">More...</a><br /></td></tr>
 <tr class="separator:a73a479cda16e3881b65e23012b163efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa71af13340693e0565a3b5a763044543"><td class="memItemLeft" align="right" valign="top"><a id="aa71af13340693e0565a3b5a763044543"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::attrForce_pos</b> (Vector3d error)</td></tr>
+<tr class="memitem:aa71af13340693e0565a3b5a763044543"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#aa71af13340693e0565a3b5a763044543">Kinematics::attrForce_pos</a> (Vector3d error)</td></tr>
+<tr class="memdesc:aa71af13340693e0565a3b5a763044543"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the attractive force based on position error (normalized).  <a href="namespaceKinematics.html#aa71af13340693e0565a3b5a763044543">More...</a><br /></td></tr>
 <tr class="separator:aa71af13340693e0565a3b5a763044543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adadb6d6f78745a2cef0a000add1a1a19"><td class="memItemLeft" align="right" valign="top"><a id="adadb6d6f78745a2cef0a000add1a1a19"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::repulForce</b> (Vector3d xe)</td></tr>
+<tr class="memitem:adadb6d6f78745a2cef0a000add1a1a19"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#adadb6d6f78745a2cef0a000add1a1a19">Kinematics::repulForce</a> (Vector3d xe)</td></tr>
+<tr class="memdesc:adadb6d6f78745a2cef0a000add1a1a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the repulsive force that keeps the end effector away from the point of shoulder singularity.  <a href="namespaceKinematics.html#adadb6d6f78745a2cef0a000add1a1a19">More...</a><br /></td></tr>
 <tr class="separator:adadb6d6f78745a2cef0a000add1a1a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad29ccb6917f8cb745c3ce3e05d320c29"><td class="memItemLeft" align="right" valign="top"><a id="ad29ccb6917f8cb745c3ce3e05d320c29"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::desPos</b> (Vector3d xe, Vector3d xf)</td></tr>
+<tr class="memitem:ad29ccb6917f8cb745c3ce3e05d320c29"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#ad29ccb6917f8cb745c3ce3e05d320c29">Kinematics::desPos</a> (Vector3d xe, Vector3d xf)</td></tr>
+<tr class="memdesc:ad29ccb6917f8cb745c3ce3e05d320c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the desired position of the end effector, it combines the attractive force towards the target position and the repulsive force from point of singularity.  <a href="namespaceKinematics.html#ad29ccb6917f8cb745c3ce3e05d320c29">More...</a><br /></td></tr>
 <tr class="separator:ad29ccb6917f8cb745c3ce3e05d320c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae708e86535fc8fe028f657257ff0dc70"><td class="memItemLeft" align="right" valign="top"><a id="ae708e86535fc8fe028f657257ff0dc70"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::desOrient</b> (Vector3d phie, Vector3d phif)</td></tr>
+<tr class="memitem:ae708e86535fc8fe028f657257ff0dc70"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#ae708e86535fc8fe028f657257ff0dc70">Kinematics::desOrient</a> (Vector3d phie, Vector3d phif)</td></tr>
+<tr class="memdesc:ae708e86535fc8fe028f657257ff0dc70"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the desired orientation of the end effector.  <a href="namespaceKinematics.html#ae708e86535fc8fe028f657257ff0dc70">More...</a><br /></td></tr>
 <tr class="separator:ae708e86535fc8fe028f657257ff0dc70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec7c725f4596bad5627e5608adb41794"><td class="memItemLeft" align="right" valign="top"><a id="aec7c725f4596bad5627e5608adb41794"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::attrForce_orient</b> (Vector3d error)</td></tr>
+<tr class="memitem:aec7c725f4596bad5627e5608adb41794"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#aec7c725f4596bad5627e5608adb41794">Kinematics::attrForce_orient</a> (Vector3d error)</td></tr>
+<tr class="memdesc:aec7c725f4596bad5627e5608adb41794"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the attractive force based on orientation error (normalized).  <a href="namespaceKinematics.html#aec7c725f4596bad5627e5608adb41794">More...</a><br /></td></tr>
 <tr class="separator:aec7c725f4596bad5627e5608adb41794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3af82f9ce6d10c61431a82b35388bc23"><td class="memItemLeft" align="right" valign="top"><a id="a3af82f9ce6d10c61431a82b35388bc23"></a>
-VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::dotQ</b> (RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)</td></tr>
+<tr class="memitem:a3af82f9ce6d10c61431a82b35388bc23"><td class="memItemLeft" align="right" valign="top">VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a3af82f9ce6d10c61431a82b35388bc23">Kinematics::dotQ</a> (RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)</td></tr>
+<tr class="memdesc:a3af82f9ce6d10c61431a82b35388bc23"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculate the derivative of joint angles using a proportional control law.  <a href="namespaceKinematics.html#a3af82f9ce6d10c61431a82b35388bc23">More...</a><br /></td></tr>
 <tr class="separator:a3af82f9ce6d10c61431a82b35388bc23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aa1c5da19ddad88af1128186b0e9205"><td class="memItemLeft" align="right" valign="top"><a id="a3aa1c5da19ddad88af1128186b0e9205"></a>
-MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::inverseDiffKinematicsUr5</b> (VectorXd th, Vector3d endPos, Vector3d endOrientation)</td></tr>
+<tr class="memitem:a3aa1c5da19ddad88af1128186b0e9205"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a3aa1c5da19ddad88af1128186b0e9205">Kinematics::inverseDiffKinematicsUr5</a> (VectorXd th, Vector3d endPos, Vector3d endOrientation)</td></tr>
+<tr class="memdesc:a3aa1c5da19ddad88af1128186b0e9205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the inverse differential kinematics for ur5 robot.  <a href="namespaceKinematics.html#a3aa1c5da19ddad88af1128186b0e9205">More...</a><br /></td></tr>
 <tr class="separator:a3aa1c5da19ddad88af1128186b0e9205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50aab70034c9a61f870d09c4a8efb134"><td class="memItemLeft" align="right" valign="top"><a id="a50aab70034c9a61f870d09c4a8efb134"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::velocity</b> (Vector3d xe, Vector3d xd, double delta)</td></tr>
-<tr class="separator:a50aab70034c9a61f870d09c4a8efb134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85f8506586359437a5bf6195167f6e88"><td class="memItemLeft" align="right" valign="top"><a id="a85f8506586359437a5bf6195167f6e88"></a>
-MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::jointSpace_kinematics</b> (VectorXd qk, Vector3d endPos, Vector3d endOrient)</td></tr>
+<tr class="memitem:a85f8506586359437a5bf6195167f6e88"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a85f8506586359437a5bf6195167f6e88">Kinematics::jointSpace_kinematics</a> (VectorXd qk, Vector3d endPos, Vector3d endOrient)</td></tr>
+<tr class="memdesc:a85f8506586359437a5bf6195167f6e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that performs joint space kinematics for ur5 robot.  <a href="namespaceKinematics.html#a85f8506586359437a5bf6195167f6e88">More...</a><br /></td></tr>
 <tr class="separator:a85f8506586359437a5bf6195167f6e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd74c1d156c380763bfb262ad67ae691"><td class="memItemLeft" align="right" valign="top"><a id="abd74c1d156c380763bfb262ad67ae691"></a>
-VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::nearest_config</b> (VectorXd qk, MatrixXd val)</td></tr>
+<tr class="memitem:abd74c1d156c380763bfb262ad67ae691"><td class="memItemLeft" align="right" valign="top">VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#abd74c1d156c380763bfb262ad67ae691">Kinematics::nearest_config</a> (VectorXd qk, MatrixXd val)</td></tr>
+<tr class="memdesc:abd74c1d156c380763bfb262ad67ae691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that find the nearest configuration between a set of different configurations.  <a href="namespaceKinematics.html#abd74c1d156c380763bfb262ad67ae691">More...</a><br /></td></tr>
 <tr class="separator:abd74c1d156c380763bfb262ad67ae691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aa63690c00b1d646862b4c3eda9520b"><td class="memItemLeft" align="right" valign="top"><a id="a5aa63690c00b1d646862b4c3eda9520b"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::positionError</b> (Vector3d xe, Vector3d xd)</td></tr>
+<tr class="memitem:a5aa63690c00b1d646862b4c3eda9520b"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a5aa63690c00b1d646862b4c3eda9520b">Kinematics::positionError</a> (Vector3d xe, Vector3d xd)</td></tr>
+<tr class="memdesc:a5aa63690c00b1d646862b4c3eda9520b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculate the error between the actual position and the desired one.  <a href="namespaceKinematics.html#a5aa63690c00b1d646862b4c3eda9520b">More...</a><br /></td></tr>
 <tr class="separator:a5aa63690c00b1d646862b4c3eda9520b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fd0827f35ce58c442badf8ab12ca8da"><td class="memItemLeft" align="right" valign="top"><a id="a0fd0827f35ce58c442badf8ab12ca8da"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::orientationError</b> (Matrix3d w_R_e, Matrix3d w_R_d)</td></tr>
+<tr class="memitem:a0fd0827f35ce58c442badf8ab12ca8da"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceKinematics.html#a0fd0827f35ce58c442badf8ab12ca8da">Kinematics::orientationError</a> (Matrix3d w_R_e, Matrix3d w_R_d)</td></tr>
+<tr class="memdesc:a0fd0827f35ce58c442badf8ab12ca8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates the orentation error between the desired and the current one. (Provided by Focchi)  <a href="namespaceKinematics.html#a0fd0827f35ce58c442badf8ab12ca8da">More...</a><br /></td></tr>
 <tr class="separator:a0fd0827f35ce58c442badf8ab12ca8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69ba017bd077db299f5f0b04864f8e4f"><td class="memItemLeft" align="right" valign="top"><a id="a69ba017bd077db299f5f0b04864f8e4f"></a>
 MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::inverseDiffKinematicsUr5Quaternions</b> (VectorXd q_k, Vector3d endPos, Vector3d endOrient)</td></tr>
@@ -190,38 +199,38 @@ VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::Compu
 <tr class="memitem:a547bf2dcf1a21caf277305094a4a162c"><td class="memItemLeft" align="right" valign="top"><a id="a547bf2dcf1a21caf277305094a4a162c"></a>
 VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>Kinematics::dotQquaternion</b> (VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des)</td></tr>
 <tr class="separator:a547bf2dcf1a21caf277305094a4a162c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc7f6a6f23b21cc03b87b968a3f14b1b"><td class="memItemLeft" align="right" valign="top"><a id="adc7f6a6f23b21cc03b87b968a3f14b1b"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::worldToRobot</b> (Vector3d p)</td></tr>
+<tr class="memitem:adc7f6a6f23b21cc03b87b968a3f14b1b"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#adc7f6a6f23b21cc03b87b968a3f14b1b">Mathutils::worldToRobot</a> (Vector3d p)</td></tr>
+<tr class="memdesc:adc7f6a6f23b21cc03b87b968a3f14b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculates the change of base frame starting from a world frame point to a point with respect to the base frame of the robot.  <a href="namespaceMathutils.html#adc7f6a6f23b21cc03b87b968a3f14b1b">More...</a><br /></td></tr>
 <tr class="separator:adc7f6a6f23b21cc03b87b968a3f14b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad29af7571ec2f06927ec144fab7a7be0"><td class="memItemLeft" align="right" valign="top"><a id="ad29af7571ec2f06927ec144fab7a7be0"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::robotToWorld</b> (Vector3d p)</td></tr>
+<tr class="memitem:ad29af7571ec2f06927ec144fab7a7be0"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#ad29af7571ec2f06927ec144fab7a7be0">Mathutils::robotToWorld</a> (Vector3d p)</td></tr>
+<tr class="memdesc:ad29af7571ec2f06927ec144fab7a7be0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculates the change of base frame starting from a robot base frame point to a point with respect to the world frame.  <a href="namespaceMathutils.html#ad29af7571ec2f06927ec144fab7a7be0">More...</a><br /></td></tr>
 <tr class="separator:ad29af7571ec2f06927ec144fab7a7be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a768da9b748aa73c4d9499a310f30c00c"><td class="memItemLeft" align="right" valign="top"><a id="a768da9b748aa73c4d9499a310f30c00c"></a>
-Matrix4d&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::getT_i</b> (int i, double th)</td></tr>
+<tr class="memitem:a768da9b748aa73c4d9499a310f30c00c"><td class="memItemLeft" align="right" valign="top">Matrix4d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a768da9b748aa73c4d9499a310f30c00c">Mathutils::getT_i</a> (int i, double th)</td></tr>
+<tr class="memdesc:a768da9b748aa73c4d9499a310f30c00c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the trasformation matrix between the frames of the robot's joints.  <a href="namespaceMathutils.html#a768da9b748aa73c4d9499a310f30c00c">More...</a><br /></td></tr>
 <tr class="separator:a768da9b748aa73c4d9499a310f30c00c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a548a12516e4f8c207cbb4516264c5dc4"><td class="memItemLeft" align="right" valign="top"><a id="a548a12516e4f8c207cbb4516264c5dc4"></a>
-MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::ur5Jacobian</b> (VectorXd th)</td></tr>
+<tr class="memitem:a548a12516e4f8c207cbb4516264c5dc4"><td class="memItemLeft" align="right" valign="top">MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a548a12516e4f8c207cbb4516264c5dc4">Mathutils::ur5Jacobian</a> (VectorXd th)</td></tr>
+<tr class="memdesc:a548a12516e4f8c207cbb4516264c5dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the Jacobian matrix of the UR5 robot.  <a href="namespaceMathutils.html#a548a12516e4f8c207cbb4516264c5dc4">More...</a><br /></td></tr>
 <tr class="separator:a548a12516e4f8c207cbb4516264c5dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a655a0b57071a622489683463512e72"><td class="memItemLeft" align="right" valign="top"><a id="a8a655a0b57071a622489683463512e72"></a>
-Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::eulerToRotationMatrix</b> (Vector3d euler)</td></tr>
+<tr class="memitem:a8a655a0b57071a622489683463512e72"><td class="memItemLeft" align="right" valign="top">Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a8a655a0b57071a622489683463512e72">Mathutils::eulerToRotationMatrix</a> (Vector3d euler)</td></tr>
+<tr class="memdesc:a8a655a0b57071a622489683463512e72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert Euler angles to a rotation matrix.  <a href="namespaceMathutils.html#a8a655a0b57071a622489683463512e72">More...</a><br /></td></tr>
 <tr class="separator:a8a655a0b57071a622489683463512e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a396f7c16da640cb1b1d4ef3c695cba2e"><td class="memItemLeft" align="right" valign="top"><a id="a396f7c16da640cb1b1d4ef3c695cba2e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::vectMagnitude</b> (const Vector3d &amp;v)</td></tr>
+<tr class="memitem:a396f7c16da640cb1b1d4ef3c695cba2e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a396f7c16da640cb1b1d4ef3c695cba2e">Mathutils::vectMagnitude</a> (const Vector3d &amp;v)</td></tr>
+<tr class="memdesc:a396f7c16da640cb1b1d4ef3c695cba2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the magnitude of a vector.  <a href="namespaceMathutils.html#a396f7c16da640cb1b1d4ef3c695cba2e">More...</a><br /></td></tr>
 <tr class="separator:a396f7c16da640cb1b1d4ef3c695cba2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35ed5ffff50db796b7f868577a2b7fdc"><td class="memItemLeft" align="right" valign="top"><a id="a35ed5ffff50db796b7f868577a2b7fdc"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::quatMagnitude</b> (const Quaterniond &amp;q)</td></tr>
+<tr class="memitem:a35ed5ffff50db796b7f868577a2b7fdc"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a35ed5ffff50db796b7f868577a2b7fdc">Mathutils::quatMagnitude</a> (const Quaterniond &amp;q)</td></tr>
+<tr class="memdesc:a35ed5ffff50db796b7f868577a2b7fdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the magnitude of a quaternion.  <a href="namespaceMathutils.html#a35ed5ffff50db796b7f868577a2b7fdc">More...</a><br /></td></tr>
 <tr class="separator:a35ed5ffff50db796b7f868577a2b7fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84f89b94f8e4be490c60d6b443fea4eb"><td class="memItemLeft" align="right" valign="top"><a id="a84f89b94f8e4be490c60d6b443fea4eb"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::centerDist</b> (Vector3d p)</td></tr>
+<tr class="memitem:a84f89b94f8e4be490c60d6b443fea4eb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a84f89b94f8e4be490c60d6b443fea4eb">Mathutils::centerDist</a> (Vector3d p)</td></tr>
+<tr class="memdesc:a84f89b94f8e4be490c60d6b443fea4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the distance from the center (below the base frame of the ur5-robot)  <a href="namespaceMathutils.html#a84f89b94f8e4be490c60d6b443fea4eb">More...</a><br /></td></tr>
 <tr class="separator:a84f89b94f8e4be490c60d6b443fea4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab35d10ed4e920f772a5abd807cf3d952"><td class="memItemLeft" align="right" valign="top"><a id="ab35d10ed4e920f772a5abd807cf3d952"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::touchCenterCircle</b> (Vector3d start_pos, Vector3d end_pos)</td></tr>
+<tr class="memitem:ab35d10ed4e920f772a5abd807cf3d952"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#ab35d10ed4e920f772a5abd807cf3d952">Mathutils::touchCenterCircle</a> (Vector3d start_pos, Vector3d end_pos)</td></tr>
+<tr class="memdesc:ab35d10ed4e920f772a5abd807cf3d952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate if the trajectory between the starting position and ending position touch the circle defined around the origin.  <a href="namespaceMathutils.html#ab35d10ed4e920f772a5abd807cf3d952">More...</a><br /></td></tr>
 <tr class="separator:ab35d10ed4e920f772a5abd807cf3d952"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb0f12ffd29ac761b36a149bfd7d6efa"><td class="memItemLeft" align="right" valign="top"><a id="abb0f12ffd29ac761b36a149bfd7d6efa"></a>
-Quaterniond&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::EulerToQuaternion</b> (Vector3d euler)</td></tr>
+<tr class="memitem:abb0f12ffd29ac761b36a149bfd7d6efa"><td class="memItemLeft" align="right" valign="top">Quaterniond&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa">Mathutils::EulerToQuaternion</a> (Vector3d euler)</td></tr>
+<tr class="memdesc:abb0f12ffd29ac761b36a149bfd7d6efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that trasforms euler angles in quaternion.  <a href="namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa">More...</a><br /></td></tr>
 <tr class="separator:abb0f12ffd29ac761b36a149bfd7d6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66ee328924ba859a7804bc2bc7c90c57"><td class="memItemLeft" align="right" valign="top"><a id="a66ee328924ba859a7804bc2bc7c90c57"></a>
-Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>Mathutils::tangentialPoint</b> (Vector3d start_pos)</td></tr>
+<tr class="memitem:a66ee328924ba859a7804bc2bc7c90c57"><td class="memItemLeft" align="right" valign="top">Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceMathutils.html#a66ee328924ba859a7804bc2bc7c90c57">Mathutils::tangentialPoint</a> (Vector3d start_pos)</td></tr>
+<tr class="memdesc:a66ee328924ba859a7804bc2bc7c90c57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculate the tangential point on a circle given a starting position.  <a href="namespaceMathutils.html#a66ee328924ba859a7804bc2bc7c90c57">More...</a><br /></td></tr>
 <tr class="separator:a66ee328924ba859a7804bc2bc7c90c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

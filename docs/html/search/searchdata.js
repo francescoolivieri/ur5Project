@@ -1,27 +1,30 @@
 var indexSectionsWithContent =
 {
-  0: "gjlmrsu",
+  0: "abcdegijklmnopqrstuvw",
   1: "jlmr",
-  2: "mru",
-  3: "gjlmrsu",
-  4: "u"
+  2: "km",
+  3: "bclmru",
+  4: "acdegijlmnopqrstuvw",
+  5: "u"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "files",
-  3: "functions",
-  4: "pages"
+  2: "namespaces",
+  3: "files",
+  4: "functions",
+  5: "pages"
 };
 
 var indexSectionLabels =
 {
   0: "All",
   1: "Classes",
-  2: "Files",
-  3: "Functions",
-  4: "Pages"
+  2: "Namespaces",
+  3: "Files",
+  4: "Functions",
+  5: "Pages"
 };
 

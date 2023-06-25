@@ -189,7 +189,6 @@ MatrixXd Kinematics::inverseKinematicsUr5(Vector3d pe, Matrix3d Re){
 
 // NB: IF i == 0 -> t_i == t_10 or i == 1 -> t_i == t_21
 Matrix4d Mathutils::getT_i(int i, double th){
-    // better if store matrices
 
     Matrix4d t_i = Matrix4d::Identity();
 
@@ -279,7 +278,7 @@ VectorXd Kinematics::nearest_config(VectorXd qk, MatrixXd val){
     for(int i=1; i < val.rows(); i++){
         candidate = val.block<1,6>(i,0);
         diff = qk -candidate;
-        diff << diff(0)*2, diff(1)*2, diff(2)*2, diff(3), diff(4), diff(5);
+        diff << diff(0)*2, diff(1)*2, diff(2)*2, diff(3), diff(4), diff(5); // more weight on the first joints -> reduce shoulder movements
         if(diff.norm() < diff_min.norm()){    // looking for the nearest configuration
             min_config = candidate;
             diff_min = diff;
@@ -309,15 +308,6 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
     rot = tmp.block<3,3>(0,0);
     pos = tmp.block<3,1>(0,3);
 
-    /*final euler orientation and position*/
-    /*
-    cout << "final euler orientation and position" << endl;
-    cout << endOrient << endl;
-    cout << eulerToRotationMatrix(endOrient).eulerAngles(0,1,2) << endl << endl;
-    cout << rot.eulerAngles(0,1,2) << endl << endl;
-    cout << pos << endl;
-    */
-
     /* fill the matrix with the middle configurations */
     int iter = 0;
     while (error.norm() > 0.005)
@@ -329,8 +319,7 @@ MatrixXd Kinematics::jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3
         // cout << error.norm() << endl;
         iter++;
     }
-    //cout << "numero di iterazioni: " << endl;
-    //cout << iter << endl;
+
     return joints_config;
 }
 
@@ -364,8 +353,6 @@ double Mathutils::centerDist(Vector3d p){
 }
 
 
-
-//th is to substitute with startPos
 MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation){
     
     MatrixXd curr_fwk = directKinematicsUr5(th);
@@ -399,9 +386,11 @@ MatrixXd Kinematics::inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vect
         
         dotq = dotQ(qk, xe, xd, Re, endOrientation);
         
+        /* Joint angles updated using the derivative (dotq) multiplied by a small step */
         qk = q + dotq * deltaT;
         q = qk;
         
+        /* Save the config. found */
         joints_config.conservativeResize(joints_config.rows() + 1, joints_config.cols());
         joints_config.block<1,6>(joints_config.rows()-1, 0) = qk.transpose();
 

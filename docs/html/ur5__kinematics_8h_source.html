@@ -78,84 +78,131 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define SCALE_FACTOR 1</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define GRIPPER_LENGTH 0.15 // needs to be replaced with 0.12 later (0 is just for testing)</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define RADIUS 0.20</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> steps = 400;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;ros/console.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define SCALE_FACTOR 1</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define GRIPPER_LENGTH 0.15 // needs to be replaced with 0.12 later (0 is just for testing)</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define RADIUS 0.20</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> steps = 400;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    SIN,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    CIRC,</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    LIN</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}mode;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">using namespace </span>Eigen;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    SIN,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    CIRC,</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    LIN</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}mode;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">using namespace </span>Eigen;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>Kinematics{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Matrix4d directKinematicsUr5(VectorXd th);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    MatrixXd inverseKinematicsUr5(Vector3d pe, Matrix3d Re);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    Vector3d attrForce_pos(Vector3d error);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    Vector3d repulForce(Vector3d xe);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Vector3d desPos(Vector3d xe, Vector3d xf);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    Vector3d desOrient(Vector3d phie, Vector3d phif);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    Vector3d attrForce_orient(Vector3d error);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">//VectorXd q_dott0(VectorXd qk);</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    Vector3d velocity(Vector3d xe, Vector3d xd, <span class="keywordtype">double</span> delta);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient );</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    VectorXd nearest_config(VectorXd qk, MatrixXd val);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Vector3d positionError(Vector3d xe, Vector3d xd);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    Vector3d orientationError(Matrix3d w_R_e, Matrix3d w_R_d);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//Quaternions</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    MatrixXd inverseDiffKinematicsUr5Quaternions(VectorXd q_k, Vector3d endPos, Vector3d endOrient);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">namespace </span>Mathutils{</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    Vector3d worldToRobot(Vector3d p);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    Vector3d robotToWorld(Vector3d p);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    Matrix4d getT_i(<span class="keywordtype">int</span> i, <span class="keywordtype">double</span> th);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    MatrixXd ur5Jacobian(VectorXd th);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceKinematics.html">Kinematics</a>{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    Matrix4d <a class="code" href="namespaceKinematics.html#aada040ce83c5bd12b0d45085c029cfe4">directKinematicsUr5</a>(VectorXd th);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    MatrixXd <a class="code" href="namespaceKinematics.html#a73a479cda16e3881b65e23012b163efd">inverseKinematicsUr5</a>(Vector3d pe, Matrix3d Re);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#aa71af13340693e0565a3b5a763044543">attrForce_pos</a>(Vector3d error);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    Matrix3d eulerToRotationMatrix(Vector3d euler); <span class="comment">//euler angles in x, y, z</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">double</span> vectMagnitude(<span class="keyword">const</span> Vector3d &amp;v);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> quatMagnitude(<span class="keyword">const</span> Quaterniond &amp;q);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">double</span> centerDist(Vector3d p);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">int</span> touchCenterCircle(Vector3d start_pos, Vector3d end_pos);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    Quaterniond EulerToQuaternion(Vector3d euler);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    Vector3d tangentialPoint(Vector3d start_pos);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">//variables</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> value;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; a = {0., 0., -0.425, -0.3922, 0., 0.}; <span class="comment">// ?</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#adadb6d6f78745a2cef0a000add1a1a19">repulForce</a>(Vector3d xe);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#ad29ccb6917f8cb745c3ce3e05d320c29">desPos</a>(Vector3d xe, Vector3d xf);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">static</span> Matrix4d t_60 = Matrix4d::Identity();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">static</span> Matrix4d t0b = Matrix4d::Identity();</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">static</span> Matrix4d te6 = Matrix4d::Identity();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">typedef</span> Matrix&lt;double, 6, 1&gt; Vector6d;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#ae708e86535fc8fe028f657257ff0dc70">desOrient</a>(Vector3d phie, Vector3d phif);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#aec7c725f4596bad5627e5608adb41794">attrForce_orient</a>(Vector3d error);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    VectorXd <a class="code" href="namespaceKinematics.html#a3af82f9ce6d10c61431a82b35388bc23">dotQ</a>(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    MatrixXd <a class="code" href="namespaceKinematics.html#a3aa1c5da19ddad88af1128186b0e9205">inverseDiffKinematicsUr5</a>(VectorXd th, Vector3d endPos, Vector3d endOrientation);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    MatrixXd <a class="code" href="namespaceKinematics.html#a85f8506586359437a5bf6195167f6e88">jointSpace_kinematics</a>(VectorXd qk, Vector3d endPos, Vector3d endOrient );</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    VectorXd <a class="code" href="namespaceKinematics.html#abd74c1d156c380763bfb262ad67ae691">nearest_config</a>(VectorXd qk, MatrixXd val);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#a5aa63690c00b1d646862b4c3eda9520b">positionError</a>(Vector3d xe, Vector3d xd);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    Vector3d <a class="code" href="namespaceKinematics.html#a0fd0827f35ce58c442badf8ab12ca8da">orientationError</a>(Matrix3d w_R_e, Matrix3d w_R_d);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="comment">//Quaternions</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="comment">/* This set of functions are not recommended,  */</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    MatrixXd inverseDiffKinematicsUr5Quaternions(VectorXd q_k, Vector3d endPos, Vector3d endOrient);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    VectorXd ComputeErrorQuaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    VectorXd dotQquaternion(VectorXd q, Vector3d pos_des, Vector3d orient_des, Vector3d v_des, Vector3d w_des);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceMathutils.html">Mathutils</a>{</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    Vector3d <a class="code" href="namespaceMathutils.html#adc7f6a6f23b21cc03b87b968a3f14b1b">worldToRobot</a>(Vector3d p);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    Vector3d <a class="code" href="namespaceMathutils.html#ad29af7571ec2f06927ec144fab7a7be0">robotToWorld</a>(Vector3d p);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    Matrix4d <a class="code" href="namespaceMathutils.html#a768da9b748aa73c4d9499a310f30c00c">getT_i</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">double</span> th);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    MatrixXd <a class="code" href="namespaceMathutils.html#a548a12516e4f8c207cbb4516264c5dc4">ur5Jacobian</a>(VectorXd th);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    Matrix3d <a class="code" href="namespaceMathutils.html#a8a655a0b57071a622489683463512e72">eulerToRotationMatrix</a>(Vector3d euler); </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="namespaceMathutils.html#a396f7c16da640cb1b1d4ef3c695cba2e">vectMagnitude</a>(<span class="keyword">const</span> Vector3d &amp;v);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="namespaceMathutils.html#a35ed5ffff50db796b7f868577a2b7fdc">quatMagnitude</a>(<span class="keyword">const</span> Quaterniond &amp;q);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="namespaceMathutils.html#a84f89b94f8e4be490c60d6b443fea4eb">centerDist</a>(Vector3d p);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="namespaceMathutils.html#ab35d10ed4e920f772a5abd807cf3d952">touchCenterCircle</a>(Vector3d start_pos, Vector3d end_pos);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    Quaterniond <a class="code" href="namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa">EulerToQuaternion</a>(Vector3d euler);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    Vector3d <a class="code" href="namespaceMathutils.html#a66ee328924ba859a7804bc2bc7c90c57">tangentialPoint</a>(Vector3d start_pos);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;}</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment">//variables</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keyword">static</span> <span class="keywordtype">double</span> value;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> first = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; alp = {0., M_PI/2, 0., 0., M_PI/2, -M_PI/2};</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; dist = {0.1625, 0., 0., 0.1333, 0.0997, 0.0996+GRIPPER_LENGTH};</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="keyword">static</span> vector&lt;double&gt; a = {0., 0., -0.425, -0.3922, 0., 0.}; <span class="comment">// ?</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="keyword">static</span> Matrix4d t_60 = Matrix4d::Identity(); </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="keyword">static</span> Matrix4d t0b = Matrix4d::Identity();  </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="keyword">static</span> Matrix4d te6 = Matrix4d::Identity();  </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="keyword">typedef</span> Matrix&lt;double, 6, 1&gt; Vector6d;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespaceMathutils_html_a548a12516e4f8c207cbb4516264c5dc4"><div class="ttname"><a href="namespaceMathutils.html#a548a12516e4f8c207cbb4516264c5dc4">Mathutils::ur5Jacobian</a></div><div class="ttdeci">MatrixXd ur5Jacobian(VectorXd th)</div><div class="ttdoc">Function that calculate the Jacobian matrix of the UR5 robot.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:408</div></div>
+<div class="ttc" id="anamespaceKinematics_html_aec7c725f4596bad5627e5608adb41794"><div class="ttname"><a href="namespaceKinematics.html#aec7c725f4596bad5627e5608adb41794">Kinematics::attrForce_orient</a></div><div class="ttdeci">Vector3d attrForce_orient(Vector3d error)</div><div class="ttdoc">This function calculates the attractive force based on orientation error (normalized).</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:218</div></div>
+<div class="ttc" id="anamespaceKinematics_html_ae708e86535fc8fe028f657257ff0dc70"><div class="ttname"><a href="namespaceKinematics.html#ae708e86535fc8fe028f657257ff0dc70">Kinematics::desOrient</a></div><div class="ttdeci">Vector3d desOrient(Vector3d phie, Vector3d phif)</div><div class="ttdoc">This function calculates the desired orientation of the end effector.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:252</div></div>
+<div class="ttc" id="anamespaceMathutils_html"><div class="ttname"><a href="namespaceMathutils.html">Mathutils</a></div><div class="ttdoc">Contains all the mathematical tools useful for the calculations about the ur5-robot.</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a73a479cda16e3881b65e23012b163efd"><div class="ttname"><a href="namespaceKinematics.html#a73a479cda16e3881b65e23012b163efd">Kinematics::inverseKinematicsUr5</a></div><div class="ttdeci">MatrixXd inverseKinematicsUr5(Vector3d pe, Matrix3d Re)</div><div class="ttdoc">This function calculate the inverse kinematics of the ur5.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:56</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a66ee328924ba859a7804bc2bc7c90c57"><div class="ttname"><a href="namespaceMathutils.html#a66ee328924ba859a7804bc2bc7c90c57">Mathutils::tangentialPoint</a></div><div class="ttdeci">Vector3d tangentialPoint(Vector3d start_pos)</div><div class="ttdoc">Function that calculate the tangential point on a circle given a starting position.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:727</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a84f89b94f8e4be490c60d6b443fea4eb"><div class="ttname"><a href="namespaceMathutils.html#a84f89b94f8e4be490c60d6b443fea4eb">Mathutils::centerDist</a></div><div class="ttdeci">double centerDist(Vector3d p)</div><div class="ttdoc">Function that calculate the distance from the center (below the base frame of the ur5-robot)</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:351</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a396f7c16da640cb1b1d4ef3c695cba2e"><div class="ttname"><a href="namespaceMathutils.html#a396f7c16da640cb1b1d4ef3c695cba2e">Mathutils::vectMagnitude</a></div><div class="ttdeci">double vectMagnitude(const Vector3d &amp;v)</div><div class="ttdoc">Function that calculate the magnitude of a vector.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:697</div></div>
+<div class="ttc" id="anamespaceKinematics_html_aada040ce83c5bd12b0d45085c029cfe4"><div class="ttname"><a href="namespaceKinematics.html#aada040ce83c5bd12b0d45085c029cfe4">Kinematics::directKinematicsUr5</a></div><div class="ttdeci">Matrix4d directKinematicsUr5(VectorXd th)</div><div class="ttdoc">This function calculate the direct kinematics of the ur5.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:33</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a3aa1c5da19ddad88af1128186b0e9205"><div class="ttname"><a href="namespaceKinematics.html#a3aa1c5da19ddad88af1128186b0e9205">Kinematics::inverseDiffKinematicsUr5</a></div><div class="ttdeci">MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation)</div><div class="ttdoc">Function that calculate the inverse differential kinematics for ur5 robot.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:356</div></div>
+<div class="ttc" id="anamespaceKinematics_html_ad29ccb6917f8cb745c3ce3e05d320c29"><div class="ttname"><a href="namespaceKinematics.html#ad29ccb6917f8cb745c3ce3e05d320c29">Kinematics::desPos</a></div><div class="ttdeci">Vector3d desPos(Vector3d xe, Vector3d xf)</div><div class="ttdoc">This function calculates the desired position of the end effector, it combines the attractive force t...</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:236</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a0fd0827f35ce58c442badf8ab12ca8da"><div class="ttname"><a href="namespaceKinematics.html#a0fd0827f35ce58c442badf8ab12ca8da">Kinematics::orientationError</a></div><div class="ttdeci">Vector3d orientationError(Matrix3d w_R_e, Matrix3d w_R_d)</div><div class="ttdoc">This function calculates the orentation error between the desired and the current one....</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:487</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a8a655a0b57071a622489683463512e72"><div class="ttname"><a href="namespaceMathutils.html#a8a655a0b57071a622489683463512e72">Mathutils::eulerToRotationMatrix</a></div><div class="ttdeci">Matrix3d eulerToRotationMatrix(Vector3d euler)</div><div class="ttdoc">Convert Euler angles to a rotation matrix.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:461</div></div>
+<div class="ttc" id="anamespaceMathutils_html_adc7f6a6f23b21cc03b87b968a3f14b1b"><div class="ttname"><a href="namespaceMathutils.html#adc7f6a6f23b21cc03b87b968a3f14b1b">Mathutils::worldToRobot</a></div><div class="ttdeci">Vector3d worldToRobot(Vector3d p)</div><div class="ttdoc">Function that calculates the change of base frame starting from a world frame point to a point with r...</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:8</div></div>
+<div class="ttc" id="anamespaceKinematics_html_aa71af13340693e0565a3b5a763044543"><div class="ttname"><a href="namespaceKinematics.html#aa71af13340693e0565a3b5a763044543">Kinematics::attrForce_pos</a></div><div class="ttdeci">Vector3d attrForce_pos(Vector3d error)</div><div class="ttdoc">This function calculates the attractive force based on position error (normalized).</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:213</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a35ed5ffff50db796b7f868577a2b7fdc"><div class="ttname"><a href="namespaceMathutils.html#a35ed5ffff50db796b7f868577a2b7fdc">Mathutils::quatMagnitude</a></div><div class="ttdeci">double quatMagnitude(const Quaterniond &amp;q)</div><div class="ttdoc">Function that calculate the magnitude of a quaternion.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:693</div></div>
+<div class="ttc" id="anamespaceKinematics_html_adadb6d6f78745a2cef0a000add1a1a19"><div class="ttname"><a href="namespaceKinematics.html#adadb6d6f78745a2cef0a000add1a1a19">Kinematics::repulForce</a></div><div class="ttdeci">Vector3d repulForce(Vector3d xe)</div><div class="ttdoc">This function calculates the repulsive force that keeps the end effector away from the point of shoul...</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:222</div></div>
+<div class="ttc" id="anamespaceMathutils_html_ad29af7571ec2f06927ec144fab7a7be0"><div class="ttname"><a href="namespaceMathutils.html#ad29af7571ec2f06927ec144fab7a7be0">Mathutils::robotToWorld</a></div><div class="ttdeci">Vector3d robotToWorld(Vector3d p)</div><div class="ttdoc">Function that calculates the change of base frame starting from a robot base frame point to a point w...</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:20</div></div>
+<div class="ttc" id="anamespaceKinematics_html"><div class="ttname"><a href="namespaceKinematics.html">Kinematics</a></div><div class="ttdoc">Contains all the functions related with the kinematic of the robot arm.</div></div>
+<div class="ttc" id="anamespaceKinematics_html_abd74c1d156c380763bfb262ad67ae691"><div class="ttname"><a href="namespaceKinematics.html#abd74c1d156c380763bfb262ad67ae691">Kinematics::nearest_config</a></div><div class="ttdeci">VectorXd nearest_config(VectorXd qk, MatrixXd val)</div><div class="ttdoc">Function that find the nearest configuration between a set of different configurations.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:272</div></div>
+<div class="ttc" id="anamespaceMathutils_html_a768da9b748aa73c4d9499a310f30c00c"><div class="ttname"><a href="namespaceMathutils.html#a768da9b748aa73c4d9499a310f30c00c">Mathutils::getT_i</a></div><div class="ttdeci">Matrix4d getT_i(int i, double th)</div><div class="ttdoc">Get the trasformation matrix between the frames of the robot's joints.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:191</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a3af82f9ce6d10c61431a82b35388bc23"><div class="ttname"><a href="namespaceKinematics.html#a3af82f9ce6d10c61431a82b35388bc23">Kinematics::dotQ</a></div><div class="ttdeci">VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid)</div><div class="ttdoc">This function calculate the derivative of joint angles using a proportional control law.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:328</div></div>
+<div class="ttc" id="anamespaceMathutils_html_abb0f12ffd29ac761b36a149bfd7d6efa"><div class="ttname"><a href="namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa">Mathutils::EulerToQuaternion</a></div><div class="ttdeci">Quaterniond EulerToQuaternion(Vector3d euler)</div><div class="ttdoc">Function that trasforms euler angles in quaternion.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:682</div></div>
+<div class="ttc" id="anamespaceMathutils_html_ab35d10ed4e920f772a5abd807cf3d952"><div class="ttname"><a href="namespaceMathutils.html#ab35d10ed4e920f772a5abd807cf3d952">Mathutils::touchCenterCircle</a></div><div class="ttdeci">int touchCenterCircle(Vector3d start_pos, Vector3d end_pos)</div><div class="ttdoc">Function that calculate if the trajectory between the starting position and ending position touch the...</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:701</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a85f8506586359437a5bf6195167f6e88"><div class="ttname"><a href="namespaceKinematics.html#a85f8506586359437a5bf6195167f6e88">Kinematics::jointSpace_kinematics</a></div><div class="ttdeci">MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient)</div><div class="ttdoc">Function that performs joint space kinematics for ur5 robot.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:291</div></div>
+<div class="ttc" id="anamespaceKinematics_html_a5aa63690c00b1d646862b4c3eda9520b"><div class="ttname"><a href="namespaceKinematics.html#a5aa63690c00b1d646862b4c3eda9520b">Kinematics::positionError</a></div><div class="ttdeci">Vector3d positionError(Vector3d xe, Vector3d xd)</div><div class="ttdoc">This function calculate the error between the actual position and the desired one.</div><div class="ttdef"><b>Definition:</b> ur5_kinematics.cpp:512</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

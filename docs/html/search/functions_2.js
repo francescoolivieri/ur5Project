@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['lego_38',['Lego',['../classLego.html#ab6b015ff6bd5287d00cac191904da2ba',1,'Lego::Lego()'],['../classLego.html#a15c598953e7e9a7dd8e32d88b6f0e44b',1,'Lego::Lego(string type, double x_base, double y_base, double z_base, double yaw, double pitch, double roll)']]]
+  ['desorient_78',['desOrient',['../namespaceKinematics.html#ae708e86535fc8fe028f657257ff0dc70',1,'Kinematics']]],
+  ['despos_79',['desPos',['../namespaceKinematics.html#ad29ccb6917f8cb745c3ce3e05d320c29',1,'Kinematics']]],
+  ['detach_80',['detach',['../link__attacher_8hpp.html#a93f83e5501e90654fa2bbfcf5798b281',1,'link_attacher.cpp']]],
+  ['directkinematicsur5_81',['directKinematicsUr5',['../namespaceKinematics.html#aada040ce83c5bd12b0d45085c029cfe4',1,'Kinematics']]],
+  ['dotq_82',['dotQ',['../namespaceKinematics.html#a3af82f9ce6d10c61431a82b35388bc23',1,'Kinematics']]]
 ];

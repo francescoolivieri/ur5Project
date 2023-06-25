@@ -1,0 +1,243 @@
+\hypertarget{namespaceMathutils}{}\doxysection{Mathutils Namespace Reference}
+\label{namespaceMathutils}\index{Mathutils@{Mathutils}}
+
+
+Contains all the mathematical tools useful for the calculations about the ur5-\/robot.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_adc7f6a6f23b21cc03b87b968a3f14b1b}{world\+To\+Robot}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculates the change of base frame starting from a world frame point to a point with respect to the base frame of the robot. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_ad29af7571ec2f06927ec144fab7a7be0}{robot\+To\+World}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculates the change of base frame starting from a robot base frame point to a point with respect to the world frame. \end{DoxyCompactList}\item 
+Matrix4d \mbox{\hyperlink{namespaceMathutils_a768da9b748aa73c4d9499a310f30c00c}{get\+T\+\_\+i}} (int i, double th)
+\begin{DoxyCompactList}\small\item\em Get the trasformation matrix between the frames of the robot\textquotesingle{}s joints. \end{DoxyCompactList}\item 
+Matrix\+Xd \mbox{\hyperlink{namespaceMathutils_a548a12516e4f8c207cbb4516264c5dc4}{ur5\+Jacobian}} (Vector\+Xd th)
+\begin{DoxyCompactList}\small\item\em Function that calculate the Jacobian matrix of the U\+R5 robot. \end{DoxyCompactList}\item 
+Matrix3d \mbox{\hyperlink{namespaceMathutils_a8a655a0b57071a622489683463512e72}{euler\+To\+Rotation\+Matrix}} (Vector3d euler)
+\begin{DoxyCompactList}\small\item\em Convert Euler angles to a rotation matrix. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a396f7c16da640cb1b1d4ef3c695cba2e}{vect\+Magnitude}} (const Vector3d \&v)
+\begin{DoxyCompactList}\small\item\em Function that calculate the magnitude of a vector. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a35ed5ffff50db796b7f868577a2b7fdc}{quat\+Magnitude}} (const Quaterniond \&q)
+\begin{DoxyCompactList}\small\item\em Function that calculate the magnitude of a quaternion. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceMathutils_a84f89b94f8e4be490c60d6b443fea4eb}{center\+Dist}} (Vector3d p)
+\begin{DoxyCompactList}\small\item\em Function that calculate the distance from the center (below the base frame of the ur5-\/robot) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{namespaceMathutils_ab35d10ed4e920f772a5abd807cf3d952}{touch\+Center\+Circle}} (Vector3d start\+\_\+pos, Vector3d end\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Function that calculate if the trajectory between the starting position and ending position touch the circle defined around the origin. \end{DoxyCompactList}\item 
+Quaterniond \mbox{\hyperlink{namespaceMathutils_abb0f12ffd29ac761b36a149bfd7d6efa}{Euler\+To\+Quaternion}} (Vector3d euler)
+\begin{DoxyCompactList}\small\item\em Function that trasforms euler angles in quaternion. \end{DoxyCompactList}\item 
+Vector3d \mbox{\hyperlink{namespaceMathutils_a66ee328924ba859a7804bc2bc7c90c57}{tangential\+Point}} (Vector3d start\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Function that calculate the tangential point on a circle given a starting position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains all the mathematical tools useful for the calculations about the ur5-\/robot. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceMathutils_a84f89b94f8e4be490c60d6b443fea4eb}\label{namespaceMathutils_a84f89b94f8e4be490c60d6b443fea4eb}} 
+\index{Mathutils@{Mathutils}!centerDist@{centerDist}}
+\index{centerDist@{centerDist}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{centerDist()}{centerDist()}}
+{\footnotesize\ttfamily double Mathutils\+::center\+Dist (\begin{DoxyParamCaption}\item[{Vector3d}]{p }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the distance from the center (below the base frame of the ur5-\/robot) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & Vector representing the position in the space \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Distance from center 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_abb0f12ffd29ac761b36a149bfd7d6efa}\label{namespaceMathutils_abb0f12ffd29ac761b36a149bfd7d6efa}} 
+\index{Mathutils@{Mathutils}!EulerToQuaternion@{EulerToQuaternion}}
+\index{EulerToQuaternion@{EulerToQuaternion}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{EulerToQuaternion()}{EulerToQuaternion()}}
+{\footnotesize\ttfamily Quaterniond Mathutils\+::\+Euler\+To\+Quaternion (\begin{DoxyParamCaption}\item[{Vector3d}]{euler }\end{DoxyParamCaption})}
+
+
+
+Function that trasforms euler angles in quaternion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em euler} & Euler angles \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Quaterniond Quaternion representing the euler angles 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_a8a655a0b57071a622489683463512e72}\label{namespaceMathutils_a8a655a0b57071a622489683463512e72}} 
+\index{Mathutils@{Mathutils}!eulerToRotationMatrix@{eulerToRotationMatrix}}
+\index{eulerToRotationMatrix@{eulerToRotationMatrix}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{eulerToRotationMatrix()}{eulerToRotationMatrix()}}
+{\footnotesize\ttfamily Matrix3d Mathutils\+::euler\+To\+Rotation\+Matrix (\begin{DoxyParamCaption}\item[{Vector3d}]{euler }\end{DoxyParamCaption})}
+
+
+
+Convert Euler angles to a rotation matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em euler} & Euler angles in x,y,z \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix3d Rotation Matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_a768da9b748aa73c4d9499a310f30c00c}\label{namespaceMathutils_a768da9b748aa73c4d9499a310f30c00c}} 
+\index{Mathutils@{Mathutils}!getT\_i@{getT\_i}}
+\index{getT\_i@{getT\_i}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{getT\_i()}{getT\_i()}}
+{\footnotesize\ttfamily Matrix4d Mathutils\+::get\+T\+\_\+i (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{double}]{th }\end{DoxyParamCaption})}
+
+
+
+Get the trasformation matrix between the frames of the robot\textquotesingle{}s joints. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & IF i == 0 -\/$>$ t\+\_\+i == t\+\_\+10 or i == 1 -\/$>$ t\+\_\+i == t\+\_\+21 \\
+\hline
+{\em th} & The joint angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix4d The transformation matrix T\+\_\+i. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_a35ed5ffff50db796b7f868577a2b7fdc}\label{namespaceMathutils_a35ed5ffff50db796b7f868577a2b7fdc}} 
+\index{Mathutils@{Mathutils}!quatMagnitude@{quatMagnitude}}
+\index{quatMagnitude@{quatMagnitude}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{quatMagnitude()}{quatMagnitude()}}
+{\footnotesize\ttfamily double Mathutils\+::quat\+Magnitude (\begin{DoxyParamCaption}\item[{const Quaterniond \&}]{q }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the magnitude of a quaternion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q} & Quaternion you want to calculate the magnitude of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Magnitude of the quaternion 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_ad29af7571ec2f06927ec144fab7a7be0}\label{namespaceMathutils_ad29af7571ec2f06927ec144fab7a7be0}} 
+\index{Mathutils@{Mathutils}!robotToWorld@{robotToWorld}}
+\index{robotToWorld@{robotToWorld}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{robotToWorld()}{robotToWorld()}}
+{\footnotesize\ttfamily Vector3d Mathutils\+::robot\+To\+World (\begin{DoxyParamCaption}\item[{Vector3d}]{p }\end{DoxyParamCaption})}
+
+
+
+Function that calculates the change of base frame starting from a robot base frame point to a point with respect to the world frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & \mbox{\hyperlink{classRobot}{Robot}} base frame point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d World frame point 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_a66ee328924ba859a7804bc2bc7c90c57}\label{namespaceMathutils_a66ee328924ba859a7804bc2bc7c90c57}} 
+\index{Mathutils@{Mathutils}!tangentialPoint@{tangentialPoint}}
+\index{tangentialPoint@{tangentialPoint}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{tangentialPoint()}{tangentialPoint()}}
+{\footnotesize\ttfamily Vector3d Mathutils\+::tangential\+Point (\begin{DoxyParamCaption}\item[{Vector3d}]{start\+\_\+pos }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the tangential point on a circle given a starting position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+\_\+pos} & Starting position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d Tangential point on the circle 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_ab35d10ed4e920f772a5abd807cf3d952}\label{namespaceMathutils_ab35d10ed4e920f772a5abd807cf3d952}} 
+\index{Mathutils@{Mathutils}!touchCenterCircle@{touchCenterCircle}}
+\index{touchCenterCircle@{touchCenterCircle}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{touchCenterCircle()}{touchCenterCircle()}}
+{\footnotesize\ttfamily int Mathutils\+::touch\+Center\+Circle (\begin{DoxyParamCaption}\item[{Vector3d}]{start\+\_\+pos,  }\item[{Vector3d}]{end\+\_\+pos }\end{DoxyParamCaption})}
+
+
+
+Function that calculate if the trajectory between the starting position and ending position touch the circle defined around the origin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+\_\+pos} & Starting position \\
+\hline
+{\em end\+\_\+pos} & Target position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Boolean that indicates if the trajectory touch the center circle
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+Not used 
+\end{DoxyRemark}
+\mbox{\Hypertarget{namespaceMathutils_a548a12516e4f8c207cbb4516264c5dc4}\label{namespaceMathutils_a548a12516e4f8c207cbb4516264c5dc4}} 
+\index{Mathutils@{Mathutils}!ur5Jacobian@{ur5Jacobian}}
+\index{ur5Jacobian@{ur5Jacobian}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{ur5Jacobian()}{ur5Jacobian()}}
+{\footnotesize\ttfamily Matrix\+Xd Mathutils\+::ur5\+Jacobian (\begin{DoxyParamCaption}\item[{Vector\+Xd}]{th }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the Jacobian matrix of the U\+R5 robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em th} & Joint angles as a Vector of 6 parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix\+Xd Jacobian matrix 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_a396f7c16da640cb1b1d4ef3c695cba2e}\label{namespaceMathutils_a396f7c16da640cb1b1d4ef3c695cba2e}} 
+\index{Mathutils@{Mathutils}!vectMagnitude@{vectMagnitude}}
+\index{vectMagnitude@{vectMagnitude}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{vectMagnitude()}{vectMagnitude()}}
+{\footnotesize\ttfamily double Mathutils\+::vect\+Magnitude (\begin{DoxyParamCaption}\item[{const Vector3d \&}]{v }\end{DoxyParamCaption})}
+
+
+
+Function that calculate the magnitude of a vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Vector you want to calculate the magnitude of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double Magnitude of the vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceMathutils_adc7f6a6f23b21cc03b87b968a3f14b1b}\label{namespaceMathutils_adc7f6a6f23b21cc03b87b968a3f14b1b}} 
+\index{Mathutils@{Mathutils}!worldToRobot@{worldToRobot}}
+\index{worldToRobot@{worldToRobot}!Mathutils@{Mathutils}}
+\doxysubsubsection{\texorpdfstring{worldToRobot()}{worldToRobot()}}
+{\footnotesize\ttfamily Vector3d Mathutils\+::world\+To\+Robot (\begin{DoxyParamCaption}\item[{Vector3d}]{p }\end{DoxyParamCaption})}
+
+
+
+Function that calculates the change of base frame starting from a world frame point to a point with respect to the base frame of the robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & World frame point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3d \mbox{\hyperlink{classRobot}{Robot}} base frame point 
+\end{DoxyReturn}

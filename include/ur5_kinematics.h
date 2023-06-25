@@ -37,6 +37,8 @@ using namespace Eigen;
 /**
  * @namespace Kinematics
  * @brief Contains all the functions related with the kinematic of the robot arm.
+ * 
+ * @remarks All the position are with respect to robot base frame
  */
 namespace Kinematics{
 
@@ -99,9 +101,45 @@ namespace Kinematics{
      */
     Vector3d attrForce_orient(Vector3d error);
 
+    /**
+     * @brief This function calculate the derivative of joint angles using a proportional control law.
+     * 
+     * @param qk Current joint angles (as a ROW VECTOR)
+     * @param xe Current end effector position
+     * @param xd Desired end effector position
+     * @param Re Current end effector orentation
+     * @param phid Desired end effector orientation (EULER ANGLES)
+     * @return VectorXd The derivative of joint angles
+     */
     VectorXd dotQ(RowVectorXd qk, Vector3d xe, Vector3d xd, Matrix3d Re, Vector3d phid);
+
+    /**
+     * @brief Function that calculate the inverse differential kinematics for ur5 robot
+     * 
+     * @param th Actual joints configuration
+     * @param endPos Target end effector position
+     * @param endOrientation Target end effector orientation
+     * @return MatrixXd Joints configurations to arrive at the wanted positio and orientation (each row is a configuration)
+     */
     MatrixXd inverseDiffKinematicsUr5(VectorXd th, Vector3d endPos, Vector3d endOrientation);
+
+    /**
+     * @brief Function that performs joint space kinematics for ur5 robot
+     * 
+     * @param qk Current joint configuration
+     * @param endPos Target Position
+     * @param endOrient Target Orientation
+     * @return MatrixXd Joints configurations to arrive at the wanted positio and orientation (each row is a configuration)
+     */
     MatrixXd jointSpace_kinematics(VectorXd qk, Vector3d endPos, Vector3d endOrient );
+    
+    /**
+     * @brief Function that find the nearest configuration between a set of different configurations 
+     * 
+     * @param qk Current configuration
+     * @param val Matrix that contains the set of different configurations (each row is a configuration)
+     * @return VectorXd Nearest joint configuration to the current one
+     */
     VectorXd nearest_config(VectorXd qk, MatrixXd val);
 
 
@@ -155,21 +193,79 @@ namespace Mathutils{
     Vector3d robotToWorld(Vector3d p);
 
     /**
-     * @brief Get the T i object
+     * @brief Get the trasformation matrix between the frames of the robot's joints
      * 
-     * @param i 
-     * @param th 
-     * @return Matrix4d 
+     * @param i IF i == 0 -> t_i == t_10 or i == 1 -> t_i == t_21
+     * @param th The joint angle in radians
+     * @return Matrix4d The transformation matrix T_i.
      */
     Matrix4d getT_i(int i, double th);
+
+    /**
+     * @brief Function that calculate the Jacobian matrix of the UR5 robot.
+     * 
+     * @param th Joint angles as a Vector of 6 parameters
+     * @return MatrixXd Jacobian matrix
+     */
     MatrixXd ur5Jacobian(VectorXd th);
 
-    Matrix3d eulerToRotationMatrix(Vector3d euler); //euler angles in x, y, z
+    /**
+     * @brief Convert Euler angles to a rotation matrix
+     * 
+     * @param euler Euler angles in x,y,z
+     * @return Matrix3d Rotation Matrix
+     */
+    Matrix3d eulerToRotationMatrix(Vector3d euler); 
+
+    /**
+     * @brief Function that calculate the magnitude of a vector
+     * 
+     * @param v Vector you want to calculate the magnitude of
+     * @return double Magnitude of the vector
+     */
     double vectMagnitude(const Vector3d &v);
+
+    /**
+     * @brief Function that calculate the magnitude of a quaternion
+     * 
+     * @param q Quaternion you want to calculate the magnitude of
+     * @return double Magnitude of the quaternion
+     */
     double quatMagnitude(const Quaterniond &q);
+
+    /**
+     * @brief Function that calculate the distance from the center (below the base frame of the ur5-robot)
+     * 
+     * @param p Vector representing the position in the space
+     * @return double Distance from center
+     */
     double centerDist(Vector3d p);
+
+    /**
+     * @brief Function that calculate if the trajectory between the starting position and ending position touch the circle defined around the origin.
+     * 
+     * @param start_pos Starting position 
+     * @param end_pos Target position
+     * @return int Boolean that indicates if the trajectory touch the center circle
+     * 
+     * @remarks Not used 
+     */
     int touchCenterCircle(Vector3d start_pos, Vector3d end_pos);
+
+    /**
+     * @brief Function that trasforms euler angles in quaternion
+     * 
+     * @param euler Euler angles
+     * @return Quaterniond Quaternion representing the euler angles
+     */
     Quaterniond EulerToQuaternion(Vector3d euler);
+
+    /**
+     * @brief Function that calculate the tangential point on a circle given a starting position.
+     * 
+     * @param start_pos Starting position
+     * @return Vector3d Tangential point on the circle
+     */
     Vector3d tangentialPoint(Vector3d start_pos);
 }
 

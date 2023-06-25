@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ur5project_20',['ur5Project',['../md__home_francesco_ros_ws_src_ur5Project_README.html',1,'']]],
-  ['update_5fblocks_5fpos_21',['update_blocks_pos',['../classModels.html#aead054534b27ad9f4b89d1b2cbabafd6',1,'Models']]],
-  ['ur5_5fkinematics_2eh_22',['ur5_kinematics.h',['../ur5__kinematics_8h.html',1,'']]]
+  ['init_24',['init',['../custom__joint__pub_8hpp.html#a02fd73d861ef2e4aabb38c0c9ff82947',1,'custom_joint_pub.cpp']]],
+  ['inversediffkinematicsur5_25',['inverseDiffKinematicsUr5',['../namespaceKinematics.html#a3aa1c5da19ddad88af1128186b0e9205',1,'Kinematics']]],
+  ['inversekinematicsur5_26',['inverseKinematicsUr5',['../namespaceKinematics.html#a73a479cda16e3881b65e23012b163efd',1,'Kinematics']]]
 ];

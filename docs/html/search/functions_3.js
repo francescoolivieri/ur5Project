@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['models_39',['Models',['../classModels.html#a3d822d79de8a3a3e4a89b48231110cec',1,'Models']]],
-  ['move_40',['move',['../classRobot.html#a53a7b0223c678ff86b692261e42dd8ed',1,'Robot']]],
-  ['move_5fgripper_41',['move_gripper',['../classRobot.html#ae8a4f33aaa71277745d9e232d64f9c1a',1,'Robot']]]
+  ['eulertoquaternion_83',['EulerToQuaternion',['../namespaceMathutils.html#abb0f12ffd29ac761b36a149bfd7d6efa',1,'Mathutils']]],
+  ['eulertorotationmatrix_84',['eulerToRotationMatrix',['../namespaceMathutils.html#a8a655a0b57071a622489683463512e72',1,'Mathutils']]]
 ];
