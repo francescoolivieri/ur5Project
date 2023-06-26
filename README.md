@@ -1,5 +1,5 @@
 # ur5Project
-IMPORTANT: to run this project you need: [locosim](https://github.com/mfocchi/locosim), [gazebo_link_attacher](https://github.com/pal-robotics/gazebo_ros_link_attacher) and these [blocks]().
+IMPORTANT: to run this project you need: [locosim](https://github.com/mfocchi/locosim), [gazebo_link_attacher](https://github.com/pal-robotics/gazebo_ros_link_attacher) and these [blocks](https://drive.google.com/drive/folders/16mWvEDk631fzUIbqhHXUmVg8F2yUmw3h?usp=sharing).
 
 ## Project Structure
 This project contains the following core folders:
