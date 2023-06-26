@@ -16,8 +16,9 @@ Download this project, place it in src folder and then perform the following com
 ```
 
 ## How to Run
-1. run the python script ```ur5_generic.py``` (you can find it in locosim/robot_control/lab_exercises/lab_palopoli)
-2. launch this command:
+1. make sure you include in your tavolo.world file the following directive: ```<plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>```
+2. run the python script ```ur5_generic.py``` (you can find it in locosim/robot_control/lab_exercises/lab_palopoli)
+3. launch this command:
 ```
 rosrun lab_palopoli main x
 ```
