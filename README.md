@@ -10,7 +10,7 @@ This project contains the following core folders:
 Every document in the include folder has been documented using doxygen, to see more details on every files' purpose you should consider to use that tool. 
 
 ## How to Build
-Download this project, place it in src folder and then perform the following command:
+Download this project, place it in src folder inside locosim (ros workspace) and then perform the following command:
 
 ```
 ~/ros_ws$ catkin_make install
@@ -19,7 +19,7 @@ Download this project, place it in src folder and then perform the following com
 ## How to Run
 1. make sure you include in your tavolo.world file the following directive: ```<plugin name="ros_link_attacher_plugin" filename="libgazebo_ros_link_attacher.so"/>```
 2. run the python script ```ur5_generic.py``` (you can find it in locosim/robot_control/lab_exercises/lab_palopoli)
-3. launch this command:
+3. launch this command from the ros workspace:
 ```
 rosrun lab_palopoli main x
 ```
