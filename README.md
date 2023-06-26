@@ -17,7 +17,7 @@ Download this project, place it in src folder and then perform the following com
 
 ## How to Run
 1. run the python script ```ur5_generic.py``` (you can find it in locosim/robot_control/lab_exercises/lab_palopoli)
-2. start this command:
+2. launch this command:
 ```
 rosrun lab_palopoli main x
 ```
