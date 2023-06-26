@@ -1,0 +1,162 @@
+\hypertarget{custom__joint__pub_8hpp}{}\doxysection{/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/custom\+\_\+joint\+\_\+pub.hpp File Reference}
+\label{custom__joint__pub_8hpp}\index{/home/francesco/ros\_ws/src/ur5Project/include/custom\_joint\_pub.hpp@{/home/francesco/ros\_ws/src/ur5Project/include/custom\_joint\_pub.hpp}}
+
+
+Set of functions that are useful to manage ros communication.  
+
+
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$sensor\+\_\+msgs/\+Joint\+State.\+h$>$}\newline
+{\ttfamily \#include $<$ros\+\_\+impedance\+\_\+controller/generic\+\_\+float.\+h$>$}\newline
+{\ttfamily \#include $<$std\+\_\+msgs/\+Float64\+Multi\+Array.\+h$>$}\newline
+{\ttfamily \#include $<$Eigen/\+Dense$>$}\newline
+{\ttfamily \#include $<$realtime\+\_\+tools/realtime\+\_\+publisher.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}link\+\_\+attacher.\+hpp\char`\"{}}\newline
+Include dependency graph for custom\+\_\+joint\+\_\+pub.\+hpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{custom__joint__pub_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{custom__joint__pub_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a98c311f8f84d62784ec0499c9df9816d}\label{custom__joint__pub_8hpp_a98c311f8f84d62784ec0499c9df9816d}} 
+typedef Matrix$<$ double, 6, 1 $>$ {\bfseries Vector6d}
+\item 
+\mbox{\Hypertarget{custom__joint__pub_8hpp_ac03ac42f1675ef0c3fbdb37a6ae5f64e}\label{custom__joint__pub_8hpp_ac03ac42f1675ef0c3fbdb37a6ae5f64e}} 
+typedef Matrix$<$ double, 9, 1 $>$ {\bfseries Vector9d}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{custom__joint__pub_8hpp_a02fd73d861ef2e4aabb38c0c9ff82947}{init}} ()
+\begin{DoxyCompactList}\small\item\em Function that initializes\+: R\+OS, the params of the robot, publishers, subscribers and service clients. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__joint__pub_8hpp_a60031f22e6fb4f02f40ffd7d77ee8d8d}{send\+\_\+des\+\_\+jstate}} (const Vector6d \&joint\+\_\+pos, const Vector3d \&gripper\+\_\+pos)
+\begin{DoxyCompactList}\small\item\em Function that sends to the robot the new joints configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__joint__pub_8hpp_ae26c3f206eca40c2958dcc2e830a44f9}{robot\+\_\+send\+\_\+des\+\_\+jstate}} (const Vector6d \&joint\+\_\+pos, const double diameter, const bool move\+\_\+gripper)
+\begin{DoxyCompactList}\small\item\em Function that sends to the real robot the new joints configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__joint__pub_8hpp_abfbe9b6c0750bf0370b962656797ffd3}{robot\+\_\+move\+\_\+gripper}} (const double diameter)
+\begin{DoxyCompactList}\small\item\em Function that sends the request to move the gripper to the robot. \end{DoxyCompactList}\item 
+Vector9d \mbox{\hyperlink{custom__joint__pub_8hpp_a459e008b0c5418614d923f67a345077c}{receive\+\_\+jstate}} ()
+\begin{DoxyCompactList}\small\item\em Function that receives the joints configuration from the robot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{custom__joint__pub_8hpp_aa7270f0ca0f39d26268309d1ea08e964}\label{custom__joint__pub_8hpp_aa7270f0ca0f39d26268309d1ea08e964}} 
+bool {\bfseries real\+\_\+robot}
+\item 
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a73bf9c03a7aad3dff1b57f290aae8351}\label{custom__joint__pub_8hpp_a73bf9c03a7aad3dff1b57f290aae8351}} 
+bool {\bfseries soft\+\_\+gripper}
+\item 
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a0b4a845684c8ab2acfd08359ed138a1e}\label{custom__joint__pub_8hpp_a0b4a845684c8ab2acfd08359ed138a1e}} 
+bool {\bfseries gripper\+\_\+sim}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Set of functions that are useful to manage ros communication. 
+
+\begin{DoxyAuthor}{Author}
+Federico Adami, Francesco Olivieri, Eddie Veronese 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2023-\/06-\/25
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2023 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a02fd73d861ef2e4aabb38c0c9ff82947}\label{custom__joint__pub_8hpp_a02fd73d861ef2e4aabb38c0c9ff82947}} 
+\index{custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}!init@{init}}
+\index{init@{init}!custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function that initializes\+: R\+OS, the params of the robot, publishers, subscribers and service clients. 
+
+\begin{DoxyRemark}{Remarks}
+Can be blocking. 
+\end{DoxyRemark}
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a459e008b0c5418614d923f67a345077c}\label{custom__joint__pub_8hpp_a459e008b0c5418614d923f67a345077c}} 
+\index{custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}!receive\_jstate@{receive\_jstate}}
+\index{receive\_jstate@{receive\_jstate}!custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}}
+\doxysubsubsection{\texorpdfstring{receive\_jstate()}{receive\_jstate()}}
+{\footnotesize\ttfamily Vector9d receive\+\_\+jstate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function that receives the joints configuration from the robot. 
+
+\begin{DoxyReturn}{Returns}
+Vector9d Actual joint configuration received from the robot
+\end{DoxyReturn}
+\begin{DoxyRemark}{Remarks}
+Can be blocking. 
+\end{DoxyRemark}
+\mbox{\Hypertarget{custom__joint__pub_8hpp_abfbe9b6c0750bf0370b962656797ffd3}\label{custom__joint__pub_8hpp_abfbe9b6c0750bf0370b962656797ffd3}} 
+\index{custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}!robot\_move\_gripper@{robot\_move\_gripper}}
+\index{robot\_move\_gripper@{robot\_move\_gripper}!custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}}
+\doxysubsubsection{\texorpdfstring{robot\_move\_gripper()}{robot\_move\_gripper()}}
+{\footnotesize\ttfamily void robot\+\_\+move\+\_\+gripper (\begin{DoxyParamCaption}\item[{const double}]{diameter }\end{DoxyParamCaption})}
+
+
+
+Function that sends the request to move the gripper to the robot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em diameter} & Opening diameter desired \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{custom__joint__pub_8hpp_ae26c3f206eca40c2958dcc2e830a44f9}\label{custom__joint__pub_8hpp_ae26c3f206eca40c2958dcc2e830a44f9}} 
+\index{custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}!robot\_send\_des\_jstate@{robot\_send\_des\_jstate}}
+\index{robot\_send\_des\_jstate@{robot\_send\_des\_jstate}!custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}}
+\doxysubsubsection{\texorpdfstring{robot\_send\_des\_jstate()}{robot\_send\_des\_jstate()}}
+{\footnotesize\ttfamily void robot\+\_\+send\+\_\+des\+\_\+jstate (\begin{DoxyParamCaption}\item[{const Vector6d \&}]{joint\+\_\+pos,  }\item[{const double}]{diameter,  }\item[{const bool}]{move\+\_\+gripper }\end{DoxyParamCaption})}
+
+
+
+Function that sends to the real robot the new joints configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joint\+\_\+pos} & Joint configuration of the arm \\
+\hline
+{\em diameter} & Diameter desired of the gripper \\
+\hline
+{\em move\+\_\+gripper} & Boolean that indicates the desire to open/close the gripper \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{custom__joint__pub_8hpp_a60031f22e6fb4f02f40ffd7d77ee8d8d}\label{custom__joint__pub_8hpp_a60031f22e6fb4f02f40ffd7d77ee8d8d}} 
+\index{custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}!send\_des\_jstate@{send\_des\_jstate}}
+\index{send\_des\_jstate@{send\_des\_jstate}!custom\_joint\_pub.hpp@{custom\_joint\_pub.hpp}}
+\doxysubsubsection{\texorpdfstring{send\_des\_jstate()}{send\_des\_jstate()}}
+{\footnotesize\ttfamily void send\+\_\+des\+\_\+jstate (\begin{DoxyParamCaption}\item[{const Vector6d \&}]{joint\+\_\+pos,  }\item[{const Vector3d \&}]{gripper\+\_\+pos }\end{DoxyParamCaption})}
+
+
+
+Function that sends to the robot the new joints configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joint\+\_\+pos} & \mbox{\hyperlink{classJoints}{Joints}} configuration of the arm \\
+\hline
+{\em gripper\+\_\+pos} & \mbox{\hyperlink{classJoints}{Joints}} configuration of the gripper \\
+\hline
+\end{DoxyParams}

@@ -1,3 +1,13 @@
+/**
+ * @file blocks.hpp
+ * @author Federico Adami, Francesco Olivieri, Eddie Veronese
+ * @brief Library that contains classes useful to handle the messages from the vision and storing the informations retrieved.
+ * @version 0.1
+ * @date 2023-06-25
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef BLOCKS_HPP
 #define BLOCK_HPP
 
@@ -16,13 +26,13 @@ static ros::Subscriber sub_blocks;
  */
 class Lego{
     public:
-        string classe;
-        double x_base;
-        double y_base;
-        double z_base;
-        double yaw;
-        double pitch;
-        double roll;
+        string classe;    // Name of the model
+        double x_base;  // Position of the Lego on the x-axis
+        double y_base;  // Position of the Lego on the y-axis
+        double z_base;  // Position of the Lego on the z-axis
+        double yaw;     // Orientation of the Lego on the z-axis
+        double pitch;   // Orientation of the Lego on the y-axis
+        double roll;    // Orientation of the Lego on the x-axis
 
         /**
          * @brief Default Constructor         * 
@@ -47,27 +57,52 @@ class Lego{
 
 /**
  * @class Models
- * @brief Class that retrieves 
+ * @brief Class used to retrieves and store models info.
  */
 class Models{
     private:
-        Lego *list;
-        int length;
+        Lego *list; // List of Lego found by the vision
+        int length; // Length of the array
         
     public:
 
         /**
          * @brief Default Constructor.
-         * Class 
+         * Retrieves from the topic the list of Lego found by the vision.
          * 
+         * @remarks This function waits until a message is received on the proper topic
          */
         Models();
 
+        /**
+         * @brief Retrieves from the topic the list of Lego found by the vision.
+         * 
+         * @remarks This function waits until a message is received on the proper topic
+         */
         void update_blocks_pos();
-        Lego get_block(int index);
-        Lego get_block(string model_name);
-        int get_length();
 
+        /**
+         * @brief Get the Lego object in the list at the index specified.
+         * 
+         * @param index Array index
+         * @return Lego Lego Class at the index specified
+         */
+        Lego get_block(int index);
+
+        /**
+         * @brief Get the Lego object in the list with model name equal to the one passed by argument.
+         * 
+         * @param model_name Name of the model I'm looking for
+         * @return Lego Lego with the same name of the parameter passed
+         */
+        Lego get_block(string model_name);
+
+        /**
+         * @brief Get the length of the list of Lego
+         * 
+         * @return int Length of the list of Lego
+         */
+        int get_lenght();
 
 };
 

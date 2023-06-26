@@ -1,13 +1,3 @@
-/**
- * @file robot.cpp
- * @author Federico Adami, Francesco Olivieri, Pirrinz Perroneddesi
- * @brief This file contains two classes that are crucial for providing to the final user a good level of abstraction and an easy management of the ur5
- * @version 0.1
- * @date 2023-06-22
- * 
- * @copyright Copyright (c) 2023
- * 
- */
 #include "robot.hpp"
 
 vector<string> models_list;
@@ -249,8 +239,9 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
         cout << "Block already up right! " << endl;
     }else{
 
-        if( ((0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI))) && !(0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ // testa in giù
-
+        /* upside down */
+        if( ((0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI) && (abs(pitch)/M_PI) < 1.1) ) && !(0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){
+            
             move({model_pose(0), model_pose(1), working_height}, {0, 0, -yaw});
 
             move_gripper(50);
@@ -261,31 +252,27 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
             handled_model = get_string_nearest_model(models_list);
             attach("ur5", "hand_1_link", handled_model.c_str(), "link");
 
-            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0});
+            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0}); 
             rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
-            move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2, M_PI, 0});
+            move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2, M_PI, 0}); 
 
             detach("ur5", "hand_1_link", handled_model.c_str(), "link");
             move({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
             rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
             
             reversed = true;
-        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ 
-
+        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){  /* lying on the side */
             move_gripper(75);
-
 
            if( pitch > 0 ){
                 if( (roll<0 && yaw<0) || (roll>0 && yaw>0) ){
                     move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll-yaw)});
-
+                    
 
                     if( roll-yaw < 1.57 && roll-yaw > -1.57 ) {
 
-
                         move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll-yaw)});
                     }else{
-
 
                         move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll-yaw)});
                         reversed = true;
@@ -294,9 +281,11 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
                 }else{
                     move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll+yaw)});
 
-                    if( (roll+yaw < 1.57 && roll+yaw > -1.57) ){
+                    if( (roll+yaw < 1.57 && roll+yaw > -1.57) || abs(roll+yaw)>4.71 ){
+
                         move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
                     }else{
+
                         move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
                         reversed = true;
                     }
@@ -306,7 +295,7 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
            }else{
                 move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll+yaw)});
 
-                if( (roll+yaw < 1.57 && roll+yaw > -1.57)){
+                if( (roll+yaw < 1.57 && roll+yaw > -1.57) ){
                     move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
                     reversed = true;
                 }else{

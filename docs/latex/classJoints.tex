@@ -12,7 +12,6 @@ Class representing the robot\textquotesingle{}s joints, used to both store and u
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classJoints_ae40766f698d114f9276e6e76672636c2}\label{classJoints_ae40766f698d114f9276e6e76672636c2}} 
 \mbox{\hyperlink{classJoints_ae40766f698d114f9276e6e76672636c2}{Joints}} ()
 \begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classJoints}{Joints}} object. It sets all the joints to their actual values. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}{Joints}} (Vector6d q\+\_\+arm)
@@ -26,7 +25,7 @@ void \mbox{\hyperlink{classJoints_a23b3806b014345902d1f0ae620d03587}{set\+\_\+ne
 void \mbox{\hyperlink{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}{set\+\_\+new}} (Vector3d q\+\_\+gripper)
 \begin{DoxyCompactList}\small\item\em Set new gripper joints. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classJoints_a0c04b955dbffff11b03db5167d1c70a3}{set\+\_\+joints\+\_\+from\+\_\+robot}} ()
-\begin{DoxyCompactList}\small\item\em Update the joints taking the values from the simulation. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Update the joints taking the values from the proper R\+OS topic. \end{DoxyCompactList}\item 
 Vector6d \mbox{\hyperlink{classJoints_a5d1149262bcd8d66ac2db249aa2079c4}{get\+\_\+arm}} ()
 \begin{DoxyCompactList}\small\item\em Get the ur5-\/arm joints. \end{DoxyCompactList}\item 
 Vector3d \mbox{\hyperlink{classJoints_a467608e6cb7dd4dd9bea9ee953c8aa3a}{get\+\_\+gripper}} ()
@@ -66,11 +65,29 @@ double {\bfseries gripper\+\_\+3}
 \doxysubsection{Detailed Description}
 Class representing the robot\textquotesingle{}s joints, used to both store and update. 
 
+\begin{DoxyRemark}{Remarks}
+It might change behaviour, if U\+P\+D\+A\+T\+E\+\_\+\+F\+R\+O\+M\+\_\+\+R\+O\+B\+OT is defined all the joints will be updated according their actual state published on the R\+OS topic\+: \char`\"{}/ur5/joint\+\_\+states\char`\"{}. 
+\end{DoxyRemark}
+
+
 \doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classJoints_ae40766f698d114f9276e6e76672636c2}\label{classJoints_ae40766f698d114f9276e6e76672636c2}} 
+\index{Joints@{Joints}!Joints@{Joints}}
+\index{Joints@{Joints}!Joints@{Joints}}
+\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Joints\+::\+Joints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classJoints}{Joints}} object. It sets all the joints to their actual values. 
+
+\begin{DoxyRemark}{Remarks}
+This function could be blocking, if U\+P\+D\+A\+T\+E\+\_\+\+F\+R\+O\+M\+\_\+\+R\+O\+B\+OT is defined (waits for messages). 
+\end{DoxyRemark}
 \mbox{\Hypertarget{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}\label{classJoints_a5ccfbf20151f1b3a91d9ce6b67356045}} 
 \index{Joints@{Joints}!Joints@{Joints}}
 \index{Joints@{Joints}!Joints@{Joints}}
-\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
 {\footnotesize\ttfamily Joints\+::\+Joints (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm }\end{DoxyParamCaption})}
 
 
@@ -85,7 +102,7 @@ Construct a new \mbox{\hyperlink{classJoints}{Joints}} object-\/ It sets all the
 \mbox{\Hypertarget{classJoints_a8c8a5c92483d2fd1fa04951d347f81f2}\label{classJoints_a8c8a5c92483d2fd1fa04951d347f81f2}} 
 \index{Joints@{Joints}!Joints@{Joints}}
 \index{Joints@{Joints}!Joints@{Joints}}
-\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+\doxysubsubsection{\texorpdfstring{Joints()}{Joints()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
 {\footnotesize\ttfamily Joints\+::\+Joints (\begin{DoxyParamCaption}\item[{Vector6d}]{q\+\_\+arm,  }\item[{Vector3d}]{q\+\_\+gripper }\end{DoxyParamCaption})}
 
 
@@ -136,8 +153,11 @@ Vector3d Vector of 3 elements representing the joints of the gripper
 
 
 
-Update the joints taking the values from the simulation. 
+Update the joints taking the values from the proper R\+OS topic. 
 
+\begin{DoxyRemark}{Remarks}
+This function waits until a message is received on the proper topic (/ur5/joint\+\_\+states) 
+\end{DoxyRemark}
 \mbox{\Hypertarget{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}\label{classJoints_ac3519fc67a0152cb69ea6150aefe47e4}} 
 \index{Joints@{Joints}!set\_new@{set\_new}}
 \index{set\_new@{set\_new}!Joints@{Joints}}
@@ -189,5 +209,5 @@ Set new arm and gripper set of joints.
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/robot.\+hpp\item 
-/home/francesco/ros\+\_\+ws/src/ur5\+Project/src/\mbox{\hyperlink{robot_8cpp}{robot.\+cpp}}\end{DoxyCompactItemize}
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/include/\mbox{\hyperlink{robot_8hpp}{robot.\+hpp}}\item 
+/home/francesco/ros\+\_\+ws/src/ur5\+Project/src/robot.\+cpp\end{DoxyCompactItemize}

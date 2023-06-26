@@ -69,45 +69,55 @@ $(function() {
 <div class="title">link_attacher.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LINK_ATTACHER_HPP</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LINK_ATTACHER_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;eigen3/Eigen/Core&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;eigen3/Eigen/Geometry&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;gazebo_ros_link_attacher/Attach.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/LinkStates.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/ModelStates.h&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/GetModelState.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/GetWorldProperties.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;geometry_msgs/Pose.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;geometry_msgs/Twist.h&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">using namespace </span>Eigen;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> ur5_model[] = <span class="stringliteral">&quot;ur5&quot;</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> ur5_hand_link[] = <span class="stringliteral">&quot;hand_1_link&quot;</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> table_model[] = <span class="stringliteral">&quot;tavolo&quot;</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> table_link[] = <span class="stringliteral">&quot;link&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">extern</span> ros::ServiceClient attach_client;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">extern</span> ros::ServiceClient detach_client;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">extern</span> ros::ServiceClient get_model_client;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">extern</span> ros::ServiceClient get_list_models_client;</div>
+<a href="link__attacher_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#ifndef LINK_ATTACHER_HPP</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define LINK_ATTACHER_HPP</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;eigen3/Eigen/Core&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;eigen3/Eigen/Geometry&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;gazebo_ros_link_attacher/Attach.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/LinkStates.h&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/ModelStates.h&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/GetModelState.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;gazebo_msgs/GetWorldProperties.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;geometry_msgs/Pose.h&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;geometry_msgs/Twist.h&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">using namespace </span>Eigen;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">extern</span> vector&lt;string&gt; models_list;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> attach(<span class="keyword">const</span> <span class="keywordtype">char</span>* model1, <span class="keyword">const</span> <span class="keywordtype">char</span>* link1, <span class="keyword">const</span> <span class="keywordtype">char</span>* model2, <span class="keyword">const</span> <span class="keywordtype">char</span>* link2);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> detach(<span class="keyword">const</span> <span class="keywordtype">char</span>* model1, <span class="keyword">const</span> <span class="keywordtype">char</span>* link1, <span class="keyword">const</span> <span class="keywordtype">char</span>* model2, <span class="keyword">const</span> <span class="keywordtype">char</span>* link2);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;Vector3d get_pose(<span class="keywordtype">string</span> model_name);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;Vector3d get_orientation(<span class="keywordtype">string</span> model_name);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> get_list_models(vector&lt;string&gt; &amp;list_models);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> ur5_model[] = <span class="stringliteral">&quot;ur5&quot;</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> ur5_hand_link[] = <span class="stringliteral">&quot;hand_1_link&quot;</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> table_model[] = <span class="stringliteral">&quot;tavolo&quot;</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> table_link[] = <span class="stringliteral">&quot;link&quot;</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">extern</span> ros::ServiceClient attach_client;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> ros::ServiceClient detach_client;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">extern</span> ros::ServiceClient get_model_client;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">extern</span> ros::ServiceClient get_list_models_client;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">extern</span> vector&lt;string&gt; models_list;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="link__attacher_8hpp.html#acdf1e9014b400ae4775526b6dc70d104">attach</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* model1, <span class="keyword">const</span> <span class="keywordtype">char</span>* link1, <span class="keyword">const</span> <span class="keywordtype">char</span>* model2, <span class="keyword">const</span> <span class="keywordtype">char</span>* link2);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="link__attacher_8hpp.html#a93f83e5501e90654fa2bbfcf5798b281">detach</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* model1, <span class="keyword">const</span> <span class="keywordtype">char</span>* link1, <span class="keyword">const</span> <span class="keywordtype">char</span>* model2, <span class="keyword">const</span> <span class="keywordtype">char</span>* link2);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;Vector3d <a class="code" href="link__attacher_8hpp.html#a127d09dae6c1325971af57454832b522">get_pose</a>(<span class="keywordtype">string</span> model_name);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;Vector3d <a class="code" href="link__attacher_8hpp.html#a6d10e051d644bdbb0fbc564aa4387c57">get_orientation</a>(<span class="keywordtype">string</span> model_name);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span> <a class="code" href="link__attacher_8hpp.html#ada53f15d7c997a6bb0865d45be717141">get_list_models</a>(vector&lt;string&gt; &amp;list_models);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="alink__attacher_8hpp_html_a6d10e051d644bdbb0fbc564aa4387c57"><div class="ttname"><a href="link__attacher_8hpp.html#a6d10e051d644bdbb0fbc564aa4387c57">get_orientation</a></div><div class="ttdeci">Vector3d get_orientation(string model_name)</div><div class="ttdoc">Function that retrieves the orientation of the model specified.</div><div class="ttdef"><b>Definition:</b> link_attacher.cpp:40</div></div>
+<div class="ttc" id="alink__attacher_8hpp_html_ada53f15d7c997a6bb0865d45be717141"><div class="ttname"><a href="link__attacher_8hpp.html#ada53f15d7c997a6bb0865d45be717141">get_list_models</a></div><div class="ttdeci">void get_list_models(vector&lt; string &gt; &amp;list_models)</div><div class="ttdoc">Function that retrieves the list of the models (filter to find only lego models)</div><div class="ttdef"><b>Definition:</b> link_attacher.cpp:57</div></div>
+<div class="ttc" id="alink__attacher_8hpp_html_a127d09dae6c1325971af57454832b522"><div class="ttname"><a href="link__attacher_8hpp.html#a127d09dae6c1325971af57454832b522">get_pose</a></div><div class="ttdeci">Vector3d get_pose(string model_name)</div><div class="ttdoc">Function that retrieves the position of the model specified.</div><div class="ttdef"><b>Definition:</b> link_attacher.cpp:29</div></div>
+<div class="ttc" id="alink__attacher_8hpp_html_a93f83e5501e90654fa2bbfcf5798b281"><div class="ttname"><a href="link__attacher_8hpp.html#a93f83e5501e90654fa2bbfcf5798b281">detach</a></div><div class="ttdeci">void detach(const char *model1, const char *link1, const char *model2, const char *link2)</div><div class="ttdoc">Function that send a request to delete a dynamic link to detach the two models specified.</div><div class="ttdef"><b>Definition:</b> link_attacher.cpp:19</div></div>
+<div class="ttc" id="alink__attacher_8hpp_html_acdf1e9014b400ae4775526b6dc70d104"><div class="ttname"><a href="link__attacher_8hpp.html#acdf1e9014b400ae4775526b6dc70d104">attach</a></div><div class="ttdeci">void attach(const char *model1, const char *link1, const char *model2, const char *link2)</div><div class="ttdoc">Function that send a request to create a dynamic link to attach the two models specified.</div><div class="ttdef"><b>Definition:</b> link_attacher.cpp:9</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
