@@ -7,6 +7,7 @@ This project contains the following core folders:
 - include: contains all the libraries files (.hpp)
 - src: contains all the source files (.cpp) exception for the main.cpp
 
+Every document in the include folder has been documented using doxygen, to see more details on every files' purpose you should consider to use that tool. 
 
 ## How to Build
 Download this project, place it in src folder and then perform the following command:
