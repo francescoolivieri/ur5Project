@@ -22,13 +22,11 @@ using namespace Eigen;
 typedef Matrix<double, 6, 1> Vector6d;
 typedef Matrix<double, 9, 1> Vector9d;
 
-bool real_robot;
-bool soft_gripper;
-bool gripper_sim;
+
 
 static double working_height = Mathutils::worldToRobot({0, 0, 1.1})(2);
 static double grasping_height = Mathutils::worldToRobot({0, 0, 0.89})(2);
-static double releasing_height = Mathutils::worldToRobot({0, 0, 0.92})(2);
+static double releasing_height = Mathutils::worldToRobot({0, 0, 0.94})(2);
 static double height_offset = 0.22;
 
 /**

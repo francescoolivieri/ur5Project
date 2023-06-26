@@ -12,6 +12,10 @@
 
 vector<string> models_list;
 
+bool real_robot;
+bool soft_gripper;
+bool gripper_sim;
+
 Joints::Joints(){
     #if UPDATE_FROM_ROBOT
         this->set_joints_from_robot();
@@ -220,7 +224,6 @@ string Robot::get_string_nearest_model(vector<string> models_list){
         current_model = models_list[i];
         current_distance = (ef_pos - get_pose(current_model)).norm();
 
-        //cout << current_distance << endl;
 
         if(current_distance < nearest_distance){
             nearest_distance = current_distance;
@@ -246,10 +249,9 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
         cout << "Block already up right! " << endl;
     }else{
 
-        move({model_pose(0), model_pose(1), working_height}, {0, 0, -yaw});
-
         if( ((0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1)  ||  (0.9 < (abs(pitch)/M_PI))) && !(0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ // testa in giù
-            cout << "#capotà" << endl;
+
+            move({model_pose(0), model_pose(1), working_height}, {0, 0, -yaw});
 
             move_gripper(50);
 
@@ -259,39 +261,59 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
             handled_model = get_string_nearest_model(models_list);
             attach("ur5", "hand_1_link", handled_model.c_str(), "link");
 
-            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0}); // sarebbe getOrient
+            move({model_pose(0), model_pose(1), working_height}, {0, 0, 0});
             rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
-            move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2, M_PI, 0}); // sarebbe getOrient
+            move({model_pose(0), model_pose(1), releasing_height}, {M_PI_2, M_PI, 0});
 
             detach("ur5", "hand_1_link", handled_model.c_str(), "link");
             move({model_pose(0), model_pose(1), working_height}, {M_PI_2, M_PI, 0});
             rotate({model_pose(0), model_pose(1), working_height}, {0,0,0});
             
             reversed = true;
-        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){  // (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1)
-            cout << "#ciapa el sol" << endl;
+        }else if( (0.9 < (abs(pitch)/M_PI_2) && (abs(pitch)/M_PI_2) < 1.1) ){ 
 
             move_gripper(75);
 
-            if(pitch < 0 && yaw<0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
-                
-                move({model_pose(0), model_pose(1)+0.025, grasping_height}, {0, 0, -yaw});
-                reversed = true;
-            }else if(pitch > 0 && yaw > 0 && (0.9 < (abs(yaw)/M_PI_2) && (abs(yaw)/M_PI_2) < 1.1)){
-                
-                move({model_pose(0), model_pose(1)-0.025, grasping_height}, {0, 0, -yaw});
-            }else if(pitch < 0 && (abs(yaw)<0.3 || ( (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1 && 0.9 < (abs(yaw)/M_PI) && (abs(yaw)/M_PI) < 1.1 ) || ( (abs(yaw)/M_PI) < 0.9 && (abs(roll)/M_PI) < 0.9 ) ) )){
-                
-                move({model_pose(0)-0.028, model_pose(1), grasping_height}, {0, 0, -yaw});
-            }else if(pitch > 0 && (abs(yaw)<0.3 || ( (0.9 < (abs(roll)/M_PI) && (abs(roll)/M_PI) < 1.1 && 0.9 < (abs(yaw)/M_PI) && (abs(yaw)/M_PI) < 1.1 ) || ( (abs(yaw)/M_PI) < 0.9 && (abs(roll)/M_PI) < 0.9 ) ) )){
 
-                move({model_pose(0)+0.028, model_pose(1), grasping_height}, {0, 0, -yaw});
-                reversed = true;
-            }else{
-                cout << "[!!!] Orientation of the block NON-Optimal" << endl;
+           if( pitch > 0 ){
+                if( (roll<0 && yaw<0) || (roll>0 && yaw>0) ){
+                    move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll-yaw)});
 
-                move({model_pose(0), model_pose(1), grasping_height-0.015}, {0, 0, -yaw});
-            }
+
+                    if( roll-yaw < 1.57 && roll-yaw > -1.57 ) {
+
+
+                        move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll-yaw)});
+                    }else{
+
+
+                        move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll-yaw)});
+                        reversed = true;
+                    }
+
+                }else{
+                    move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll+yaw)});
+
+                    if( (roll+yaw < 1.57 && roll+yaw > -1.57) ){
+                        move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
+                    }else{
+                        move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
+                        reversed = true;
+                    }
+
+                }
+
+           }else{
+                move({model_pose(0), model_pose(1), working_height}, {0, 0, -(roll+yaw)});
+
+                if( (roll+yaw < 1.57 && roll+yaw > -1.57)){
+                    move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
+                    reversed = true;
+                }else{
+                    move({model_pose(0), model_pose(1), grasping_height}, {0, 0, -(roll+yaw)});
+                }
+
+           }
 
             handled_model = get_string_nearest_model(models_list);
             attach("ur5", "hand_1_link", handled_model.c_str(), "link");
@@ -309,7 +331,6 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
             return;
         }
 
-        /* if arrived here I know that the block is in a vertical position but I don't know it's orientation */
 
         if(reversed == true){
                 move({model_pose(0), model_pose(1), releasing_height}, {0,0,0});
@@ -320,7 +341,7 @@ void Robot::set_block_up_right(Vector3d model_pose, Vector3d model_rotation){
                 move({model_pose(0), model_pose(1), releasing_height}, {0,0,M_PI});
                 detach("ur5", "hand_1_link", handled_model.c_str(), "link");
 
-                move({model_pose(0), model_pose(1), working_height}, {0,0,0});
+                move({model_pose(0), model_pose(1), working_height}, {0,0,M_PI});
             }
 
         rotate({model_pose(0), model_pose(1), working_height}, {M_PI_2,M_PI,0});

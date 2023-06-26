@@ -32,7 +32,7 @@ class Lego{
         /**
          * @brief Construct a new Lego object
          * 
-         * @param type Name of the Lego
+         * @param classe Name of the Lego
          * @param x_base Position of the Lego on the x-axis
          * @param y_base Position of the Lego on the y-axis
          * @param z_base Position of the Lego on the z-axis
