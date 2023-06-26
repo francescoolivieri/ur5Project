@@ -1,6 +1,6 @@
 /**
  * @file robot.hpp
- * @author Federico Adami, Francesco Olivieri, Pirrinz Perroneddesi
+ * @author Federico Adami, Francesco Olivieri, Eddie Veronese
  * @brief This file contains two classes that are crucial. They provide to the final user a good level of abstraction and an easy management of the ur5 robotic arm.
  * @version 0.1
  * @date 2023-06-23

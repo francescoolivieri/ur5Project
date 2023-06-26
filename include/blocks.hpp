@@ -102,7 +102,7 @@ class Models{
          * 
          * @return int Length of the list of Lego
          */
-        int get_lenght();
+        int get_length();
 
 };
 
