@@ -1,4 +1,20 @@
 # ur5Project
+IMPORTANT: to run this project you need: [locosim](https://github.com/mfocchi/locosim) and [gazebo_link_attacher](https://github.com/pal-robotics/gazebo_ros_link_attacher).
+
+
+## How to Build
+Download this project, place it in src folder and then perform the following command:
+
+```
+~/ros_ws$ catkin_make install
+```
+
+## How to Run
+First of all, we need to run the python script ```ur5_generic.py``` (you can find it in locosim/robot_control/lab_exercises/lab_palopoli) and then start this command:
+```
+rosrun lab_palopoli main x
+```
+where x is the number of the task we want to perform.
 
 How is structured:
     -custom libraries in src and include to implement functions
